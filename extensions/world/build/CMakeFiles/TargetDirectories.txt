@@ -1,0 +1,3 @@
+/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/world.dir
+/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/edit_cache.dir
+/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/rebuild_cache.dir
