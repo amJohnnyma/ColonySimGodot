@@ -14,7 +14,7 @@ script = ExtResource("1_rvslj")
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("2_rarhs")
 zoom_step = 0.01
-min_zoom = -1.0
+min_zoom = 0.0
 
 [node name="WorldRenderer" type="Node2D" parent="." node_paths=PackedStringArray("world")]
 script = ExtResource("1_elqb8")

@@ -1,5 +1,6 @@
 #pragma once
 #include "entity.h"
+#include "perlinNoise.h"
 #include <godot_cpp/variant/vector2i.hpp>
 #include <godot_cpp/variant/color.hpp>
 #include <vector>
@@ -18,24 +19,22 @@ struct Chunk {
 
     Chunk(int w, int h, Vector2i c) : coord(c), width(w), height(h) {
         tiles.resize(width * height, 0);
-        tileColors.resize(width * height, Color(1,1,1)); // initialize colors
+        tileColors.resize(width * height, Color(1,1,1,1)); // initialize colors
     }
     
     
-    void generateRandomRGB(int& r, int& g, int& b) {
-    // Generate random values for each component (0-255)
-    r = rand() % 256;
-    g = rand() % 256;
-    b = rand() % 256;
-    }
-
-    void generate() {
+    void generate(int wx, int wy) {
+        PerlinNoise noise(12345);
         for(int y=0;y<height;y++)
             for(int x=0;x<width;x++){
                 tiles[y*width+x] = (x+y+coord.x+coord.y)%3;
-                int r,g,b;
-                generateRandomRGB(r, g,b);
-                tileColors[y*width+x] = Color(r * 20,g * 20,b * 20);
+                double n = noise.noise(
+                double(x + coord.x * width * wx) * 0.05,
+                double(y + coord.y * height * wy) * 0.05
+            );
+
+                float v = float((n + 1.0) * 0.5); // normalize 0–1
+                tileColors[y*width+x] = Color(v,v * 2,v,1);
             }
         auto e = std::make_shared<Entity>(Vector2i(width/2,height/2),true);
         entities.push_back(e);

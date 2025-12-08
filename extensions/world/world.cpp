@@ -78,7 +78,8 @@ std::shared_ptr<Chunk> World::load_chunk(const Vector2i &coord) {
     if (existing) return existing;
 
     auto c = std::make_shared<Chunk>(chunk_size, chunk_size, coord);
-    c->generate();
+    c->generate(1,1);
+    //c->load();
     chunks.emplace(coord, c);
     return c;
 }
@@ -122,7 +123,7 @@ void World::set_tile(int world_x, int world_y, int value) {
     auto it = chunks.find(chunk_coord);
     if (it == chunks.end()) {
         auto new_chunk = std::make_shared<Chunk>(chunk_size, chunk_size, chunk_coord);
-        new_chunk->generate();
+        new_chunk->generate(world_x, world_y);
         chunks.emplace(chunk_coord, new_chunk);
         it = chunks.find(chunk_coord);
     }

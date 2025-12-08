@@ -129,6 +129,30 @@ world/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/build
 .PHONY : world/fast
 
+perlin_noise.o: perlin_noise.cpp.o
+.PHONY : perlin_noise.o
+
+# target to build an object file
+perlin_noise.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/perlin_noise.cpp.o
+.PHONY : perlin_noise.cpp.o
+
+perlin_noise.i: perlin_noise.cpp.i
+.PHONY : perlin_noise.i
+
+# target to preprocess a source file
+perlin_noise.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/perlin_noise.cpp.i
+.PHONY : perlin_noise.cpp.i
+
+perlin_noise.s: perlin_noise.cpp.s
+.PHONY : perlin_noise.s
+
+# target to generate assembly for a file
+perlin_noise.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/perlin_noise.cpp.s
+.PHONY : perlin_noise.cpp.s
+
 register_types.o: register_types.cpp.o
 .PHONY : register_types.o
 
@@ -186,6 +210,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... world"
+	@echo "... perlin_noise.o"
+	@echo "... perlin_noise.i"
+	@echo "... perlin_noise.s"
 	@echo "... register_types.o"
 	@echo "... register_types.i"
 	@echo "... register_types.s"

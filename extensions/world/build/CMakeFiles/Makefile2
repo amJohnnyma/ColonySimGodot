@@ -81,12 +81,12 @@ clean: CMakeFiles/world.dir/clean
 CMakeFiles/world.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=1,2,3 "Built target world"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=1,2,3,4 "Built target world"
 .PHONY : CMakeFiles/world.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/world.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/world.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles 0
 .PHONY : CMakeFiles/world.dir/rule

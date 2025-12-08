@@ -20,6 +20,7 @@ include_directories(
 set(SOURCES
     register_types.cpp
     world.cpp
+    perlin_noise.cpp
 )
 
 # Output library name
