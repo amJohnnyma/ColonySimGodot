@@ -31,7 +31,7 @@ func _process(_delta: float) -> void:
 				add_child(renderer)
 				renderer.setup(world, c)
 				chunks[c] = renderer
-				print("Loaded chunk ", c)
+				#dssprint("Loaded chunk ", c)
 
 	for c: Vector2i in chunks.keys():
 		if !needed.has(c):

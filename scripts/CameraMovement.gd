@@ -3,6 +3,7 @@ extends Camera2D
 
 @export var speed := 400.0   # pixels per second at zoom 1.0
 
+	
 func _process(delta: float) -> void:
 	var input_vec := Vector2.ZERO
 	

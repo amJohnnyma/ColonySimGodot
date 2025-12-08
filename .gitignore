@@ -1,3 +1,25 @@
-# Godot 4+ specific ignores
-.godot/
-/android/
+# Godot 4 specific ignores
+/.godot/
+/import/
+/export/
+/bin/
+
+# GDExtension build files
+build/
+*.oso
+*.os
+*.dylib
+*.dll
+*.so
+
+# Editor temp files
+*.tmp
+*.translation
+*.import
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
