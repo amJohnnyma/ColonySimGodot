@@ -18,8 +18,8 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_world_width_tiles"), &World::get_world_width_tiles);
     ClassDB::bind_method(D_METHOD("get_world_height_tiles"), &World::get_world_height_tiles);
     ClassDB::bind_method(D_METHOD("world_pos_to_chunk", "pos"), &World::world_pos_to_chunk);
-ClassDB::bind_method(D_METHOD("is_valid_chunk", "coord"), &World::is_valid_chunk);
-ClassDB::bind_method(D_METHOD("get_chunk_colors", "coord"), &World::get_chunk_colors);
+    ClassDB::bind_method(D_METHOD("is_valid_chunk", "coord"), &World::is_valid_chunk);
+    ClassDB::bind_method(D_METHOD("get_chunk_colors", "coord"), &World::get_chunk_colors);
 
 }
 

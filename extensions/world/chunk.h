@@ -4,6 +4,7 @@
 #include <godot_cpp/variant/color.hpp>
 #include <vector>
 #include <memory>
+#include <cstdlib>
 
 using namespace godot;
 
@@ -19,12 +20,22 @@ struct Chunk {
         tiles.resize(width * height, 0);
         tileColors.resize(width * height, Color(1,1,1)); // initialize colors
     }
+    
+    
+    void generateRandomRGB(int& r, int& g, int& b) {
+    // Generate random values for each component (0-255)
+    r = rand() % 256;
+    g = rand() % 256;
+    b = rand() % 256;
+    }
 
     void generate() {
         for(int y=0;y<height;y++)
             for(int x=0;x<width;x++){
                 tiles[y*width+x] = (x+y+coord.x+coord.y)%3;
-                tileColors[y*width+x] = Color(1,0,0); // red
+                int r,g,b;
+                generateRandomRGB(r, g,b);
+                tileColors[y*width+x] = Color(r * 20,g * 20,b * 20);
             }
         auto e = std::make_shared<Entity>(Vector2i(width/2,height/2),true);
         entities.push_back(e);

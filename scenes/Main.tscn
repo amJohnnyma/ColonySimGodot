@@ -13,6 +13,8 @@ script = ExtResource("1_rvslj")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("2_rarhs")
+zoom_step = 0.01
+min_zoom = -1.0
 
 [node name="WorldRenderer" type="Node2D" parent="." node_paths=PackedStringArray("world")]
 script = ExtResource("1_elqb8")
@@ -20,5 +22,6 @@ world = NodePath("../World")
 chunk_renderer_scene = ExtResource("2_rvslj")
 
 [node name="Benchmark" type="Node2D" parent="."]
+visible = false
 script = ExtResource("5_vcsgt")
 sample_frames = 5000

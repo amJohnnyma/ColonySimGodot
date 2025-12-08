@@ -2,7 +2,8 @@ extends Node2D
 
 @export var world: World
 @export var chunk_renderer_scene: PackedScene
-@export var render_distance := 8
+@export var render_distance := 2
+@export var max_render_distance := 4
 
 var chunks := {}
 
