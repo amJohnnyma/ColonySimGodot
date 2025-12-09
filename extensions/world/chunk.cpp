@@ -115,6 +115,7 @@ void Chunk::simulate(float delta, bool full_simulation) {
 }
 */
 void Chunk::simulate(float delta, bool full_simulation) {
+    return;
     std::vector<std::shared_ptr<Entity>> to_transfer[4];  // N=0, E=1, S=2, W=3
     std::vector<int> to_transfer_idx[4];  // N=0, E=1, S=2, W=3
 
@@ -125,7 +126,6 @@ void Chunk::simulate(float delta, bool full_simulation) {
         if (!entities[i]) continue;
         if(entities[i]->busy) continue;
         entities[i]->busy = true;
-        UtilityFunctions::print("Entity being processed");
 
         Vector2i new_pos;
         if (entities[i]->simulate(delta, full_simulation ? new_pos : entities[i]->position)) {
@@ -179,12 +179,12 @@ void Chunk::transfer_entities(std::vector<std::shared_ptr<Entity>>& entities_vec
             target->entities.push_back(e);
         }
     }
-    entities_vec.clear();
     for(auto& i : idx)
     {
         entities[i]->busy = false;
         entities[i] = nullptr;
     }
+    entities_vec.clear();
 }
 
 int Chunk::get_tile(int local_x, int local_y) const {
