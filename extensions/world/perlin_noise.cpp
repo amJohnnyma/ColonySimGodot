@@ -1,4 +1,5 @@
 #include "perlinNoise.h"
+#include <random>
 
 PerlinNoise::PerlinNoise(unsigned int seed)
 {
@@ -86,4 +87,29 @@ float PerlinNoise::elevation(float nx, float ny, int layers)
 float PerlinNoise::amplitude(float nx, float ny, int fac, double amplitude)
 {
     return amplitude * noise(fac * nx, fac * ny);
+}
+
+BiomeType PerlinNoise::get_biome(int wx, int wy)
+{
+    // just have it random for now
+    std::mt19937 rng(std::random_device{}());
+    std::uniform_int_distribution<int> dist(0,3);
+
+    int random = dist(rng);
+
+    switch(random){
+        case 0:
+            return BiomeType::FOREST;
+        case 1:
+            return BiomeType::MOUNTAIN;
+        case 2:
+            return BiomeType::OCEAN;
+        case 3:
+            return BiomeType::TUNDRA;
+        default:
+            return BiomeType::FOREST;
+    }
+
+    
+
 }

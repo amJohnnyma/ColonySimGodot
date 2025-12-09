@@ -21,25 +21,45 @@ struct Chunk {
         tiles.resize(width * height, 0);
         tileColors.resize(width * height, Color(1,1,1,1)); // initialize colors
     }
-    
-    
+
     void generate(int wx, int wy) {
         PerlinNoise noise(12345);
-        for(int y=0;y<height;y++)
-            for(int x=0;x<width;x++){
-                tiles[y*width+x] = (x+y+coord.x+coord.y)%3;
-                double n = noise.noise(
-                double(x + coord.x * width * wx) * 0.05,
-                double(y + coord.y * height * wy) * 0.05
-            );
+        BiomeType b = noise.get_biome(wx, wy);
+        const float* col = BIOME_TABLE[(int)b].color;
 
-                float v = float((n + 1.0) * 0.5); // normalize 0–1
-                tileColors[y*width+x] = Color(v,v * 2,v,1);
+        entities.clear();           // Start fresh
+        entities.reserve(width * height);  // Pre-allocate for speed
+        
+        bool flag = false;
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                tiles[y * width + x] = (x + y + coord.x + coord.y) % 3;
+                double n = noise.noise(
+                    double(x + coord.x * width) * 0.05,
+                    double(y + coord.y * height) * 0.05
+                );
+                float v = float((n + 1.0) * 0.5);
+                tileColors[y * width + x] = Color(v * col[0], v * col[1], v * col[2], col[3]);
+                if(flag) {
+                    Vector2 world_pos(
+                        coord.x * width + x + 0.5f,   // +0.5 to center on tile
+                        coord.y * height + y + 0.5f
+                    );
+
+                    auto e = std::make_shared<Entity>(world_pos, true);
+                    entities.push_back(e);
+                    flag = false;
+
+                }
+                else{
+                    flag = true;
+                }
             }
-        auto e = std::make_shared<Entity>(Vector2i(width/2,height/2),true);
-        entities.push_back(e);
     }
 
+    UtilityFunctions::print("Generated chunk ", coord, " with ", entities.size(), " entities");
+}
+    
     void simulate(float delta, bool full_simulation=true){
         for(auto &e:entities)
             if(e && e->active) e->simulate(delta);

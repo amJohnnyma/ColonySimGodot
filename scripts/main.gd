@@ -1,14 +1,23 @@
-# Main.gd  ← attach to the root Node2D
+# Main.gd — FIXED ORDER (scale FIRST, then camera)
 extends Node2D
 
+@export var world_scale: float = 8.0   # ← 8 = perfect size
+
 func _ready():
-	Engine.max_fps = 0  # unlimited
+	# 1. Scale FIRST
+	scale = Vector2(world_scale, world_scale)
+	print("World scaled to ", world_scale, "×")
+	
+	# 2. Unlock FPS
+	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	$World.init(2_000_000, 2_000_000, 16)
-	print("World initialized – 2 million × 2 million tiles")    
-	# Start camera in EXACT middle of world
+	
+	# 3. Init world
+	$World.init(1_000_000, 1_000_000, 32)
+	
+	# 4. Camera position AFTER scale
 	var half_width = $World.get_world_width_tiles() / 2.0
 	var half_height = $World.get_world_height_tiles() / 2.0
-	$Camera2D.global_position = Vector2(half_width, half_height)
-
-	print("Camera started at world center: ", $Camera2D.global_position)
+	$Camera2D.target_position = Vector2(half_width, half_height)
+	
+	print("Camera at center: ", $Camera2D.global_position)

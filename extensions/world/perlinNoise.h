@@ -8,15 +8,40 @@
 #include <random>
 #include <iostream>
 //https://www.redblobgames.com/maps/terrain-from-noise/
+enum class BiomeType {
+    FOREST,
+    MOUNTAIN,
+    OCEAN,
+    TUNDRA,
+    COUNT
+};
+
+struct BiomeData {
+    float color[4];
+    // texture
+    // moisture
+    // humidity
+     
+};
+
+static const BiomeData BIOME_TABLE[(int)BiomeType::COUNT] = {
+    { {0.4f, 0.8f, 0.4f, 1.0f} }, //forest
+    { {0.9f, 0.85f, 0.4f, 1.0f} }, // mountain
+    { {0.0f, 0.2f, 0.8f, 1.0f} }, // ocean
+    { {0.85f, 0.8f, 1.0f, 1.0f} } // tundra
+};
+
 class PerlinNoise
 {
     private:
         std::vector<int> p; //permutation table
+        // permutation table for biomes
     public:
         PerlinNoise(unsigned int seed = std::default_random_engine::default_seed);
         ~PerlinNoise();
         float noise(float x, float y);
         float val(float x, float y);
+        BiomeType get_biome(int wx, int wy);
     private:
         static float fade(float t) {
             return t * t * t * (t * (t * 6 - 15) + 10); // 6t^5 - 15t^4 + 10t^3

@@ -14,6 +14,7 @@ func setup(p_world: World, coord: Vector2i) -> void:
 
 	var quad := QuadMesh.new()
 	quad.size = Vector2(1, 1)
+	quad.center_offset = Vector3(0.5, 0.5, 1)
 	multimesh.mesh = quad
 
 	var cs := world.get_chunk_size()

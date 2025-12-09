@@ -20,6 +20,9 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("world_pos_to_chunk", "pos"), &World::world_pos_to_chunk);
     ClassDB::bind_method(D_METHOD("is_valid_chunk", "coord"), &World::is_valid_chunk);
     ClassDB::bind_method(D_METHOD("get_chunk_colors", "coord"), &World::get_chunk_colors);
+    ClassDB::bind_method(D_METHOD("get_chunk_entity_count", "coord"), &World::get_chunk_entity_count);
+    ClassDB::bind_method(D_METHOD("get_entity_position", "chunk_coord", "entity_index"), &World::get_entity_position);
+    ClassDB::bind_method(D_METHOD("get_chunk_entity_capacity"), &World::get_chunk_entity_capacity);
 
 }
 
@@ -86,6 +89,24 @@ std::shared_ptr<Chunk> World::load_chunk(const Vector2i &coord) {
 
 void World::unload_chunk(const Vector2i &coord) {
     chunks.erase(coord);
+}
+
+int World::get_chunk_entity_count(const Vector2i &coord) const {
+    auto it = chunks.find(coord);
+    if (it == chunks.end()) return 0;
+    return static_cast<int>(it->second->entities.size());
+}
+
+Vector2i World::get_entity_position(const Vector2i &chunk_coord, int entity_index) const {
+    auto it = chunks.find(chunk_coord);
+    if (it == chunks.end() || entity_index < 0 || entity_index >= it->second->entities.size()) {
+        return Vector2(-99999, -99999); // invisible
+    }
+    return it->second->entities[entity_index]->position;  // already world space!
+}
+
+int World::get_chunk_entity_capacity() const {
+    return 100; // or make it a constant
 }
 
 int World::get_tile(int world_x, int world_y) const {

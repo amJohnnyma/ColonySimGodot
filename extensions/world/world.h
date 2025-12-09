@@ -48,6 +48,9 @@ public:
     std::shared_ptr<Chunk> get_chunk(const Vector2i &coord);
     std::shared_ptr<Chunk> load_chunk(const Vector2i &coord);
     void unload_chunk(const Vector2i &coord);
+    int get_chunk_entity_count(const Vector2i &coord) const;
+    Vector2i get_entity_position(const Vector2i &chunk_coord, int entity_index) const;
+    int get_chunk_entity_capacity() const; // returns 100
 
     // Tile access
     int get_tile(int world_x,int world_y) const;

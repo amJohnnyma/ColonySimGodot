@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c15h72jiuyrq7"]
+
+[ext_resource type="Texture2D" uid="uid://culifq6xqh2x" path="res://sprites/sprite.png" id="1_pmaom"]
+
+[node name="Sprite2D" type="Sprite2D"]
+z_index = 10
+scale = Vector2(0.003, 0.003)
+texture = ExtResource("1_pmaom")
+offset = Vector2(160, -160)
+region_enabled = true
+region_rect = Rect2(0, 0, 320, 320)

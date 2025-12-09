@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://16o2hwbk1655"]
+[gd_scene load_steps=4 format=3 uid="uid://16o2hwbk1655"]
 
 [ext_resource type="Script" uid="uid://caerqsu7w0cbh" path="res://scripts/ChunkRenderer.gd" id="1_errlg"]
+[ext_resource type="Shader" uid="uid://bsajh10huncq6" path="res://shaders/GridLineShader.gdshader" id="1_f5jh8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yhk28"]
+shader = ExtResource("1_f5jh8")
+shader_parameter/grid_size = 1.0
+shader_parameter/grid_color = Color(0.2, 0.2, 0.2, 0.8)
+shader_parameter/line_width = 0.05
 
 [node name="MultiMeshInstance2D" type="MultiMeshInstance2D"]
+material = SubResource("ShaderMaterial_yhk28")
 script = ExtResource("1_errlg")
