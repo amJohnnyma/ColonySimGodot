@@ -5,6 +5,7 @@
 
 using namespace godot;
 
+
 void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("init", "world_width_tiles", "world_height_tiles", "chunk_size_tiles"),
                          &World::init);
@@ -23,6 +24,8 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_chunk_entity_count", "coord"), &World::get_chunk_entity_count);
     ClassDB::bind_method(D_METHOD("get_entity_position", "chunk_coord", "entity_index"), &World::get_entity_position);
     ClassDB::bind_method(D_METHOD("get_chunk_entity_capacity"), &World::get_chunk_entity_capacity);
+    ClassDB::bind_method(D_METHOD("get_visible_chunks", "cam_pos", "world_min", "world_max", "max_render_distance"),&World::get_visible_chunks);
+    ClassDB::bind_method(D_METHOD("get_visible_entities", "chunk_coords", "cull_min", "cull_max", "max_entities"),&World::get_visible_entities);
 
 }
 
@@ -168,12 +171,111 @@ Array World::get_chunk_colors(const Vector2i &coord) {
     return dest;
 }
 
+
+
+
+TypedArray<Vector2i> World::get_visible_chunks(
+    const Vector2 &cam_pos,
+    const Vector2 &world_min,
+    const Vector2 &world_max,
+    int max_render_distance
+) {
+    TypedArray<Vector2i> result;
+    
+    Vector2i min_chunk = world_pos_to_chunk(world_min);
+    Vector2i max_chunk = world_pos_to_chunk(world_max);
+    Vector2i origin_chunk = world_pos_to_chunk(cam_pos);
+    
+    // Clamp to max render distance
+    Vector2i clamped_min(
+        std::max(origin_chunk.x - max_render_distance, min_chunk.x),
+        std::max(origin_chunk.y - max_render_distance, min_chunk.y)
+    );
+    Vector2i clamped_max(
+        std::min(origin_chunk.x + max_render_distance, max_chunk.x),
+        std::min(origin_chunk.y + max_render_distance, max_chunk.y)
+    );
+    
+    float chunk_size_f = static_cast<float>(chunk_size);
+    
+    // Load and cull chunks in one pass
+    for (int cy = clamped_min.y; cy <= clamped_max.y; ++cy) {
+        for (int cx = clamped_min.x; cx <= clamped_max.x; ++cx) {
+            Vector2i c(cx, cy);
+            if (!is_valid_chunk(c)) continue;
+            
+            // Chunk-level AABB culling
+            float chunk_world_min_x = c.x * chunk_size_f;
+            float chunk_world_min_y = c.y * chunk_size_f;
+            float chunk_world_max_x = (c.x + 1) * chunk_size_f;
+            float chunk_world_max_y = (c.y + 1) * chunk_size_f;
+            
+            // Skip if chunk doesn't overlap visible area
+            if (chunk_world_max_x < world_min.x || chunk_world_min_x > world_max.x ||
+                chunk_world_max_y < world_min.y || chunk_world_min_y > world_max.y) {
+                continue;
+            }
+            
+            // Load chunk if needed
+            auto chunk = get_chunk(c);
+            if (!chunk) chunk = load_chunk(c);
+            
+            if (chunk) {
+                result.push_back(c);
+            }
+        }
+    }
+    
+    return result;
+}
+
+PackedVector2Array World::get_visible_entities(
+    const TypedArray<Vector2i> &chunk_coords,
+    const Vector2 &cull_min,
+    const Vector2 &cull_max,
+    int max_entities
+) {
+    PackedVector2Array result;
+    result.resize(max_entities);
+    int count = 0;
+    
+    // Process all chunks and their entities in C++
+    for (int i = 0; i < chunk_coords.size(); ++i) {
+        if (count >= max_entities) break;
+        
+        Vector2i coord = chunk_coords[i];
+        auto it = chunks.find(coord);
+        if (it == chunks.end()) continue;
+        
+        auto& chunk = it->second;
+        for (const auto& entity : chunk->entities) {
+            if (count >= max_entities) break;
+            if (!entity || !entity->active) continue;
+            
+            Vector2 pos(entity->position.x, entity->position.y);
+            
+            // Entity-level culling
+            if (pos.x < cull_min.x || pos.x > cull_max.x ||
+                pos.y < cull_min.y || pos.y > cull_max.y) {
+                continue;
+            }
+            
+            result.set(count, pos);
+            count++;
+        }
+    }
+    
+    // Resize to actual count
+    result.resize(count);
+    return result;
+}
+
 void World::update(const Vector2 &origin, int render_distance_chunks, float delta) {
     Vector2i origin_chunk = world_pos_to_chunk(origin);
     int R = render_distance_chunks;
     std::unordered_set<Vector2i, Vector2iHash> needed_chunks;
 
-    // Load and full-simulate nearby chunks
+    // Load and simulate nearby chunks
     for (int dy = -R; dy <= R; ++dy) {
         for (int dx = -R; dx <= R; ++dx) {
             Vector2i c = origin_chunk + Vector2i(dx, dy);
@@ -205,7 +307,4 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
         }
     }
     for (auto &c : to_remove) unload_chunk(c);
-
 }
-
-

@@ -18,9 +18,6 @@ build/
 *.import
 *.swp
 
-# macOS
-.DS_Store
+#vscode
+*.vscode/
 
-# Windows
-Thumbs.db
-Desktop.ini

@@ -2,10 +2,10 @@ CMakeFiles/world.dir/world.cpp.o: \
  /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp \
  /usr/include/stdc-predef.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/world.h \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/node2d.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/canvas_item.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/global_constants.hpp \
- /usr/include/c++/13/cstdint \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/ref_counted.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/classes/ref.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/defs.hpp \
+ /usr/include/c++/13/cstddef \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -17,6 +17,8 @@ CMakeFiles/world.dir/world.cpp.o: \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h \
  /usr/include/c++/13/pstl/pstl_config.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
+ /usr/include/c++/13/cstdint \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -26,16 +28,12 @@ CMakeFiles/world.dir/world.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/node.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/classes/ref.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/defs.hpp \
- /usr/include/c++/13/cstddef \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
  /usr/include/c++/13/type_traits /usr/include/c++/13/utility \
  /usr/include/c++/13/bits/stl_relops.h \
  /usr/include/c++/13/bits/stl_pair.h /usr/include/c++/13/bits/move.h \
  /usr/include/c++/13/bits/utility.h /usr/include/c++/13/initializer_list \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/object.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/global_constants.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/classes/wrapped.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/memory.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/error_macros.hpp \
@@ -177,16 +175,15 @@ CMakeFiles/world.dir/world.cpp.o: \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/builtin_vararg_methods.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/list.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/typed_array.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/ref_counted.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/object.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/local_vector.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/class_db.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/method_bind.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/binder_common.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/method_ptrcall.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/object.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/local_vector.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/type_info.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/global_constants_binds.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/builtin_binds.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/class_db.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/method_bind.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/print_string.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/utility_functions.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/class_db_singleton.hpp \
@@ -246,6 +243,9 @@ CMakeFiles/world.dir/world.cpp.o: \
  /usr/include/c++/13/bits/stl_set.h \
  /usr/include/c++/13/bits/stl_multiset.h \
  /usr/include/c++/13/bits/erase_if.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/node2d.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/canvas_item.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/node.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/text_server.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/texture2d.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/texture.hpp \

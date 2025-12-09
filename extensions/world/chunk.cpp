@@ -1,14 +1,15 @@
 // chunk.cpp
 #include "chunk.h"
-#include "world.h"        // ← Full World definition here (safe!)
+#include "world.h"        
 #include "entity.h"
 #include "perlinNoise.h"
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <random>
+#include <algorithm>
 
 using namespace godot;
 
-// === Constructor ===
+
 Chunk::Chunk(int w, int h, Vector2i c, World* parent_world)
     : world(parent_world), coord(c), width(w), height(h) {
     tiles.resize(width * height, 0);
@@ -17,14 +18,13 @@ Chunk::Chunk(int w, int h, Vector2i c, World* parent_world)
 
 Chunk::Chunk(int w, int h, Vector2i c) : Chunk(w, h, c, nullptr) {}
 
-// === Generate with checkerboard entities ===
 void Chunk::generate(int wx, int wy) {
     PerlinNoise noise(12345);
     BiomeType b = noise.get_biome(wx, wy);
     const float* col = BIOME_TABLE[(int)b].color;
 
     entities.clear();
-    entities.reserve(width * height);
+    entities.reserve(width * height / 50);
 
     int count = 0;
     for (int y = 0; y < height; y++) {
@@ -38,7 +38,7 @@ void Chunk::generate(int wx, int wy) {
             float v = float((n + 1.0) * 0.5);
             tileColors[y * width + x] = Color(v * col[0], v * col[1], v * col[2], col[3]);
 
-            if (count > 50) {
+            if (count > 49) {
                 Vector2 world_pos(
                     coord.x * width + x + 0.5f,
                     coord.y * height + y + 0.5f
@@ -70,23 +70,35 @@ void Chunk::simulate(float delta, bool full_simulation) {
         if (entities[i]->simulate(delta, full_simulation ? new_pos : entities[i]->position)) {
             if (new_pos.x < 0) {
                 #pragma omp critical
+                {
                 to_transfer[3].push_back(entities[i]);
                 to_transfer_idx[3].push_back(i);
+                }
+
             }
             else if (new_pos.x >= width) {
                 #pragma omp critical
+                {
                 to_transfer[1].push_back(entities[i]);
                 to_transfer_idx[1].push_back(i);
+                }
+
             }
             else if (new_pos.y < 0) {
                 #pragma omp critical
+                {
                 to_transfer[0].push_back(entities[i]);
                 to_transfer_idx[0].push_back(i);
+                }
+
             }
             else if (new_pos.y >= height) {
                 #pragma omp critical
+                {
                 to_transfer[2].push_back(entities[i]);
                 to_transfer_idx[2].push_back(i);
+                }
+
             }
             else {
                 entities[i]->position = new_pos;
