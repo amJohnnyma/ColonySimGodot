@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 #include <cmath>
+#include "entity.h"
 #include "chunk.h"
 
 using namespace godot;
@@ -19,13 +20,22 @@ struct Vector2iHash {
     }
 };
 
+struct PendingTransfer {
+    Vector2i target_chunk;
+    std::shared_ptr<Entity> entity;
+};
+
+
+
 class World : public Node2D {
     GDCLASS(World, Node2D)
 
 public:
+    friend class Chunk;
     int chunk_size = 16;
     int world_chunks_x = 0;
     int world_chunks_y = 0;
+    std::vector<PendingTransfer> transfer_queue;
 
     std::unordered_map<Vector2i,std::shared_ptr<Chunk>,Vector2iHash> chunks;
 
@@ -66,6 +76,14 @@ public:
     int get_world_width_tiles() const;
     int get_world_height_tiles() const;
 
+    //parallel safe chunk Transfer
+    void queue_entity_transfer(
+    const std::vector<std::shared_ptr<Entity>>& list,
+    const Vector2i& target );
+
     // Optional: utility for chunk tile colors
    Array get_chunk_colors(const Vector2i &coord);
+
+private:
+   void apply_transfers();
 };

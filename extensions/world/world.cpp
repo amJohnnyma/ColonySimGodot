@@ -80,7 +80,7 @@ std::shared_ptr<Chunk> World::load_chunk(const Vector2i &coord) {
     auto existing = get_chunk(coord);
     if (existing) return existing;
 
-    auto c = std::make_shared<Chunk>(chunk_size, chunk_size, coord);
+    auto c = std::make_shared<Chunk>(chunk_size, chunk_size, coord, this);
     c->generate(1,1);
     //c->load();
     chunks.emplace(coord, c);
@@ -143,7 +143,7 @@ void World::set_tile(int world_x, int world_y, int value) {
     if (!is_valid_chunk(chunk_coord)) return;
     auto it = chunks.find(chunk_coord);
     if (it == chunks.end()) {
-        auto new_chunk = std::make_shared<Chunk>(chunk_size, chunk_size, chunk_coord);
+        auto new_chunk = std::make_shared<Chunk>(chunk_size, chunk_size, chunk_coord,this);
         new_chunk->generate(world_x, world_y);
         chunks.emplace(chunk_coord, new_chunk);
         it = chunks.find(chunk_coord);
@@ -197,6 +197,7 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
         }
     }
 
+    apply_transfers();
     // Unload far chunks
     std::vector<Vector2i> to_remove;
     for (auto &kv : chunks) {
@@ -205,4 +206,26 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
         }
     }
     for (auto &c : to_remove) unload_chunk(c);
+
+}
+
+
+void World::apply_transfers() {
+    for (auto &t : transfer_queue) {
+        auto chunk = get_chunk(t.target_chunk);
+        if (!chunk) chunk = load_chunk(t.target_chunk);
+
+        // safe: the world is not iterating chunks right now
+        chunk->entities.push_back(t.entity);
+    }
+    transfer_queue.clear();
+}
+
+void World::queue_entity_transfer(
+    const std::vector<std::shared_ptr<Entity>>& list,
+    const Vector2i& target
+) {
+    for (auto& e : list) {
+        transfer_queue.push_back({ target, e });
+    }
 }

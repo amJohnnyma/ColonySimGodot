@@ -5,14 +5,14 @@ extends Node2D
 @export var chunk_renderer_scene: PackedScene
 @export var entity_sprite_scene: PackedScene
 
-@export var render_buffer_chunks: int = 2   # ← 1 or 2 extra chunks around screen
-@export var simulation_distance: int = 6    # ← background sim (unchanged)
+@export var render_buffer_chunks: int = 1   # ← 1 or 2 extra chunks around screen
+@export var simulation_distance: int = 1    # ← background sim (unchanged)
 
 @onready var entity_container: Node2D = $EntityContainer
 
 var chunks: Dictionary = {}                    # Vector2i → ChunkRenderer
 var entity_sprites: Array[Sprite2D] = []
-const ENTITY_POOL_SIZE: int = 20000
+const ENTITY_POOL_SIZE: int = 1000
 var pool_index: int = 0
 
 func _ready() -> void:

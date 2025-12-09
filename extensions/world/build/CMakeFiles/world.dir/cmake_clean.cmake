@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "/home/johnny/Godot/colony-sim-2/bin/libworld.pdb"
   "/home/johnny/Godot/colony-sim-2/bin/libworld.so"
+  "CMakeFiles/world.dir/chunk.cpp.o"
+  "CMakeFiles/world.dir/chunk.cpp.o.d"
   "CMakeFiles/world.dir/perlin_noise.cpp.o"
   "CMakeFiles/world.dir/perlin_noise.cpp.o.d"
   "CMakeFiles/world.dir/register_types.cpp.o"

@@ -129,6 +129,30 @@ world/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/build
 .PHONY : world/fast
 
+chunk.o: chunk.cpp.o
+.PHONY : chunk.o
+
+# target to build an object file
+chunk.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk.cpp.o
+.PHONY : chunk.cpp.o
+
+chunk.i: chunk.cpp.i
+.PHONY : chunk.i
+
+# target to preprocess a source file
+chunk.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk.cpp.i
+.PHONY : chunk.cpp.i
+
+chunk.s: chunk.cpp.s
+.PHONY : chunk.s
+
+# target to generate assembly for a file
+chunk.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk.cpp.s
+.PHONY : chunk.cpp.s
+
 perlin_noise.o: perlin_noise.cpp.o
 .PHONY : perlin_noise.o
 
@@ -210,6 +234,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... world"
+	@echo "... chunk.o"
+	@echo "... chunk.i"
+	@echo "... chunk.s"
 	@echo "... perlin_noise.o"
 	@echo "... perlin_noise.i"
 	@echo "... perlin_noise.s"
