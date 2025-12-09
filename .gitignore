@@ -16,6 +16,7 @@ build/
 *.tmp
 *.translation
 *.import
+*.swp
 
 # macOS
 .DS_Store
