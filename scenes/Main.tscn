@@ -16,7 +16,7 @@ world_scale = 1.0
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(40, 40)
 script = ExtResource("2_rarhs")
-min_zoom = 4.0
+min_zoom = 1.0
 max_zoom = 28.0
 
 [node name="WorldRenderer" type="Node2D" parent="." node_paths=PackedStringArray("world")]

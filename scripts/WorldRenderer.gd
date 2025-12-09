@@ -5,16 +5,18 @@ extends Node2D
 @export var chunk_renderer_scene: PackedScene
 @export var entity_sprite_scene: PackedScene
 
-@export var max_render_distance_chunks: int = 2      # ← YOU control max chunks rendered
-@export var render_buffer_chunks: int = 2           # ← extra chunks around screen
-@export var simulation_distance: int = 12           # ← background simulation
+@export var max_render_distance_chunks: int = 1      # ← YOU control max chunks rendered
+@export var render_buffer_chunks: int = 0           # ← extra chunks around screen
+@export var simulation_distance: int = 2          # ← background simulation
 
 @onready var entity_container: Node2D = $EntityContainer
 
 var chunks: Dictionary = {}
 var entity_sprites: Array[Sprite2D] = []
-const ENTITY_POOL_SIZE: int = 25000
+const ENTITY_POOL_SIZE: int = 10000
 var pool_index: int = 0
+var processed_entity: int = 0
+var entity_in_view: int = 0
 
 func _ready() -> void:
 	for i in ENTITY_POOL_SIZE:
@@ -34,16 +36,17 @@ func _process(delta: float) -> void:
 	var viewport_rect: Rect2 = get_viewport_rect()
 	var cam_pos: Vector2 = cam.global_position
 	var cam_zoom: Vector2 = cam.zoom
-	
-	# === 1. Screen-space bounds (with buffer) ===
-	var screen_top_left: Vector2 = cam_pos + (viewport_rect.position - viewport_rect.size * 0.5) / cam_zoom
-	var screen_bottom_right: Vector2 = cam_pos + (viewport_rect.end - viewport_rect.size * 0.5) / cam_zoom
-	
+
+	# === FIXED: Proper viewport-to-world conversion ===
+	var viewport_half: Vector2 = viewport_rect.size * 0.5
+	var screen_top_left: Vector2 = cam_pos - viewport_half / cam_zoom
+	var screen_bottom_right: Vector2 = cam_pos + viewport_half / cam_zoom
+
 	var chunk_size: float = float(world.get_chunk_size())
 	var buffer_world: float = render_buffer_chunks * chunk_size
-	
-	var world_min: Vector2 = Vector2(screen_top_left.x - buffer_world, screen_top_left.y - buffer_world)
-	var world_max: Vector2 = Vector2(screen_bottom_right.x + buffer_world, screen_bottom_right.y + buffer_world)
+
+	var world_min: Vector2 = screen_top_left - Vector2(buffer_world, buffer_world)
+	var world_max: Vector2 = screen_bottom_right + Vector2(buffer_world, buffer_world)
 	
 	var min_chunk: Vector2i = world.world_pos_to_chunk(world_min)
 	var max_chunk: Vector2i = world.world_pos_to_chunk(world_max)
@@ -82,22 +85,47 @@ func _process(delta: float) -> void:
 			chunks.erase(c)
 	
 	# === 4. ENTITY RENDERING — ONLY IF ON SCREEN (strict culling) ===
+
 	pool_index = 0
-	var screen_margin: float = 100.0  # pixels off-screen still allowed
+	processed_entity = 0
+	var max_entities = entity_sprites.size()
+	
+	# Pre-compute world-space culling bounds
+	var cull_min := world_min
+	var cull_max := world_max
+	
+	# Pre-compute chunk bounds for faster rejection
+	var chunk_size_f := float(world.get_chunk_size())
+	
+	var pool_exhausted := false
 	
 	for c in needed_chunks.keys():
+		if pool_exhausted:
+			break
+		
+		# === CHUNK-LEVEL CULLING ===
+		var chunk_world_min := Vector2(c.x * chunk_size_f, c.y * chunk_size_f)
+		var chunk_world_max := Vector2((c.x + 1) * chunk_size_f, (c.y + 1) * chunk_size_f)
+		
+		# Skip entire chunk if it doesn't overlap visible area
+		if chunk_world_max.x < cull_min.x or chunk_world_min.x > cull_max.x or \
+			chunk_world_max.y < cull_min.y or chunk_world_min.y > cull_max.y:
+			continue  # ← Skip all entities in this chunk!
+		
+		# === ENTITY-LEVEL CULLING (only for visible chunks) ===
 		var entity_count: int = world.get_chunk_entity_count(c)
 		for i in entity_count:
-			if pool_index >= entity_sprites.size():
+			processed_entity += 1
+			if pool_index >= max_entities:
+				pool_exhausted = true
 				break
 				
 			var pos: Vector2 = world.get_entity_position(c, i)
-			var screen_pos: Vector2 = cam.get_screen_center_position() + (pos - cam_pos) * cam_zoom
 			
-			# TRUE off-screen culling
-			if screen_pos.x < -screen_margin or screen_pos.x > viewport_rect.size.x + screen_margin or \
-			   screen_pos.y < -screen_margin or screen_pos.y > viewport_rect.size.y + screen_margin:
-				continue  # Skip — not visible
+			# Fast world-space culling
+			if pos.x < cull_min.x or pos.x > cull_max.x or \
+				pos.y < cull_min.y or pos.y > cull_max.y:
+				continue
 				
 			var sprite: Sprite2D = entity_sprites[pool_index]
 			sprite.global_position = pos
@@ -113,7 +141,7 @@ func _process(delta: float) -> void:
 	
 	# Debug
 	if Engine.get_frames_drawn() % 60 == 0:
-		print("Chunks: %d | Entities ON-SCREEN: %d | FPS: %.1f" % [
-			needed_chunks.size(), pool_index,
+		print("Chunks: %d | Entities ON-SCREEN: %d | Entities PROCESSED: %d | FPS: %.1f" % [
+			needed_chunks.size(), pool_index, processed_entity,
 			Performance.get_monitor(Performance.TIME_FPS)
 		])

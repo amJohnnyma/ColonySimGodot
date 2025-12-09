@@ -38,7 +38,7 @@ void Chunk::generate(int wx, int wy) {
             float v = float((n + 1.0) * 0.5);
             tileColors[y * width + x] = Color(v * col[0], v * col[1], v * col[2], col[3]);
 
-            if (count > 9) {
+            if (count > 50) {
                 Vector2 world_pos(
                     coord.x * width + x + 0.5f,
                     coord.y * height + y + 0.5f
@@ -54,68 +54,7 @@ void Chunk::generate(int wx, int wy) {
         }
     }
 }
-/*
 void Chunk::simulate(float delta, bool full_simulation) {
-    // N=0, E=1, S=2, W=3
-    std::vector<std::shared_ptr<Entity>> to_transfer[4];
-    std::vector<int> to_clear;
-
-    for (int i = 0; i < (int)entities.size(); ++i) {
-        if (!entities[i])
-            continue;
-
-        Vector2i new_pos;
-
-        bool moved = entities[i]->simulate(
-            delta,
-            full_simulation ? new_pos : entities[i]->position
-        );
-
-        if (!moved)
-            continue;
-
-        // Check border crossings
-        if (new_pos.x < 0) {
-            to_transfer[3].push_back(entities[i]); // West
-            to_clear.push_back(i);
-        }
-        else if (new_pos.x >= width) {
-            to_transfer[1].push_back(entities[i]); // East
-            to_clear.push_back(i);
-        }
-        else if (new_pos.y < 0) {
-            to_transfer[0].push_back(entities[i]); // North
-            to_clear.push_back(i);
-        }
-        else if (new_pos.y >= height) {
-            to_transfer[2].push_back(entities[i]); // South
-            to_clear.push_back(i);
-        }
-        else {
-            // Still in this chunk
-            entities[i]->position = new_pos;
-        }
-    }
-
-    // ---- NEW: Queue transfers instead of applying them directly ----
-
-    if (!to_transfer[0].empty())
-        world->queue_entity_transfer(to_transfer[0], coord + Vector2i(0, -1)); // N
-
-    if (!to_transfer[1].empty())
-        world->queue_entity_transfer(to_transfer[1], coord + Vector2i(1, 0)); // E
-
-    if (!to_transfer[2].empty())
-        world->queue_entity_transfer(to_transfer[2], coord + Vector2i(0, 1)); // S
-
-    if (!to_transfer[3].empty())
-        world->queue_entity_transfer(to_transfer[3], coord + Vector2i(-1, 0)); // W
-
-   // godot::UtilityFunctions::print("Cleared", to_clear.size());
-}
-*/
-void Chunk::simulate(float delta, bool full_simulation) {
-    return;
     std::vector<std::shared_ptr<Entity>> to_transfer[4];  // N=0, E=1, S=2, W=3
     std::vector<int> to_transfer_idx[4];  // N=0, E=1, S=2, W=3
 
@@ -160,8 +99,13 @@ void Chunk::simulate(float delta, bool full_simulation) {
     if (!to_transfer[1].empty()) transfer_entities(to_transfer[1], Vector2i(1, 0), to_transfer_idx[1]);
     if (!to_transfer[2].empty()) transfer_entities(to_transfer[2], Vector2i(0, 1), to_transfer_idx[2]);
     if (!to_transfer[3].empty()) transfer_entities(to_transfer[3], Vector2i(-1, 0), to_transfer_idx[3]);
-}
 
+    entities.erase(
+        std::remove_if(entities.begin(), entities.end(),
+            [](const std::shared_ptr<Entity>& e) { return e == nullptr; }),
+        entities.end()
+    );
+}
 void Chunk::transfer_entities(std::vector<std::shared_ptr<Entity>>& entities_vec, Vector2i direction, std::vector<int> idx) {
     Vector2i target_chunk = coord + direction;
     auto target = world->get_chunk(target_chunk);

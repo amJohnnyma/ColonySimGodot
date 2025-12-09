@@ -197,7 +197,6 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
         }
     }
 
-    apply_transfers();
     // Unload far chunks
     std::vector<Vector2i> to_remove;
     for (auto &kv : chunks) {
@@ -210,22 +209,3 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
 }
 
 
-void World::apply_transfers() {
-    for (auto &t : transfer_queue) {
-        auto chunk = get_chunk(t.target_chunk);
-        if (!chunk) chunk = load_chunk(t.target_chunk);
-
-        // safe: the world is not iterating chunks right now
-        chunk->entities.push_back(t.entity);
-    }
-    transfer_queue.clear();
-}
-
-void World::queue_entity_transfer(
-    const std::vector<std::shared_ptr<Entity>>& list,
-    const Vector2i& target
-) {
-    for (auto& e : list) {
-        transfer_queue.push_back({ target, e });
-    }
-}
