@@ -7,7 +7,7 @@ extends Node2D
 
 @export var max_render_distance_chunks: int = 1
 @export var render_buffer_chunks: int = 1
-@export var simulation_distance: int = 2
+@export var simulation_distance: int = 8
 
 @onready var entity_container: Node2D = $EntityContainer
 

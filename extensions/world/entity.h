@@ -30,8 +30,8 @@ struct Entity {
 
 
         const Vector2i dirs[4] = {
-            Vector2i(1, 0), Vector2i(-1, 0),
-            Vector2i(0, 1), Vector2i(0, -1)
+            Vector2i(0, -1), Vector2i(1, 0),
+            Vector2i(0, 1), Vector2i(-1, 0)
         };
         thread_local static std::mt19937 gen(std::random_device{}());
         std::uniform_int_distribution<int> dist(0, 3);
@@ -41,6 +41,47 @@ struct Entity {
         return true;  // Moved
     }
 };
+/*
+ *
+    bool simulate(float delta, Vector2i& out_new_pos, std::vector<int> availableDirs) {
+        if (!active) return false;
+
+        move_timer -= delta;
+        if (move_timer > 0.0f) return false;
+
+        if (availableDirs.empty()) {
+            out_new_pos = position;      // don't move
+            reset_timer();               // still consume the turn (prevents spamming)
+            return false;
+        }
+
+        thread_local static std::mt19937 rng{std::random_device{}()};
+
+        // If there's only one option, just use it (common case)
+        int chosen_dir_index;
+        if (availableDirs.size() == 1) {
+            chosen_dir_index = 0;
+        } else {
+            std::uniform_int_distribution<int> dist(0, static_cast<int>(availableDirs.size() - 1));
+            chosen_dir_index = dist(rng);
+        }
+
+        int chosen_dir = availableDirs[chosen_dir_index];
+
+        const Vector2i offsets[4] = {
+        Vector2i(0, -1), Vector2i(1, 0),
+        Vector2i(0, 1), Vector2i(-1, 0)
+        };
+
+        out_new_pos = position + offsets[chosen_dir];
+
+        reset_timer();
+        return true; // we actually moved
+
+    }
+};
+ * */
+
 /*
 // entity.h
 #pragma once

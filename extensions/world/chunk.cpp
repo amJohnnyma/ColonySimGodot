@@ -28,7 +28,6 @@ void Chunk::generate(int wx, int wy) {
 
     entities.clear();
     entities.reserve(width * height / 50); // there wont be max entities in a chunk to start
-int count = 0;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             tiles[y * width + x] = (x + y + coord.x + coord.y) % 3;
@@ -40,18 +39,13 @@ int count = 0;
             float v = float((n + 1.0) * 0.5);
             tileColors[y * width + x] = Color(v * bd.color[0], v * bd.color[1], v * bd.color[2], bd.color[3]);
 
-            //if (n < bd.temp_entity_spawn_rate) 
-            if(count > 5){
+            if (n < bd.temp_entity_spawn_rate) {
                 Vector2 world_pos(
                     coord.x * width + x + 0.5f,
                     coord.y * height + y + 0.5f
                 );
                 auto e = std::make_shared<Entity>(world_pos);
                 entities.push_back(e);
-                count = 0;
-            }
-            else{
-                count++;
             }
             
         }
@@ -60,14 +54,25 @@ int count = 0;
 
 Vector2i entityWorldToLocalCoord(Vector2i worldCoord, World* world)
 {
-    return (worldCoord % world->get_chunk_size());
+    int cs = world->get_chunk_size();
+    // Proper positive modulo for negative numbers
+    int x = worldCoord.x % cs;
+    int y = worldCoord.y % cs;
+    if (x < 0) x += cs;
+    if (y < 0) y += cs;
+    return Vector2i(x, y);
 }
 //entity pos in local coords
 // neighbour chunks are only if applicable (On a chunk border)
 std::vector<int> Chunk::getAvailableDirs(Vector2i current, std::vector<std::tuple<Vector2i, int>> neighbourChunks)
 {
-    std::vector<std::shared_ptr<Chunk>> neighbour = {};
     std::vector<int> ret = {};
+    if (!world) {
+        UtilityFunctions::print("ERROR: Chunk::world is null!");
+        return ret; // or {0,1,2,3} or whatever is safe
+    }
+
+    std::vector<std::shared_ptr<Chunk>> neighbour = {};
     int chunkSize = world->get_chunk_size();
 
     for(auto& coord : neighbourChunks)
@@ -82,8 +87,15 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current, std::vector<std::tupl
         auto chunk = world->get_chunk(std::get<0>(coord));
         auto dir = std::get<1>(coord);
 
+        if (!chunk) {
+            // Neighbour chunk not loaded — be safe: either skip or assume blocked
+            // For now, let's assume direction is BLOCKED (don't add it)
+            continue;
+        }
+
         for(auto &e : chunk->entities)
         {
+            if (!e) continue;
             Vector2i eLocal = entityWorldToLocalCoord(e->position, world);
             switch(dir)
             {
@@ -115,6 +127,7 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current, std::vector<std::tupl
     // and check current chunk
     for(auto& e : entities)
     {
+        if (!e) continue;
         Vector2i eLocal = entityWorldToLocalCoord(e->position, world);
         for(int i = 0; i < 4; i ++)
         {
@@ -173,8 +186,8 @@ void Chunk::simulate(float delta, bool full_simulation) {
     
     for (int i = 0; i < (int)entities.size(); ++i) {
         if (!entities[i]) continue;
-        std::vector<std::tuple<Vector2i, int>> neighbourChunksCoords = getNeighbouringChunks(entities[i]->position, world, coord);
-        std::vector<int> availableDirs = {}; // getAvailableDirs(entities[i]->position % world->get_chunk_size(), neighbourChunksCoords);
+     //   std::vector<std::tuple<Vector2i, int>> neighbourChunksCoords = getNeighbouringChunks(entities[i]->position, world, coord);
+        std::vector<int> availableDirs = {}; // getAvailableDirs(entityWorldToLocalCoord(entities[i]->position, world), neighbourChunksCoords);
         Vector2i new_pos;
         bool moved = entities[i]->simulate(delta, new_pos, availableDirs);
         
