@@ -14,3 +14,7 @@ config/name="ColonySim2"
 run/main_scene="uid://b4buet0jfu1wt"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameSettings="*res://scenes/game_settings.tscn"

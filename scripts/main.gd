@@ -3,6 +3,7 @@ extends Node2D
 
 @export var world_scale: float = 8.0   # ← 8 = perfect size
 
+
 func _ready():
 	# 1. Scale FIRST
 	scale = Vector2(world_scale, world_scale)
@@ -13,7 +14,7 @@ func _ready():
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	
 	# 3. Init world
-	$World.init(1_000_000, 1_000_000, 64)
+	$World.init(GameSettings.max_world_tiles, GameSettings.max_world_tiles, GameSettings.chunk_size)
 	
 	# 4. Camera position AFTER scale
 	var half_width = $World.get_world_width_tiles() / 2.0

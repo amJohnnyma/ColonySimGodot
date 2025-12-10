@@ -10,13 +10,16 @@ extends Node2D
 @export var simulation_distance: int = 8
 
 @onready var entity_container: Node2D = $EntityContainer
+@onready var MainNode: Node2D = get_node("scenes/Main.tscn")
 
 var chunks: Dictionary = {}
 var entity_sprites: Array[Sprite2D] = []
 var cam_pos : Vector2
 const ENTITY_POOL_SIZE: int = 5000 # drawn at once
+var cs : float
 
 func _ready() -> void:
+	cs = GameSettings.chunk_size
 	# Pre-allocate entity sprite pool
 	entity_sprites.resize(ENTITY_POOL_SIZE)
 	for i in ENTITY_POOL_SIZE:
@@ -42,8 +45,7 @@ func _process(delta: float) -> void:
 	var screen_top_left: Vector2 = cam_pos - viewport_half / cam_zoom
 	var screen_bottom_right: Vector2 = cam_pos + viewport_half / cam_zoom
 	
-	var chunk_size: float = float(world.get_chunk_size())
-	var buffer_world: float = render_buffer_chunks * chunk_size
+	var buffer_world: float = render_buffer_chunks * cs
 	
 	var world_min: Vector2 = screen_top_left - Vector2(buffer_world, buffer_world)
 	var world_max: Vector2 = screen_bottom_right + Vector2(buffer_world, buffer_world)

@@ -24,6 +24,9 @@ script = ExtResource("1_elqb8")
 world = NodePath("../World")
 chunk_renderer_scene = ExtResource("2_rvslj")
 entity_sprite_scene = ExtResource("5_c01mt")
+max_render_distance_chunks = null
+render_buffer_chunks = null
+simulation_distance = null
 
 [node name="EntityContainer" type="Node2D" parent="WorldRenderer"]
 

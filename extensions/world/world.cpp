@@ -109,7 +109,7 @@ Vector2i World::get_entity_position(const Vector2i &chunk_coord, int entity_inde
 }
 
 int World::get_chunk_entity_capacity() const {
-    return 100; // or make it a constant
+    return chunk_size * chunk_size; // or make it a constant
 }
 
 int World::get_tile(int world_x, int world_y) const {
