@@ -3,6 +3,7 @@ project(world_gdextension)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Path to godot-cpp folder
 set(GODOT_CPP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/godot-cpp)
@@ -22,6 +23,7 @@ set(SOURCES
     chunk.cpp
     perlin_noise.cpp
 )
+
 
 # Output library name
 set(LIB_NAME world)

@@ -13,6 +13,7 @@ extends Node2D
 
 var chunks: Dictionary = {}
 var entity_sprites: Array[Sprite2D] = []
+var cam_pos : Vector2
 const ENTITY_POOL_SIZE: int = 5000 # drawn at once
 
 func _ready() -> void:
@@ -33,7 +34,7 @@ func _process(delta: float) -> void:
 		return
 	
 	var viewport_rect: Rect2 = get_viewport_rect()
-	var cam_pos: Vector2 = cam.global_position
+	cam_pos = cam.global_position
 	var cam_zoom: Vector2 = cam.zoom
 	
 	# === 1. Calculate world-space bounds ===
@@ -91,8 +92,7 @@ func _process(delta: float) -> void:
 	for i in range(entity_count, ENTITY_POOL_SIZE):
 		entity_sprites[i].visible = false
 	
-	# === 6. Background simulation (C++ handles this) ===
-	world.update(cam_pos, simulation_distance, delta)
+
 	
 	# === 7. Debug (every second) ===
 	if Engine.get_frames_drawn() % 60 == 0:
@@ -101,3 +101,8 @@ func _process(delta: float) -> void:
 			entity_count,
 			Performance.get_monitor(Performance.TIME_FPS)
 		])
+
+func _physics_process(delta: float) -> void:
+		# === 6. Background simulation (C++ handles this) ===
+	world.update(cam_pos, simulation_distance, delta) # split into update render # update physics
+	

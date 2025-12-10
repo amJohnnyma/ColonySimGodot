@@ -4,7 +4,6 @@
 #include "entity.h"
 #include "perlinNoise.h"
 #include <godot_cpp/variant/utility_functions.hpp>
-#include <random>
 #include <algorithm>
 
 using namespace godot;
@@ -21,12 +20,11 @@ Chunk::Chunk(int w, int h, Vector2i c) : Chunk(w, h, c, nullptr) {}
 void Chunk::generate(int wx, int wy) {
     PerlinNoise noise(12345);
     BiomeType b = noise.get_biome(wx, wy);
-    const float* col = BIOME_TABLE[(int)b].color;
+    const BiomeData bd = BIOME_TABLE[(int)b];
 
     entities.clear();
-    entities.reserve(width * height / 50);
+    entities.reserve(width * height / 50); // there wont be max entities in a chunk to start
 
-    int count = 0;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             tiles[y * width + x] = (x + y + coord.x + coord.y) % 3;
@@ -36,19 +34,15 @@ void Chunk::generate(int wx, int wy) {
                 double(y + coord.y * height) * 0.05
             );
             float v = float((n + 1.0) * 0.5);
-            tileColors[y * width + x] = Color(v * col[0], v * col[1], v * col[2], col[3]);
+            tileColors[y * width + x] = Color(v * bd.color[0], v * bd.color[1], v * bd.color[2], bd.color[3]);
 
-            if (count > 49) {
+            if (n < bd.temp_entity_spawn_rate) {
                 Vector2 world_pos(
                     coord.x * width + x + 0.5f,
                     coord.y * height + y + 0.5f
                 );
                 auto e = std::make_shared<Entity>(world_pos);
                 entities.push_back(e);
-                count = 0;
-            }
-            else{
-                count++;
             }
             
         }

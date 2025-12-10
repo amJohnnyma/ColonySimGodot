@@ -18,6 +18,7 @@ enum class BiomeType {
 
 struct BiomeData {
     float color[4];
+    float temp_entity_spawn_rate;
     // texture
     // moisture
     // humidity
@@ -25,10 +26,10 @@ struct BiomeData {
 };
 
 static const BiomeData BIOME_TABLE[(int)BiomeType::COUNT] = {
-    { {0.4f, 0.8f, 0.4f, 1.0f} }, //forest
-    { {0.9f, 0.85f, 0.4f, 1.0f} }, // mountain
-    { {0.0f, 0.2f, 0.8f, 1.0f} }, // ocean
-    { {0.85f, 0.8f, 1.0f, 1.0f} } // tundra
+    { {0.4f, 0.8f, 0.4f, 1.0f}, 0.3f }, //forest
+    { {0.9f, 0.85f, 0.4f, 1.0f}, 0.1f }, // mountain
+    { {0.0f, 0.2f, 0.8f, 1.0f}, 0.0f }, // ocean
+    { {0.85f, 0.8f, 1.0f, 1.0f}, 0.1f } // tundra
 };
 
 class PerlinNoise
