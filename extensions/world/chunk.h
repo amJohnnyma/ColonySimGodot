@@ -29,7 +29,7 @@ struct Chunk {
     // Methods
     void generate(int wx, int wy);
     void simulate(float delta, bool full_simulation = true);
-    void transfer_entities(std::vector<std::shared_ptr<Entity>>& entities, Vector2i direction, std::vector<int> idx);
+    void transfer_entities(std::vector<std::shared_ptr<Entity>>& entities, Vector2i direction);
 
     int get_tile(int local_x, int local_y) const;
     void set_tile(int local_x, int local_y, int value);

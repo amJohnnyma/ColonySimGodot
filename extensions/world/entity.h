@@ -1,7 +1,7 @@
 // entity.h
 #pragma once
 #include <godot_cpp/variant/vector2i.hpp>
-/*#include <random>
+#include <random>
 
 using namespace godot;
 
@@ -21,11 +21,13 @@ struct Entity {
     }
 
     // Returns new position and true if crossed chunk border
-    bool simulate(float delta, Vector2i& out_new_pos) {
+    bool simulate(float delta, Vector2i& out_new_pos, std::vector<int> availableDirs) {
         if (!active) return false;
 
         move_timer -= delta;
         if (move_timer > 0.0f) return false;
+
+
 
         const Vector2i dirs[4] = {
             Vector2i(1, 0), Vector2i(-1, 0),
@@ -39,7 +41,7 @@ struct Entity {
         return true;  // Moved
     }
 };
-*/
+/*
 // entity.h
 #pragma once
 #include <godot_cpp/variant/vector2i.hpp>
@@ -92,4 +94,4 @@ struct Entity {
 
         return true;
     }
-};
+};*/

@@ -13,7 +13,7 @@ func _ready():
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	
 	# 3. Init world
-	$World.init(1_000_000, 1_000_000, 128)
+	$World.init(32, 32, 16)
 	
 	# 4. Camera position AFTER scale
 	var half_width = $World.get_world_width_tiles() / 2.0

@@ -6,11 +6,8 @@
 #include <godot_cpp/variant/vector2i.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <unordered_map>
-#include <unordered_set>
 #include <memory>
-#include <vector>
 #include <cmath>
-#include "entity.h"
 #include "chunk.h"
 
 using namespace godot;
