@@ -64,7 +64,7 @@ Vector2i entityWorldToLocalCoord(Vector2i worldCoord, World* world)
 }
 //entity pos in local coords
 // neighbour chunks are only if applicable (On a chunk border)
-std::vector<int> getAvailableDirs(Vector2i current, std::vector<std::tuple<Vector2i, int>> neighbourChunks, World* world)
+std::vector<int> Chunk::getAvailableDirs(Vector2i current, std::vector<std::tuple<Vector2i, int>> neighbourChunks)
 {
     std::vector<std::shared_ptr<Chunk>> neighbour = {};
     std::vector<int> ret = {};
@@ -108,8 +108,20 @@ std::vector<int> getAvailableDirs(Vector2i current, std::vector<std::tuple<Vecto
             }
         }
     }
+    const Vector2i dirs[4] = {
+        Vector2i(0, -1), Vector2i(1, 0),
+        Vector2i(0, 1), Vector2i(-1, 0)
+    };
     // and check current chunk
+    for(auto& e : entities)
+    {
+        Vector2i eLocal = entityWorldToLocalCoord(e->position, world);
+        for(int i = 0; i < 4; i ++)
+        {
+            if(current + dirs[i] != eLocal) ret.push_back(i);
 
+        }
+    }
 
     return ret;
 }
@@ -159,13 +171,10 @@ void Chunk::simulate(float delta, bool full_simulation) {
 
     //UtilityFunctions::print("Chunk(",coord.x, coord.y,") has ", entities.size(), "entities before");
     
-    // Calculate this chunk's origin in world coordinates
-   // Vector2i chunk_origin(coord.x * width, coord.y * height);
-
     for (int i = 0; i < (int)entities.size(); ++i) {
         if (!entities[i]) continue;
-     //   std::vector<std::tuple<Vector2i, int>> neighbourChunksCoords = getNeighbouringChunks(entities[i]->position, world, coord);
-        std::vector<int> availableDirs = {};// getAvailableDirs(entities[i]->position % world->get_chunk_size(), neighbourChunksCoords, world);
+        std::vector<std::tuple<Vector2i, int>> neighbourChunksCoords = getNeighbouringChunks(entities[i]->position, world, coord);
+        std::vector<int> availableDirs = {}; // getAvailableDirs(entities[i]->position % world->get_chunk_size(), neighbourChunksCoords);
         Vector2i new_pos;
         bool moved = entities[i]->simulate(delta, new_pos, availableDirs);
         
