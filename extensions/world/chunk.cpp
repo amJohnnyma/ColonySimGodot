@@ -1,7 +1,6 @@
 // chunk.cpp
 #include "chunk.h"
-#include "templates/vector.hpp"
-#include "variant/vector2i.hpp"
+#include <godot_cpp/variant/vector2i.hpp>
 #include "world.h"        
 #include "entity.h"
 #include "perlinNoise.h"

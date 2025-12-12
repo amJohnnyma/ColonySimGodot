@@ -10,7 +10,8 @@ extends Node2D
 @export var simulation_distance: int = 8
 
 @onready var entity_container: Node2D = $EntityContainer
-@onready var MainNode: Node2D = get_node("scenes/Main.tscn")
+@onready var MainNode = get_parent()
+#@onready var MainNode: Node2D = get_node("res://scenes/Main.tscn")
 
 var chunks: Dictionary = {}
 var entity_sprites: Array[Sprite2D] = []
@@ -94,6 +95,26 @@ func _process(delta: float) -> void:
 	for i in range(entity_count, ENTITY_POOL_SIZE):
 		entity_sprites[i].visible = false
 	
+	# === TEMPORARY DEBUG: Count visible entities per chunk (GDScript only) ===
+	var visible_per_chunk: Dictionary = {}  # Vector2i -> count
+
+	entity_count = entity_positions.size()
+	for i in entity_count:
+		var world_pos := entity_positions[i]
+		var chunk := (world_pos / cs).floor() as Vector2i
+		visible_per_chunk[chunk] = visible_per_chunk.get(chunk, 0) + 1
+
+	# === Update all chunk debug labels ===
+	for chunk_coord in visible_chunks:
+		var renderer: ChunkRenderer = chunks[chunk_coord]
+		var visible_here : int = visible_per_chunk.get(chunk_coord, 0)
+		
+		# You probably already have a way to get total entities per chunk?
+		# If not, use this is the fastest temporary hack:
+		var total_here : int = world.get_loaded_entity_count_in_chunk(chunk_coord) if world.has_method("get_loaded_entity_count_in_chunk") \
+						else visible_here  # fallback: assume all loaded are visible (good enough for debug)
+
+		renderer.set_debug_text(total_here, visible_here)
 
 	
 	# === 7. Debug (every second) ===
@@ -108,3 +129,8 @@ func _physics_process(delta: float) -> void:
 		# === 6. Background simulation (C++ handles this) ===
 	world.update(cam_pos, simulation_distance, delta) # split into update render # update physics
 	
+func _unhandled_input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_F3:
+		for r in chunks.values():
+			if r.debug_label:
+				r.debug_label.visible = !r.debug_label.visible
