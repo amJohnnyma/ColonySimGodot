@@ -1,6 +1,7 @@
 // chunk.cpp
 #include "chunk.h"
 #include <godot_cpp/variant/vector2i.hpp>
+#include "variant/color.hpp"
 #include "world.h"        
 #include "entity.h"
 #include "perlinNoise.h"
@@ -43,7 +44,7 @@ void Chunk::generate(int wx, int wy) {
                     coord.x * width + x + 0.5f,
                     coord.y * height + y + 0.5f
                 );
-                auto e = std::make_shared<Entity>(world_pos);
+                auto e = std::make_shared<Colonist>(world_pos);
                 entities.push_back(e);
             }
             
@@ -95,7 +96,7 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current, std::vector<std::tupl
         for(auto &e : chunk->entities)
         {
             if (!e) continue;
-            Vector2i eLocal = entityWorldToLocalCoord(e->position, world);
+            Vector2i eLocal = entityWorldToLocalCoord(e->get_position(), world);
             switch(dir)
             {
                 case 0:
@@ -127,7 +128,7 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current, std::vector<std::tupl
     for(auto& e : entities)
     {
         if (!e) continue;
-        Vector2i eLocal = entityWorldToLocalCoord(e->position, world);
+        Vector2i eLocal = entityWorldToLocalCoord(e->get_position(), world);
         for(int i = 0; i < 4; i ++)
         {
             if(current + dirs[i] != eLocal) ret.push_back(i);
@@ -188,14 +189,20 @@ void Chunk::simulate(float delta, bool full_simulation) {
      //   std::vector<std::tuple<Vector2i, int>> neighbourChunksCoords = getNeighbouringChunks(entities[i]->position, world, coord);
         std::vector<int> availableDirs = {}; // getAvailableDirs(entityWorldToLocalCoord(entities[i]->position, world), neighbourChunksCoords);
         Vector2i new_pos;
-        bool moved = entities[i]->simulate(delta, new_pos, availableDirs);
+        EntitySimulationParam params = 
+        {
+            delta,
+            new_pos,
+            availableDirs
+        };
+        bool moved = entities[i]->simulate(params);
         
         if (moved && full_simulation) {
             // make sure they stay in world bounds
             if(new_pos.x < 0 || new_pos.x >= world->get_world_width_tiles())  continue;
             if(new_pos.y < 0 || new_pos.y >= world->get_world_height_tiles()) continue;
 
-            entities[i]->position = new_pos;
+            entities[i]->set_position(new_pos);
            // UtilityFunctions::print("Entity moved from ", old_pos, "to ", new_pos);
             //Vector2i local_pos(new_pos.x - chunk_origin.x, new_pos.y - chunk_origin.y);
             Vector2i local_pos(new_pos % world->get_chunk_size());

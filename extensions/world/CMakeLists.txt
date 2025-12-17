@@ -22,6 +22,9 @@ set(SOURCES
     world.cpp
     chunk.cpp
     perlin_noise.cpp
+    entity.cpp
+    colonist.cpp
+    building.cpp
 )
 
 

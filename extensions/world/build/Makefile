@@ -129,6 +129,30 @@ world/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/build
 .PHONY : world/fast
 
+building.o: building.cpp.o
+.PHONY : building.o
+
+# target to build an object file
+building.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/building.cpp.o
+.PHONY : building.cpp.o
+
+building.i: building.cpp.i
+.PHONY : building.i
+
+# target to preprocess a source file
+building.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/building.cpp.i
+.PHONY : building.cpp.i
+
+building.s: building.cpp.s
+.PHONY : building.s
+
+# target to generate assembly for a file
+building.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/building.cpp.s
+.PHONY : building.cpp.s
+
 chunk.o: chunk.cpp.o
 .PHONY : chunk.o
 
@@ -152,6 +176,54 @@ chunk.s: chunk.cpp.s
 chunk.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk.cpp.s
 .PHONY : chunk.cpp.s
+
+colonist.o: colonist.cpp.o
+.PHONY : colonist.o
+
+# target to build an object file
+colonist.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/colonist.cpp.o
+.PHONY : colonist.cpp.o
+
+colonist.i: colonist.cpp.i
+.PHONY : colonist.i
+
+# target to preprocess a source file
+colonist.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/colonist.cpp.i
+.PHONY : colonist.cpp.i
+
+colonist.s: colonist.cpp.s
+.PHONY : colonist.s
+
+# target to generate assembly for a file
+colonist.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/colonist.cpp.s
+.PHONY : colonist.cpp.s
+
+entity.o: entity.cpp.o
+.PHONY : entity.o
+
+# target to build an object file
+entity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entity.cpp.o
+.PHONY : entity.cpp.o
+
+entity.i: entity.cpp.i
+.PHONY : entity.i
+
+# target to preprocess a source file
+entity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entity.cpp.i
+.PHONY : entity.cpp.i
+
+entity.s: entity.cpp.s
+.PHONY : entity.s
+
+# target to generate assembly for a file
+entity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entity.cpp.s
+.PHONY : entity.cpp.s
 
 perlin_noise.o: perlin_noise.cpp.o
 .PHONY : perlin_noise.o
@@ -234,9 +306,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... world"
+	@echo "... building.o"
+	@echo "... building.i"
+	@echo "... building.s"
 	@echo "... chunk.o"
 	@echo "... chunk.i"
 	@echo "... chunk.s"
+	@echo "... colonist.o"
+	@echo "... colonist.i"
+	@echo "... colonist.s"
+	@echo "... entity.o"
+	@echo "... entity.i"
+	@echo "... entity.s"
 	@echo "... perlin_noise.o"
 	@echo "... perlin_noise.i"
 	@echo "... perlin_noise.s"

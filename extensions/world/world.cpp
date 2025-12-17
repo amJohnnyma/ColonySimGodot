@@ -105,7 +105,7 @@ Vector2i World::get_entity_position(const Vector2i &chunk_coord, int entity_inde
     if (it == chunks.end() || entity_index < 0 || entity_index >= it->second->entities.size()) {
         return Vector2(-99999, -99999); // invisible
     }
-    return it->second->entities[entity_index]->position;  // already world space!
+    return it->second->entities[entity_index]->get_position();  // already world space!
 }
 
 int World::get_chunk_entity_capacity() const {
@@ -250,9 +250,9 @@ PackedVector2Array World::get_visible_entities(
         auto& chunk = it->second;
         for (const auto& entity : chunk->entities) {
             if (count >= max_entities) break;
-            if (!entity || !entity->active) continue;
+            if (!entity || !entity->is_active()) continue;
             
-            Vector2 pos(entity->position.x, entity->position.y);
+            Vector2 pos(entity->get_position().x, entity->get_position().y);
             
             // Entity-level culling
             if (pos.x < cull_min.x || pos.x > cull_max.x ||

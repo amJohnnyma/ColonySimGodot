@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 #include "entity.h"
+#include "colonist.h"
 
 class World;  // Forward declaration — NO CIRCULAR INCLUDE!
 

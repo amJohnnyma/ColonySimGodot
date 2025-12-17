@@ -56,7 +56,6 @@ public:
     Vector2i get_entity_position(const Vector2i &chunk_coord, int entity_index) const;
     int get_chunk_entity_capacity() const;
     
-    // === NEW BATCH API FOR PERFORMANCE ===
     
     // Get all chunks that need rendering (clamped + culled)
     TypedArray<Vector2i> get_visible_chunks(
@@ -78,4 +77,7 @@ public:
     std::shared_ptr<Chunk> get_chunk(const Vector2i &coord);
     std::shared_ptr<Chunk> load_chunk(const Vector2i &coord);
     void unload_chunk(const Vector2i &coord);
+
+    // The building system
+    void place_building_in_chunk(const Vector2i &mouse_coord, const std::string &building_type);
 };
