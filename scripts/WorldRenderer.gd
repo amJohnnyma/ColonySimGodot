@@ -86,6 +86,7 @@ func _process(delta: float) -> void:
 	# Extract the actual data
 	var positions: PackedVector2Array = visible_data["positions"]
 	var entity_count: int = visible_data["count"]
+	var entity_type: PackedInt32Array = visible_data["types"]
 
 	# === 5. Update sprite pool (simple array assignment) ===
 	for i in entity_count:

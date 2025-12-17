@@ -44,7 +44,7 @@ void Chunk::generate(int wx, int wy) {
                     coord.x * width + x + 0.5f,
                     coord.y * height + y + 0.5f
                 );
-                auto e = std::make_shared<Colonist>(world_pos, 0/* World::generate_entity_id()*/);
+                auto e = std::make_shared<Colonist>(world_pos, world->get_next_entity_id());
                 entities.push_back(e);
             }
             
