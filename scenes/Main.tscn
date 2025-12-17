@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://c24qbluo3e5pl" path="res://scripts/WorldRenderer.gd" id="1_elqb8"]
 [ext_resource type="Script" uid="uid://cjt5nf5s7y8ul" path="res://scripts/main.gd" id="1_rvslj"]
 [ext_resource type="Script" uid="uid://briht6pardr66" path="res://scripts/CameraMovement.gd" id="2_rarhs"]
-[ext_resource type="PackedScene" uid="uid://16o2hwbk1655" path="res://scenes/ChunkRenderer.tscn" id="2_rvslj"]
-[ext_resource type="PackedScene" uid="uid://c15h72jiuyrq7" path="res://EntitySprite.tscn" id="5_c01mt"]
+[ext_resource type="PackedScene" uid="uid://16o2hwbk1655" path="res://scenes/ChunkRenderer.tscn" id="4_c01mt"]
+[ext_resource type="PackedScene" uid="uid://c15h72jiuyrq7" path="res://EntitySprite.tscn" id="5_nxtc6"]
 [ext_resource type="Script" uid="uid://b55gn1ao5cbka" path="res://scripts/Benchmark.gd" id="5_vcsgt"]
 
 [node name="Main" type="Node2D"]
@@ -22,8 +22,8 @@ max_zoom = 28.0
 [node name="WorldRenderer" type="Node2D" parent="." node_paths=PackedStringArray("world")]
 script = ExtResource("1_elqb8")
 world = NodePath("../World")
-chunk_renderer_scene = ExtResource("2_rvslj")
-entity_sprite_scene = ExtResource("5_c01mt")
+chunk_renderer_scene = ExtResource("4_c01mt")
+entity_sprite_scene = ExtResource("5_nxtc6")
 
 [node name="EntityContainer" type="Node2D" parent="WorldRenderer"]
 

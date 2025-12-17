@@ -83,52 +83,10 @@ CMakeFiles/world.dir/register_types.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/world.dir/register_types.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/johnny/Godot/colony-sim-2/extensions/world/register_types.cpp -o CMakeFiles/world.dir/register_types.cpp.s
 
-CMakeFiles/world.dir/world.cpp.o: CMakeFiles/world.dir/flags.make
-CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp
-CMakeFiles/world.dir/world.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/world.dir/world.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/world.cpp.o -MF CMakeFiles/world.dir/world.cpp.o.d -o CMakeFiles/world.dir/world.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp
-
-CMakeFiles/world.dir/world.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/world.dir/world.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp > CMakeFiles/world.dir/world.cpp.i
-
-CMakeFiles/world.dir/world.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/world.dir/world.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp -o CMakeFiles/world.dir/world.cpp.s
-
-CMakeFiles/world.dir/chunk.cpp.o: CMakeFiles/world.dir/flags.make
-CMakeFiles/world.dir/chunk.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp
-CMakeFiles/world.dir/chunk.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/world.dir/chunk.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/chunk.cpp.o -MF CMakeFiles/world.dir/chunk.cpp.o.d -o CMakeFiles/world.dir/chunk.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp
-
-CMakeFiles/world.dir/chunk.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/world.dir/chunk.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp > CMakeFiles/world.dir/chunk.cpp.i
-
-CMakeFiles/world.dir/chunk.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/world.dir/chunk.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp -o CMakeFiles/world.dir/chunk.cpp.s
-
-CMakeFiles/world.dir/perlin_noise.cpp.o: CMakeFiles/world.dir/flags.make
-CMakeFiles/world.dir/perlin_noise.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp
-CMakeFiles/world.dir/perlin_noise.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/world.dir/perlin_noise.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/perlin_noise.cpp.o -MF CMakeFiles/world.dir/perlin_noise.cpp.o.d -o CMakeFiles/world.dir/perlin_noise.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp
-
-CMakeFiles/world.dir/perlin_noise.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/world.dir/perlin_noise.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp > CMakeFiles/world.dir/perlin_noise.cpp.i
-
-CMakeFiles/world.dir/perlin_noise.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/world.dir/perlin_noise.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp -o CMakeFiles/world.dir/perlin_noise.cpp.s
-
 CMakeFiles/world.dir/entity.cpp.o: CMakeFiles/world.dir/flags.make
 CMakeFiles/world.dir/entity.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/entity.cpp
 CMakeFiles/world.dir/entity.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/world.dir/entity.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/world.dir/entity.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/entity.cpp.o -MF CMakeFiles/world.dir/entity.cpp.o.d -o CMakeFiles/world.dir/entity.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/entity.cpp
 
 CMakeFiles/world.dir/entity.cpp.i: cmake_force
@@ -142,7 +100,7 @@ CMakeFiles/world.dir/entity.cpp.s: cmake_force
 CMakeFiles/world.dir/colonist.cpp.o: CMakeFiles/world.dir/flags.make
 CMakeFiles/world.dir/colonist.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/colonist.cpp
 CMakeFiles/world.dir/colonist.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/world.dir/colonist.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/world.dir/colonist.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/colonist.cpp.o -MF CMakeFiles/world.dir/colonist.cpp.o.d -o CMakeFiles/world.dir/colonist.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/colonist.cpp
 
 CMakeFiles/world.dir/colonist.cpp.i: cmake_force
@@ -156,7 +114,7 @@ CMakeFiles/world.dir/colonist.cpp.s: cmake_force
 CMakeFiles/world.dir/building.cpp.o: CMakeFiles/world.dir/flags.make
 CMakeFiles/world.dir/building.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/building.cpp
 CMakeFiles/world.dir/building.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/world.dir/building.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/world.dir/building.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/building.cpp.o -MF CMakeFiles/world.dir/building.cpp.o.d -o CMakeFiles/world.dir/building.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/building.cpp
 
 CMakeFiles/world.dir/building.cpp.i: cmake_force
@@ -167,27 +125,70 @@ CMakeFiles/world.dir/building.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/world.dir/building.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/johnny/Godot/colony-sim-2/extensions/world/building.cpp -o CMakeFiles/world.dir/building.cpp.s
 
+CMakeFiles/world.dir/world.cpp.o: CMakeFiles/world.dir/flags.make
+CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp
+CMakeFiles/world.dir/world.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/world.dir/world.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/world.cpp.o -MF CMakeFiles/world.dir/world.cpp.o.d -o CMakeFiles/world.dir/world.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp
+
+CMakeFiles/world.dir/world.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/world.dir/world.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp > CMakeFiles/world.dir/world.cpp.i
+
+CMakeFiles/world.dir/world.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/world.dir/world.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp -o CMakeFiles/world.dir/world.cpp.s
+
+CMakeFiles/world.dir/chunk.cpp.o: CMakeFiles/world.dir/flags.make
+CMakeFiles/world.dir/chunk.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp
+CMakeFiles/world.dir/chunk.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/world.dir/chunk.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/chunk.cpp.o -MF CMakeFiles/world.dir/chunk.cpp.o.d -o CMakeFiles/world.dir/chunk.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp
+
+CMakeFiles/world.dir/chunk.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/world.dir/chunk.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp > CMakeFiles/world.dir/chunk.cpp.i
+
+CMakeFiles/world.dir/chunk.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/world.dir/chunk.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp -o CMakeFiles/world.dir/chunk.cpp.s
+
+CMakeFiles/world.dir/perlin_noise.cpp.o: CMakeFiles/world.dir/flags.make
+CMakeFiles/world.dir/perlin_noise.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp
+CMakeFiles/world.dir/perlin_noise.cpp.o: CMakeFiles/world.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/world.dir/perlin_noise.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/world.dir/perlin_noise.cpp.o -MF CMakeFiles/world.dir/perlin_noise.cpp.o.d -o CMakeFiles/world.dir/perlin_noise.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp
+
+CMakeFiles/world.dir/perlin_noise.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/world.dir/perlin_noise.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp > CMakeFiles/world.dir/perlin_noise.cpp.i
+
+CMakeFiles/world.dir/perlin_noise.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/world.dir/perlin_noise.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp -o CMakeFiles/world.dir/perlin_noise.cpp.s
+
 # Object files for target world
 world_OBJECTS = \
 "CMakeFiles/world.dir/register_types.cpp.o" \
-"CMakeFiles/world.dir/world.cpp.o" \
-"CMakeFiles/world.dir/chunk.cpp.o" \
-"CMakeFiles/world.dir/perlin_noise.cpp.o" \
 "CMakeFiles/world.dir/entity.cpp.o" \
 "CMakeFiles/world.dir/colonist.cpp.o" \
-"CMakeFiles/world.dir/building.cpp.o"
+"CMakeFiles/world.dir/building.cpp.o" \
+"CMakeFiles/world.dir/world.cpp.o" \
+"CMakeFiles/world.dir/chunk.cpp.o" \
+"CMakeFiles/world.dir/perlin_noise.cpp.o"
 
 # External object files for target world
 world_EXTERNAL_OBJECTS =
 
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/register_types.cpp.o
-/home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/world.cpp.o
-/home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/chunk.cpp.o
-/home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/perlin_noise.cpp.o
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/entity.cpp.o
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/colonist.cpp.o
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/building.cpp.o
+/home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/world.cpp.o
+/home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/chunk.cpp.o
+/home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/perlin_noise.cpp.o
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/build.make
+/home/johnny/Godot/colony-sim-2/bin/libworld.so: /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/bin/libgodot-cpp.linux.editor.x86_64.a
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/bin/libgodot-cpp.linux.editor.x86_64.a
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: /usr/lib/x86_64-linux-gnu/libpthread.a

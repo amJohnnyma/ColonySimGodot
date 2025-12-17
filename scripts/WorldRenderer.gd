@@ -76,32 +76,31 @@ func _process(delta: float) -> void:
 			chunks.erase(c)
 	
 	# === 4. Get all visible entity positions from C++ (batch operation) ===
-	var entity_positions: PackedVector2Array = world.get_visible_entities(
+	var visible_data: Dictionary = world.get_visible_entities(
 		visible_chunks,
 		world_min,
 		world_max,
 		ENTITY_POOL_SIZE
 	)
-	
+
+	# Extract the actual data
+	var positions: PackedVector2Array = visible_data["positions"]
+	var entity_count: int = visible_data["count"]
+
 	# === 5. Update sprite pool (simple array assignment) ===
-	var entity_count: int = entity_positions.size()
-	
-	# Show visible entities
 	for i in entity_count:
-		entity_sprites[i].global_position = entity_positions[i]
+		entity_sprites[i].global_position = positions[i]
 		entity_sprites[i].visible = true
-	
+
 	# Hide unused sprites
 	for i in range(entity_count, ENTITY_POOL_SIZE):
 		entity_sprites[i].visible = false
-	
-	# === TEMPORARY DEBUG: Count visible entities per chunk (GDScript only) ===
-	var visible_per_chunk: Dictionary = {}  # Vector2i -> count
 
-	entity_count = entity_positions.size()
+	# === TEMPORARY DEBUG: Count visible entities per chunk (GDScript only) ===
+	var visible_per_chunk: Dictionary = {} # Vector2i -> count
 	for i in entity_count:
-		var world_pos := entity_positions[i]
-		var chunk := (world_pos / cs).floor() as Vector2i
+		var world_pos: Vector2 = positions[i]
+		var chunk: Vector2i = (world_pos / cs).floor()
 		visible_per_chunk[chunk] = visible_per_chunk.get(chunk, 0) + 1
 
 	# === Update all chunk debug labels ===

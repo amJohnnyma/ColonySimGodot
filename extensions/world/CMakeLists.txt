@@ -19,12 +19,12 @@ include_directories(
 # Sources
 set(SOURCES
     register_types.cpp
-    world.cpp
-    chunk.cpp
-    perlin_noise.cpp
     entity.cpp
     colonist.cpp
     building.cpp
+    world.cpp
+    chunk.cpp
+    perlin_noise.cpp
 )
 
 
@@ -47,6 +47,10 @@ if(OpenMP_CXX_FOUND)
     target_link_libraries(${LIB_NAME} OpenMP::OpenMP_CXX)  # Link it
 endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp") # Enable #pragma omp
+
+find_package(Threads REQUIRED)  # Add this
+
+target_link_libraries(${LIB_NAME} ${GODOT_CPP_LIB} Threads::Threads)
 
 # Output to the Godot project's bin/ directory
 set_target_properties(${LIB_NAME} PROPERTIES

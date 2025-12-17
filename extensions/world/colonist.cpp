@@ -1,7 +1,8 @@
 #include "colonist.h"
 #include "entity.h"
+#include <cstdint>
 
-Colonist::Colonist(Vector2i pos) : Entity(pos) {
+Colonist::Colonist(Vector2i pos, uint64_t id) : Entity(pos, id) {
     reset_timer();
 }
 // Returns new position and true if crossed chunk border

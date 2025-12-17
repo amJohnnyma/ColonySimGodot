@@ -228,45 +228,61 @@ TypedArray<Vector2i> World::get_visible_chunks(
     
     return result;
 }
+Dictionary World::get_visible_entities(
+    const TypedArray<Vector2i>& chunk_coords,
+    const Vector2& cull_min,
+    const Vector2& cull_max,
+    int max_entities)
+{
+    PackedVector2Array positions;
+    PackedInt64Array entity_ids;
+    PackedInt32Array types;
 
-PackedVector2Array World::get_visible_entities(
-    const TypedArray<Vector2i> &chunk_coords,
-    const Vector2 &cull_min,
-    const Vector2 &cull_max,
-    int max_entities
-) {
-    PackedVector2Array result;
-    result.resize(max_entities);
+    // Pre-allocate for performance
+    positions.resize(max_entities);
+    entity_ids.resize(max_entities);
+    types.resize(max_entities);
+
     int count = 0;
-    
-    // Process all chunks and their entities in C++
-    for (int i = 0; i < chunk_coords.size(); ++i) {
-        if (count >= max_entities) break;
-        
+
+    for (int i = 0; i < chunk_coords.size() && count < max_entities; ++i) {
         Vector2i coord = chunk_coords[i];
         auto it = chunks.find(coord);
         if (it == chunks.end()) continue;
-        
-        auto& chunk = it->second;
-        for (const auto& entity : chunk->entities) {
+
+        const auto& chunk_entities = it->second->entities;
+        for (const auto& entity_ptr : chunk_entities) {
             if (count >= max_entities) break;
-            if (!entity || !entity->is_active()) continue;
-            
-            Vector2 pos(entity->get_position().x, entity->get_position().y);
-            
+            if (!entity_ptr || !entity_ptr->is_active()) continue;
+
+            Vector2 pos = entity_ptr->get_position();  // Assuming get_position() returns Vector2 now
+
             // Entity-level culling
             if (pos.x < cull_min.x || pos.x > cull_max.x ||
                 pos.y < cull_min.y || pos.y > cull_max.y) {
                 continue;
             }
-            
-            result.set(count, pos);
+
+            positions.set(count, pos);
+            entity_ids.set(count, static_cast<int64_t>(entity_ptr->get_entity_id()));
+            types.set(count, entity_ptr->get_type_id());
+
             count++;
         }
     }
-    
-    // Resize to actual count
-    result.resize(count);
+
+    // Trim arrays to actual used size (important for GDScript)
+    positions.resize(count);
+    entity_ids.resize(count);
+    types.resize(count);
+
+    // Build and return the dictionary
+    Dictionary result;
+    result["positions"]  = positions;
+    result["entity_ids"] = entity_ids;
+    result["types"]      = types;
+    result["count"]      = count;
+
     return result;
 }
 

@@ -9,6 +9,7 @@
 #include <memory>
 #include <cmath>
 #include "chunk.h"
+#include "godot_cpp/variant/dictionary.hpp"
 
 using namespace godot;
 
@@ -66,7 +67,7 @@ public:
     );
     
     // Batch get all visible entity positions in one call
-    PackedVector2Array get_visible_entities(
+    Dictionary get_visible_entities(
         const TypedArray<Vector2i> &chunk_coords,
         const Vector2 &cull_min,
         const Vector2 &cull_max,
