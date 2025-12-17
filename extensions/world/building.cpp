@@ -4,6 +4,7 @@
 
 Building::Building(Vector2i pos, uint64_t id, std::string type) : Entity(pos, id), type(type) {
     reset_timer();
+    entity_type = 1;
 }
 
 bool Building::simulate(EntitySimulationParam &params) {

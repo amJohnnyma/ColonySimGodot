@@ -26,7 +26,7 @@ class Entity
         bool active = true;
         Entity(Vector2i pos, uint64_t id);
         uint64_t entity_id;
-
+        int entity_type;
     public:
         virtual ~Entity() = default;
 
@@ -39,5 +39,7 @@ class Entity
         bool is_active() { return active; }
         virtual int get_type_id() const = 0;
         uint64_t get_entity_id() const { return entity_id; }
+        // temporary
+        void set_type(int type) {entity_type = type;}
 
 };

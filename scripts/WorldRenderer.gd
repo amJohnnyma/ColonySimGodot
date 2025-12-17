@@ -4,6 +4,45 @@ extends Node2D
 @export var world: World
 @export var chunk_renderer_scene: PackedScene
 @export var entity_sprite_scene: PackedScene
+# currently 15 x 6
+@export var entity_atlas: Texture2D  # Assign your atlas.png in the inspector
+
+# Define your entity types (match your C++ enum!)
+enum EntityType { PLAYER_FRONT = 0, PLAYER_BACK = 1, PLAYER_CLIMB_FRONT = 2, PLAYER_CLIMB_BACK = 3, BUSH = 4, TILE=5 }
+
+# Map type → atlas rect (x, y, w, h in pixels)
+var type_to_region: Dictionary = { # x = 16, y = 32
+	EntityType.PLAYER_FRONT: Rect2(0,   0, 16, 32), # 0,0
+	EntityType.PLAYER_BACK: Rect2(48,  32, 16, 32), # 3, 1
+	EntityType.PLAYER_CLIMB_FRONT:  Rect2(32,  96, 16, 32), # 2, 3
+	EntityType.PLAYER_CLIMB_BACK:   Rect2(80,  96, 16, 32), # 5 , 3
+	EntityType.BUSH:   Rect2(64,  160, 16, 32), # 4, 5
+	EntityType.TILE:    Rect2(64,  0, 16, 32), # 4,0
+}
+
+# NEW: Map type → scale (Vector2 for non-uniform, or use Vector2(scale, scale))
+var type_to_scale: Dictionary = {
+	EntityType.PLAYER_FRONT: Vector2(0.03, 0.03),
+	EntityType.PLAYER_BACK: Vector2(0.03, 0.03),
+	EntityType.PLAYER_CLIMB_FRONT: Vector2(0.03, 0.03),
+	EntityType.PLAYER_CLIMB_BACK: Vector2(0.03, 0.03),
+	EntityType.BUSH: Vector2(0.03, 0.03),
+	EntityType.TILE: Vector2(0.03, 0.03),
+}
+
+var type_to_offset: Dictionary = {
+	EntityType.PLAYER_FRONT: Vector2(16,-16),
+	EntityType.PLAYER_BACK: Vector2(16, -16),
+	EntityType.PLAYER_CLIMB_FRONT: Vector2(16, -16),
+	EntityType.PLAYER_CLIMB_BACK: Vector2(16, -16),
+	EntityType.BUSH: Vector2(16, -16),
+	EntityType.TILE: Vector2(16, -16),
+}
+
+var default_scale: Vector2 = Vector2(0.03, 0.03)
+var default_region: Rect2 = Rect2(0, 0, 16, 32)
+var default_offset: Vector2 = Vector2(16, -16)
+
 
 @export var max_render_distance_chunks: int = 1
 @export var render_buffer_chunks: int = 1
@@ -28,6 +67,15 @@ func _ready() -> void:
 		s.visible = false
 		entity_container.add_child(s)
 		entity_sprites[i] = s
+		
+	for sprite in entity_sprites:
+		sprite.texture = entity_atlas
+		sprite.region_enabled = true
+		sprite.region_rect = default_region  # or hide somehow
+		sprite.offset = default_offset
+
+		sprite.scale = default_scale  
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 func _process(delta: float) -> void:
 	if not world or not chunk_renderer_scene:
@@ -90,8 +138,23 @@ func _process(delta: float) -> void:
 
 	# === 5. Update sprite pool (simple array assignment) ===
 	for i in entity_count:
-		entity_sprites[i].global_position = positions[i]
-		entity_sprites[i].visible = true
+		var sprite: Sprite2D = entity_sprites[i]
+		sprite.global_position = positions[i]
+		
+
+		var type: int = entity_type[i]
+		var region: Rect2 = type_to_region.get(type, default_region)
+		var scale: Vector2 = type_to_scale.get(type, default_scale)  
+		var offset_vec: Vector2 = type_to_offset.get(type, default_offset)  
+		# Only update texture/region if it changed (optional micro-optimization)
+		if sprite.region_rect != region:
+			sprite.region_rect = region
+		if sprite.scale != scale:
+			sprite.scale = scale
+		if sprite.offset != offset_vec: 
+			sprite.offset = offset_vec
+
+		sprite.visible = true
 
 	# Hide unused sprites
 	for i in range(entity_count, ENTITY_POOL_SIZE):

@@ -45,6 +45,12 @@ void Chunk::generate(int wx, int wy) {
                     coord.y * height + y + 0.5f
                 );
                 auto e = std::make_shared<Colonist>(world_pos, world->get_next_entity_id());
+
+                thread_local static std::mt19937 gen(std::random_device{}());
+                std::uniform_int_distribution<int> dist(0, 5);
+
+                e->set_type(dist(gen));
+
                 entities.push_back(e);
             }
             

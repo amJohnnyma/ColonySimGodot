@@ -4,6 +4,7 @@
 
 Colonist::Colonist(Vector2i pos, uint64_t id) : Entity(pos, id) {
     reset_timer();
+    entity_type = 0;
 }
 // Returns new position and true if crossed chunk border
 bool Colonist::simulate(EntitySimulationParam &params) {
