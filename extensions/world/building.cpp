@@ -1,7 +1,7 @@
 #include "building.h"
 #include "entity.h"
 
-Building::Building(Vector2i pos) : Entity(pos) {
+Building::Building(Vector2i pos, std::string type) : Entity(pos), type(type) {
     reset_timer();
 }
 
