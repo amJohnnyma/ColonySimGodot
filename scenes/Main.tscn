@@ -6,11 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://16o2hwbk1655" path="res://scenes/ChunkRenderer.tscn" id="4_c01mt"]
 [ext_resource type="PackedScene" uid="uid://c15h72jiuyrq7" path="res://EntitySprite.tscn" id="5_nxtc6"]
 [ext_resource type="Script" uid="uid://b55gn1ao5cbka" path="res://scripts/Benchmark.gd" id="5_vcsgt"]
-[ext_resource type="Texture2D" uid="uid://cnrpl5abixfh6" path="res://sprites/sprite-sheet.png" id="6_nxtc6"]
+[ext_resource type="Script" uid="uid://dxxlsmhwr6e32" path="res://scripts/grid_hightlight.gd" id="8_jlsqs"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_rvslj")
-world_scale = 1.0
 
 [node name="World" type="World" parent="."]
 
@@ -25,7 +24,6 @@ script = ExtResource("1_elqb8")
 world = NodePath("../World")
 chunk_renderer_scene = ExtResource("4_c01mt")
 entity_sprite_scene = ExtResource("5_nxtc6")
-entity_atlas = ExtResource("6_nxtc6")
 
 [node name="EntityContainer" type="Node2D" parent="WorldRenderer"]
 
@@ -33,3 +31,14 @@ entity_atlas = ExtResource("6_nxtc6")
 visible = false
 script = ExtResource("5_vcsgt")
 sample_frames = 5000
+
+[node name="GameSystems" type="Node2D" parent="."]
+
+[node name="GridHighlight" type="Node2D" parent="GameSystems"]
+script = ExtResource("8_jlsqs")
+tile_size = null
+line_color = null
+line_width = null
+highlight_offset_y = null
+
+[node name="BuildingSystem" type="Node2D" parent="GameSystems"]

@@ -1,7 +1,7 @@
 # Main.gd — FIXED ORDER (scale FIRST, then camera)
 extends Node2D
 
-@export var world_scale: float = 8.0   # ← 8 = perfect size
+@export var world_scale: float = 1.0   # ← 8 = perfect size
 
 
 func _ready():

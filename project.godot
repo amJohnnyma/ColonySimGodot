@@ -18,3 +18,4 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameSettings="*res://scenes/game_settings.tscn"
+SpriteAtlas="*res://scripts/sprite_atlas.gd"
