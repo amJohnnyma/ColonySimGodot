@@ -45,7 +45,6 @@ func rebuild() -> void:
 		multimesh.set_instance_color(i, col)
 		#multimesh.set_instance_transform_2d(i, Transform2D(0, Vector2(lx, ly)))
 
-# === NEW: Called every frame (or less) from WorldRenderer ===
 func set_debug_text(total: int, visible: int) -> void:
 # Create the label ONCE the first time we're called
 	if not debug_label:

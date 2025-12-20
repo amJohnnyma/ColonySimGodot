@@ -83,5 +83,5 @@ class World : public  Node2D{
         int get_next_entity_id() {current_entity_id++; return (current_entity_id-1);};
 
         // The building system
-        void place_building_in_chunk(const Vector2i &mouse_coord, const std::string &building_type);
+        void place_building_in_chunk(const Vector2i &tile_coord, const int &building_type);
 };

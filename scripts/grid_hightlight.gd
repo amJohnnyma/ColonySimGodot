@@ -1,7 +1,6 @@
 @tool  # So it works in editor too — great for debugging!
 extends Node2D
 
-@export var tile_size: float = 1.0  # Size of ONE tile in WORLD units (before scaling)
 @export var line_color: Color = Color.RED
 @export var line_width: float = 0.1
 @export var highlight_offset_y: float = 0.01  # Tiny lift to avoid z-fight with tiles
@@ -16,6 +15,8 @@ func update_highlight():
 	var cam: Camera2D = get_viewport().get_camera_2d()
 	if not cam:
 		return
+		
+	var tile_size = GameSettings.tile_size
 	
 	var mouse_pos_screen: Vector2 = get_viewport().get_mouse_position()
 	var mouse_pos_world: Vector2 = cam.global_position + (mouse_pos_screen - get_viewport_rect().size / 2) / cam.zoom
@@ -32,7 +33,8 @@ func update_highlight():
 func _draw():
 	if current_tile.x == -999:
 		return
-	
+	var tile_size : float = GameSettings.tile_size
+
 	# Compute the four corners of the tile (in local space of this Node2D)
 	var origin := current_tile * tile_size
 	var size_vec := Vector2(tile_size, tile_size)

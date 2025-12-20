@@ -31,15 +31,13 @@ entity_sprite_scene = ExtResource("5_nxtc6")
 [node name="Benchmark" type="Node2D" parent="."]
 visible = false
 script = ExtResource("5_vcsgt")
-sample_frames = 5000
+sample_frames = 10
 
 [node name="GameSystems" type="Node2D" parent="."]
 
 [node name="GridHighlight" type="Node2D" parent="GameSystems"]
 script = ExtResource("8_jlsqs")
 
-[node name="BuildingSystem" type="Node2D" parent="GameSystems"]
+[node name="BuildUI" type="CanvasLayer" parent="."]
 
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="BuildingInterface" parent="UI" instance=ExtResource("8_q8u5g")]
+[node name="BuildingInterface" parent="BuildUI" instance=ExtResource("8_q8u5g")]

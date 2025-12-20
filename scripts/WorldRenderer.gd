@@ -144,12 +144,13 @@ func _process(delta: float) -> void:
 
 	
 	# === 7. Debug (every second) ===
+	'''
 	if Engine.get_frames_drawn() % 60 == 0:
 		print("Chunks: %d | Entities: %d | FPS: %.1f" % [
 			visible_chunks.size(),
 			entity_count,
 			Performance.get_monitor(Performance.TIME_FPS)
-		])
+		]) '''
 
 func _physics_process(delta: float) -> void:
 		# === 6. Background simulation (C++ handles this) ===
