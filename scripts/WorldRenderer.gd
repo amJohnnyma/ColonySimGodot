@@ -106,16 +106,16 @@ func _process(delta: float) -> void:
 		
 
 		var type: int = entity_type[i]
-		var region: Rect2 = SpriteAtlas.type_to_region.get(type, SpriteAtlas.default_region)
-		var scale: Vector2 = SpriteAtlas.type_to_scale.get(type, SpriteAtlas.default_scale)  
-		var offset_vec: Vector2 = SpriteAtlas.type_to_offset.get(type, SpriteAtlas.default_offset)  
+		var sprite_region: Rect2 = SpriteAtlas.type_to_region.get(type, SpriteAtlas.default_region)
+		var sprite_scale: Vector2 = SpriteAtlas.type_to_scale.get(type, SpriteAtlas.default_scale)  
+		var sprite_offset_vec: Vector2 = SpriteAtlas.type_to_offset.get(type, SpriteAtlas.default_offset)  
 		# Only update texture/region if it changed (optional micro-optimization)
-		if sprite.region_rect != region:
-			sprite.region_rect = region
-		if sprite.scale != scale:
-			sprite.scale = scale
-		if sprite.offset != offset_vec: 
-			sprite.offset = offset_vec
+		if sprite.region_rect != sprite_region:
+			sprite.region_rect = sprite_region
+		if sprite.scale != sprite_scale:
+			sprite.scale = sprite_scale
+		if sprite.offset != sprite_offset_vec: 
+			sprite.offset = sprite_offset_vec
 
 		sprite.visible = true
 

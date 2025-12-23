@@ -4,11 +4,15 @@
 
 [node name="BuildingInterface" type="Control" node_paths=PackedStringArray("button_1", "button_2", "button_3", "button_4")]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -75.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_renbc")
 button_1 = NodePath("Panel/HBoxContainer/Button")
 button_2 = NodePath("Panel/HBoxContainer/Button2")
@@ -16,17 +20,13 @@ button_3 = NodePath("Panel/HBoxContainer/Button3")
 button_4 = NodePath("Panel/HBoxContainer/Button4")
 
 [node name="Panel" type="Panel" parent="."]
+clip_contents = true
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -100.0
-offset_right = 200.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 layout_mode = 1
@@ -39,27 +39,23 @@ grow_vertical = 2
 [node name="Button" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-toggle_mode = true
 text = "1"
 alignment = 0
 
 [node name="Button2" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-toggle_mode = true
 text = "2"
 alignment = 0
 
 [node name="Button3" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-toggle_mode = true
 text = "3"
 alignment = 0
 
 [node name="Button4" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-toggle_mode = true
 text = "4"
 alignment = 0

@@ -1,4 +1,5 @@
 #include "world.h"
+#include "chunk.h"
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <cmath>
 #include <unordered_set>
@@ -288,6 +289,17 @@ Dictionary World::get_visible_entities(
 }
 
 void World::update(const Vector2 &origin, int render_distance_chunks, float delta) {
+
+
+    for(auto ec : pendingEntityPlacements)
+    {
+        auto chunkRef = std::get<0>(ec);
+        auto entityRef = std::get<1>(ec);
+
+        chunkRef->entities.push_back(entityRef);
+    }
+    pendingEntityPlacements.clear();
+
     Vector2i origin_chunk = world_pos_to_chunk(origin);
     int R = render_distance_chunks;
     std::unordered_set<Vector2i, Vector2iHash> needed_chunks;
@@ -344,9 +356,11 @@ void World::place_building_in_chunk(const Vector2i &tile_coord, const int &build
     }
 
     auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), building_type);
+    e->set_type(building_type);
 
 
+    pendingEntityPlacements.push_back({chunk,e});
 
-    chunk->entities.push_back(e);
+
 
 }

@@ -26,14 +26,34 @@ func _on_entity_type_selected(type: SpriteAtlas.EntityType) -> void:
 	current_build_type = type
 	print("Ready to place: ", SpriteAtlas.EntityType.keys()[type])
 
+func _unhandled_input(event: InputEvent) -> void:
+	if current_build_type == -1:
+		# print("No build type selected (click UI button first!)")
+		return
+	
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		# print(">>> LEFT CLICK DETECTED IN WORLD!")
+		var tile_size = GameSettings.tile_size
+		var mouse_pos_screen: Vector2 = event.position
+		var mouse_pos_world: Vector2 = cam.global_position + (mouse_pos_screen - get_viewport_rect().size / 2) / cam.zoom
+		var tile_x: int = floor(mouse_pos_world.x / tile_size)
+		var tile_y: int = floor(mouse_pos_world.y / tile_size) + 1
+		var tile_pos := Vector2i(tile_x, tile_y)
+		# print(">>> PLACING ", SpriteAtlas.EntityType.keys()[current_build_type], " at ", tile_pos)
+		$World.place_building_in_chunk(tile_pos, current_build_type)
+
+		# Optional: explicitly mark as handled (usually not needed here)
+		# get_viewport().set_input_as_handled()
+		
+'''
 func _input(event: InputEvent) -> void:
 
 	if current_build_type == -1:
-		print("No build type selected (click UI button first!)")
+		#print("No build type selected (click UI button first!)")
 		return  
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		print(">>> LEFT CLICK DETECTED!")
+		#print(">>> LEFT CLICK DETECTED!")
 
 		var tile_size = GameSettings.tile_size
 		var mouse_pos_screen: Vector2 = event.position
@@ -43,6 +63,7 @@ func _input(event: InputEvent) -> void:
 		var tile_y: int = floor(mouse_pos_world.y / tile_size) + 1
 		var tile_pos := Vector2i(tile_x, tile_y)
 
-		print(">>> PLACING ", SpriteAtlas.EntityType.keys()[current_build_type], " at ", tile_pos)
+		#print(">>> PLACING ", SpriteAtlas.EntityType.keys()[current_build_type], " at ", tile_pos)
 
 		$World.place_building_in_chunk(tile_pos, current_build_type)
+'''

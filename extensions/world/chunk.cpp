@@ -47,7 +47,7 @@ void Chunk::generate(int wx, int wy) {
                 auto e = std::make_shared<Colonist>(world_pos, world->get_next_entity_id());
 
                 thread_local static std::mt19937 gen(std::random_device{}());
-                std::uniform_int_distribution<int> dist(0, 5);
+                std::uniform_int_distribution<int> dist(0, 1);
 
                 e->set_type(dist(gen));
 

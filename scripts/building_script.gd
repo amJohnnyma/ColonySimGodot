@@ -7,7 +7,7 @@ extends Control
 
 @export var type_1: SpriteAtlas.EntityType = SpriteAtlas.EntityType.BUSH
 @export var type_2: SpriteAtlas.EntityType = SpriteAtlas.EntityType.TILE
-@export var type_3: SpriteAtlas.EntityType = SpriteAtlas.EntityType.PLAYER_FRONT
+@export var type_3: SpriteAtlas.EntityType = SpriteAtlas.EntityType.PLAYER_CLIMB_FRONT
 @export var type_4: SpriteAtlas.EntityType = SpriteAtlas.EntityType.PLAYER_CLIMB_BACK
 
 var selected_button: BaseButton = null

@@ -10,6 +10,7 @@
 #include <memory>
 #include <cmath>
 #include "chunk.h"
+#include "entity.h"
 #include "godot_cpp/variant/dictionary.hpp"
 
 using namespace godot;
@@ -28,6 +29,7 @@ class World : public  Node2D{
 
     private:
         std::unordered_map<Vector2i, std::shared_ptr<Chunk>, Vector2iHash> chunks;
+        std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
         int chunk_size = 16;
         int world_chunks_x = 0;
         int world_chunks_y = 0;
