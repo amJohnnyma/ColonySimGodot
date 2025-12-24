@@ -3,11 +3,8 @@ extends Node2D
 
 @export var world_scale: float = 1.0
 
-@onready var button_selector: Control = $BuildUI/BuildingInterface  # Adjust path
 @onready var cam: Camera2D = $Camera2D
 
-var current_build_type: SpriteAtlas.EntityType = -1  # -1 = nothing selected
-var current_base_type: String
 
 func _ready() -> void:
 	scale = Vector2(world_scale, world_scale)
@@ -20,17 +17,8 @@ func _ready() -> void:
 	var half_height = $World.get_world_height_tiles() / 2.0
 	cam.target_position = Vector2(half_width, half_height)
 	
-	# Connect selection
-	button_selector.entity_type_selected.connect(_on_entity_type_selected)
-	button_selector.entity_base_type_selected.connect(_on_entity_base_type_selected)
 
-func _on_entity_type_selected(type: SpriteAtlas.EntityType) -> void:
-	current_build_type = type
-	print("Ready to place: ", SpriteAtlas.EntityType.keys()[type])
-	
-func _on_entity_base_type_selected(type:String) -> void:
-	current_base_type = type
-
+'''
 func _unhandled_input(event: InputEvent) -> void:
 	if current_build_type == -1:
 		# print("No build type selected (click UI button first!)")
@@ -49,7 +37,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		# if place building
 		# elif place colonist
 		$World.create_entity(current_base_type, tile_pos, current_build_type)
-
+'''
 
 		
 '''

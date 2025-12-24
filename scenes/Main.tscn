@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c15h72jiuyrq7" path="res://EntitySprite.tscn" id="5_nxtc6"]
 [ext_resource type="Script" uid="uid://b55gn1ao5cbka" path="res://scripts/Benchmark.gd" id="5_vcsgt"]
 [ext_resource type="Script" uid="uid://dxxlsmhwr6e32" path="res://scripts/grid_hightlight.gd" id="8_jlsqs"]
-[ext_resource type="PackedScene" uid="uid://dbufewkdt2i4j" path="res://scenes/building_interface.tscn" id="8_q8u5g"]
+[ext_resource type="PackedScene" uid="uid://b4x0pgtbs0r18" path="res://scenes/game_ui.tscn" id="8_q8u5g"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_rvslj")
@@ -38,6 +38,7 @@ sample_frames = 10
 [node name="GridHighlight" type="Node2D" parent="GameSystems"]
 script = ExtResource("8_jlsqs")
 
-[node name="BuildUI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
 
-[node name="BuildingInterface" parent="BuildUI" instance=ExtResource("8_q8u5g")]
+[node name="GameUI" parent="UI" instance=ExtResource("8_q8u5g")]
+top_level = true

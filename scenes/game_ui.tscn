@@ -1,0 +1,175 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4x0pgtbs0r18"]
+
+[ext_resource type="Script" uid="uid://8ks538tawrff" path="res://scripts/master_ui.gd" id="1_yubou"]
+[ext_resource type="Texture2D" uid="uid://71nui0fwoium" path="res://icon.svg" id="2_rns2u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rns2u"]
+
+[node name="GameUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_yubou")
+
+[node name="MainActionContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="BuildExpandButton" type="Button" parent="MainActionContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+text = "Build"
+
+[node name="JobExpandButton" type="Button" parent="MainActionContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+text = "Job
+"
+
+[node name="DiplomacyExpandButton" type="Button" parent="MainActionContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+text = "Diplomacy"
+
+[node name="OtherExpandButton" type="Button" parent="MainActionContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+text = "Other
+"
+
+[node name="BuildExpandedPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.837
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CloseBuildExpandedButton" type="Button" parent="BuildExpandedPanel"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="BuildCategories" type="HBoxContainer" parent="BuildExpandedPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Cat1Button" type="Button" parent="BuildExpandedPanel/BuildCategories"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cat1
+"
+icon = ExtResource("2_rns2u")
+alignment = 0
+icon_alignment = 1
+
+[node name="Cat2Button" type="Button" parent="BuildExpandedPanel/BuildCategories"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cat1
+"
+icon = ExtResource("2_rns2u")
+alignment = 0
+icon_alignment = 1
+
+[node name="Cat3Button" type="Button" parent="BuildExpandedPanel/BuildCategories"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cat1
+"
+icon = ExtResource("2_rns2u")
+alignment = 0
+icon_alignment = 1
+
+[node name="Cat4Button" type="Button" parent="BuildExpandedPanel/BuildCategories"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cat1
+"
+icon = ExtResource("2_rns2u")
+alignment = 0
+icon_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BuildExpandedPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -210.0
+offset_bottom = -210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rns2u")
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="BuildExpandedPanel/ScrollContainer"]
+modulate = Color(0.0627451, 1, 1, 1)
+self_modulate = Color(1, 0.1254902, 1, 1)
+layout_mode = 2
+columns = 4
+
+[node name="JobExpandedPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.837
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CloseJobExpandedButton" type="Button" parent="JobExpandedPanel"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="DiplomacyExpandedPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.837
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CloseDiplomacyExpandedButton" type="Button" parent="DiplomacyExpandedPanel"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+offset_right = 8.0
+offset_bottom = 8.0
