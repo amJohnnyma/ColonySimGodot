@@ -7,6 +7,7 @@ extends Node2D
 @onready var cam: Camera2D = $Camera2D
 
 var current_build_type: SpriteAtlas.EntityType = -1  # -1 = nothing selected
+var current_base_type: String
 
 func _ready() -> void:
 	scale = Vector2(world_scale, world_scale)
@@ -21,10 +22,14 @@ func _ready() -> void:
 	
 	# Connect selection
 	button_selector.entity_type_selected.connect(_on_entity_type_selected)
+	button_selector.entity_base_type_selected.connect(_on_entity_base_type_selected)
 
 func _on_entity_type_selected(type: SpriteAtlas.EntityType) -> void:
 	current_build_type = type
 	print("Ready to place: ", SpriteAtlas.EntityType.keys()[type])
+	
+func _on_entity_base_type_selected(type:String) -> void:
+	current_base_type = type
 
 func _unhandled_input(event: InputEvent) -> void:
 	if current_build_type == -1:
@@ -40,10 +45,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		var tile_y: int = floor(mouse_pos_world.y / tile_size) + 1
 		var tile_pos := Vector2i(tile_x, tile_y)
 		# print(">>> PLACING ", SpriteAtlas.EntityType.keys()[current_build_type], " at ", tile_pos)
-		$World.place_building_in_chunk(tile_pos, current_build_type)
+		
+		# if place building
+		# elif place colonist
+		$World.create_entity(current_base_type, tile_pos, current_build_type)
 
-		# Optional: explicitly mark as handled (usually not needed here)
-		# get_viewport().set_input_as_handled()
+
 		
 '''
 func _input(event: InputEvent) -> void:

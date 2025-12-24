@@ -27,7 +27,7 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_chunk_entity_capacity"), &World::get_chunk_entity_capacity);
     ClassDB::bind_method(D_METHOD("get_visible_chunks", "cam_pos", "world_min", "world_max", "max_render_distance"),&World::get_visible_chunks);
     ClassDB::bind_method(D_METHOD("get_visible_entities", "chunk_coords", "cull_min", "cull_max", "max_entities"),&World::get_visible_entities);
-    ClassDB::bind_method(D_METHOD("place_building_in_chunk", "tile_coord", "building_type"),&World::place_building_in_chunk);
+    ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type"),&World::create_entity);
 
 }
 
@@ -339,14 +339,13 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
 }
 
 
-void World::place_building_in_chunk(const Vector2i &tile_coord, const int &building_type)
-{
-    UtilityFunctions::print("Placing building type ", building_type, " at tile ", tile_coord);
 
+void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type)
+{
     Vector2i chunk_coord = world_tile_to_chunk(tile_coord.x, tile_coord.y);
-    UtilityFunctions::print("-> Chunk: ", chunk_coord);
-    Vector2i local = world_tile_to_local(tile_coord.x, tile_coord.y);
-    UtilityFunctions::print("-> Local: ", local);
+   // UtilityFunctions::print("-> Chunk: ", chunk_coord);
+ //   Vector2i local = world_tile_to_local(tile_coord.x, tile_coord.y);
+   // UtilityFunctions::print("-> Local: ", local);
 
     // Load the chunk if needed
     auto chunk = load_chunk(chunk_coord);
@@ -355,11 +354,27 @@ void World::place_building_in_chunk(const Vector2i &tile_coord, const int &build
         return;
     }
 
-    auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), building_type);
-    e->set_type(building_type);
+    if(type == "colonist")
+    {
 
+        auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id());
+        e->set_type(entity_type);
+        pendingEntityPlacements.push_back({chunk,e});
+    }
+    else if(type == "building")
+    {
+        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_type);
+        e->set_type(entity_type);
+        pendingEntityPlacements.push_back({chunk,e});
+    }
+    else 
+    {
 
-    pendingEntityPlacements.push_back({chunk,e});
+       // auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_type);
+     //   e->set_type(entity_type);
+   //     pendingEntityPlacements.push_back({chunk,e});
+    
+    }
 
 
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ynq0st3njnlh" path="res://scripts/building_script.gd" id="1_renbc"]
 
-[node name="BuildingInterface" type="Control" node_paths=PackedStringArray("button_1", "button_2", "button_3", "button_4")]
+[node name="BuildingInterface" type="Control" node_paths=PackedStringArray("button_1", "button_2", "button_3", "button_4", "menu_button")]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -18,6 +18,7 @@ button_1 = NodePath("Panel/HBoxContainer/Button")
 button_2 = NodePath("Panel/HBoxContainer/Button2")
 button_3 = NodePath("Panel/HBoxContainer/Button3")
 button_4 = NodePath("Panel/HBoxContainer/Button4")
+menu_button = NodePath("Panel/HBoxContainer/MenuButton")
 
 [node name="Panel" type="Panel" parent="."]
 clip_contents = true
@@ -59,3 +60,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "4"
 alignment = 0
+
+[node name="MenuButton" type="MenuButton" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "Entity Type"
+item_count = 2
+popup/item_0/text = "Colonist"
+popup/item_0/id = 0
+popup/item_1/text = "Building"
+popup/item_1/id = 1

@@ -12,6 +12,7 @@
 #include "chunk.h"
 #include "entity.h"
 #include "godot_cpp/variant/dictionary.hpp"
+#include "templates/vector.hpp"
 
 using namespace godot;
 
@@ -60,6 +61,7 @@ class World : public  Node2D{
         int get_chunk_entity_count(const Vector2i &coord) const;
         Vector2i get_entity_position(const Vector2i &chunk_coord, int entity_index) const;
         int get_chunk_entity_capacity() const;
+
         
         
         // Get all chunks that need rendering (clamped + culled)
@@ -85,5 +87,5 @@ class World : public  Node2D{
         int get_next_entity_id() {current_entity_id++; return (current_entity_id-1);};
 
         // The building system
-        void place_building_in_chunk(const Vector2i &tile_coord, const int &building_type);
+        void create_entity(const String &type, const Vector2i &coord,const int &entity_type);
 };
