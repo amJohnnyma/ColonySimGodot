@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://t2fu0q2fs1ee"]
+
+[ext_resource type="Theme" uid="uid://dagsu1nb4qbs4" path="res://themes/main_theme.tres" id="1_rayio"]
+[ext_resource type="Script" uid="uid://cyw35exgk7ep7" path="res://scripts/main_menu.gd" id="2_4pl3l"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rayio")
+script = ExtResource("2_4pl3l")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 50.0
+grow_vertical = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="MenuButtons" type="VBoxContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ContinueButton" type="Button" parent="TextureRect/MarginContainer/MenuButtons"]
+layout_mode = 2
+text = "CONTINUE"
+
+[node name="NewButton" type="Button" parent="TextureRect/MarginContainer/MenuButtons"]
+layout_mode = 2
+text = "Play
+"
+
+[node name="SettingsButton" type="Button" parent="TextureRect/MarginContainer/MenuButtons"]
+layout_mode = 2
+text = "Settings
+"
+
+[node name="ExitButton" type="Button" parent="TextureRect/MarginContainer/MenuButtons"]
+layout_mode = 2
+text = "Exit"

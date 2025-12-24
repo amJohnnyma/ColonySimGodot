@@ -110,7 +110,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 10, "Panel", button_id)
+				fill_grid_with_placeholders(build_grid_options, 40, "Panel", button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		2:
@@ -118,7 +118,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 20, "Label", button_id)
+				fill_grid_with_placeholders(build_grid_options, 40, "Label", button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		3:
@@ -126,7 +126,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 30, "Button", button_id)
+				fill_grid_with_placeholders(build_grid_options, 40, "Button", button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		4:
@@ -155,24 +155,24 @@ func fill_grid_with_placeholders(grid: GridContainer, count: int = 20, placehold
 		match placeholder_type:
 			"Panel":
 				placeholder = Panel.new()
-				placeholder.custom_minimum_size = Vector2(100, 100)  # Adjust size as needed
+				placeholder.custom_minimum_size = Vector2(50, 50)  # Adjust size as needed
 				placeholder.modulate = Color(0.3, 0.3, 0.3, 0.8)   # Gray semi-transparent
 			"Label":
 				placeholder = Label.new()
 				placeholder.text = "Item %d" % (i + 1)
 				placeholder.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 				placeholder.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-				placeholder.custom_minimum_size = Vector2(100, 100)
+				placeholder.custom_minimum_size = Vector2(50, 50)
 			"Button":
 				placeholder = Button.new()
 				placeholder.text = "Btn %d" % (i + 1)
-				placeholder.custom_minimum_size = Vector2(100, 100)
+				placeholder.custom_minimum_size = Vector2(50, 50)
 			"TextureRect":
 				placeholder = TextureRect.new()
 				placeholder.texture = preload("res://icon.svg")  # Use Godot icon or your placeholder image
 				placeholder.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 				placeholder.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-				placeholder.custom_minimum_size = Vector2(100, 100)
+				placeholder.custom_minimum_size = Vector2(50, 50)
 			_:
 				placeholder = Panel.new()  # fallback
 		
