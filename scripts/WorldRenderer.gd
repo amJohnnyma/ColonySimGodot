@@ -93,9 +93,14 @@ func _process(delta: float) -> void:
 	var sheet_ids: PackedInt32Array = visible_data["types"]                    # Spritesheet ID
 	var variant_ids: PackedInt32Array = visible_data["entity_sprites"]        # Sprite variant on that sheet
 	var entity_count: int = visible_data["count"]
+	var entity_width: PackedInt32Array = visible_data["entity_width"]
+	var entity_height: PackedInt32Array = visible_data["entity_height"]
 
 	# === 5. Update sprite pool ===
 	for i in entity_count:
+		
+		var width: int = entity_width[i]                     # e.g., 3 for a 3-wide building
+		var height: int = entity_height[i]
 		var sprite: Sprite2D = sprite_pool[i]
 		sprite.global_position = positions[i]
 
@@ -118,9 +123,12 @@ func _process(delta: float) -> void:
 			sprite.scale = new_scale
 
 		# Offset
-		var new_offset: Vector2 = SpriteAtlas.get_offset(sheet_id)
+		var new_offset: Vector2 = SpriteAtlas.get_offset(sheet_id, variant_id)
 		if sprite.offset != new_offset:
 			sprite.offset = new_offset
+			
+		sprite.scale.x *= width
+		sprite.scale.y *= height
 
 		sprite.visible = true
 

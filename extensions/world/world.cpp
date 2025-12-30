@@ -1,5 +1,6 @@
 #include "world.h"
 #include "chunk.h"
+#include "variant/vector2i.hpp"
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <cmath>
 #include <unordered_set>
@@ -240,12 +241,16 @@ Dictionary World::get_visible_entities(
     PackedInt64Array entity_ids;
     PackedInt32Array types;
     PackedInt32Array entity_sprites;
+    PackedInt32Array entity_width;
+    PackedInt32Array entity_height;
 
     // Pre-allocate for performance
     positions.resize(max_entities);
     entity_ids.resize(max_entities);
     types.resize(max_entities);
     entity_sprites.resize(max_entities);
+    entity_width.resize(max_entities);
+    entity_height.resize(max_entities);
 
     int count = 0;
 
@@ -271,6 +276,8 @@ Dictionary World::get_visible_entities(
             entity_ids.set(count, static_cast<int64_t>(entity_ptr->get_entity_id()));
             types.set(count, entity_ptr->get_type_id());
             entity_sprites.set(count, entity_ptr->get_entity_sprite());
+            entity_width.set(count, entity_ptr->get_entity_width());
+            entity_height.set(count, entity_ptr->get_entity_height());
 
             count++;
         }
@@ -288,6 +295,8 @@ Dictionary World::get_visible_entities(
     result["entity_ids"] = entity_ids;
     result["types"]      = types;
     result["entity_sprites"] = entity_sprites;
+    result["entity_width"] = entity_width;
+    result["entity_height"] = entity_height;
     result["count"]      = count;
 
     return result;
@@ -362,12 +371,13 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     if(type == "colonist")
     {
 
-        auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite);
+        auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(1,1));
         pendingEntityPlacements.push_back({chunk,e});
     }
     else if(type == "building")
     {
-        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, entity_type);
+        // temporarily make a building this size
+        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(1,1), entity_type);
         pendingEntityPlacements.push_back({chunk,e});
     }
     else 

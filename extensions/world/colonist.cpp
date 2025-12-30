@@ -2,7 +2,7 @@
 #include "entity.h"
 #include <cstdint>
 
-Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite) : Entity(pos, id, entity_sprite) {
+Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) : Entity(pos, id, entity_sprite, size) {
     reset_timer();
     entity_type = 1;
 }

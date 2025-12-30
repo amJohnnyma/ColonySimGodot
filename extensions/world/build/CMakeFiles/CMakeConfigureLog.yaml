@@ -61,8 +61,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Be6zJs"
-      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Be6zJs"
+      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-TbH428"
+      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-TbH428"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -71,13 +71,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Be6zJs'
+        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-TbH428'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a4691/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_a4691.dir/build.make CMakeFiles/cmTC_a4691.dir/build
-        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Be6zJs'
-        Building C object CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7e762/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_7e762.dir/build.make CMakeFiles/cmTC_7e762.dir/build
+        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-TbH428'
+        Building C object CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -87,8 +87,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a4691.dir/'
-         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_a4691.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc8PB3Ds.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7e762.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_7e762.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccniwNNr.s
         GNU C17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)
         	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
         
@@ -105,15 +105,15 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 38987c28e967c64056a6454abdef726e
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a4691.dir/'
-         as -v --64 -o CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o /tmp/cc8PB3Ds.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7e762.dir/'
+         as -v --64 -o CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o /tmp/ccniwNNr.s
         GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_a4691
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a4691.dir/link.txt --verbose=1
-        /usr/bin/cc  -v CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o -o cmTC_a4691 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_7e762
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7e762.dir/link.txt --verbose=1
+        /usr/bin/cc  -v CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o -o cmTC_7e762 
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
@@ -126,10 +126,10 @@ events:
         gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a4691' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a4691.'
-         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccfPzLqp.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_a4691 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a4691' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a4691.'
-        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Be6zJs'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7e762' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_7e762.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPFLr1K.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7e762 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7e762' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_7e762.'
+        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-TbH428'
         
       exitCode: 0
   -
@@ -163,13 +163,13 @@ events:
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Be6zJs']
+        ignore line: [Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-TbH428']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a4691/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_a4691.dir/build.make CMakeFiles/cmTC_a4691.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Be6zJs']
-        ignore line: [Building C object CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7e762/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_7e762.dir/build.make CMakeFiles/cmTC_7e762.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-TbH428']
+        ignore line: [Building C object CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -179,8 +179,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a4691.dir/']
-        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_a4691.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc8PB3Ds.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7e762.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_7e762.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccniwNNr.s]
         ignore line: [GNU C17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
         ignore line: []
@@ -197,15 +197,15 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 38987c28e967c64056a6454abdef726e]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a4691.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o /tmp/cc8PB3Ds.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7e762.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o /tmp/ccniwNNr.s]
         ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_a4691]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a4691.dir/link.txt --verbose=1]
-        ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o -o cmTC_a4691 ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_7e762]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7e762.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o -o cmTC_7e762 ]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
@@ -218,13 +218,13 @@ events:
         ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a4691' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a4691.']
-        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccfPzLqp.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_a4691 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7e762' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_7e762.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPFLr1K.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7e762 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccfPzLqp.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccPFLr1K.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -242,7 +242,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_a4691] ==> ignore
+          arg [cmTC_7e762] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o]
@@ -254,7 +254,7 @@ events:
           arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
-          arg [CMakeFiles/cmTC_a4691.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_7e762.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -294,8 +294,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ScyojP"
-      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ScyojP"
+      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ubOhtI"
+      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ubOhtI"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -304,13 +304,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ScyojP'
+        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ubOhtI'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3227c/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_3227c.dir/build.make CMakeFiles/cmTC_3227c.dir/build
-        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ScyojP'
-        Building CXX object CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_13c30/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_13c30.dir/build.make CMakeFiles/cmTC_13c30.dir/build
+        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ubOhtI'
+        Building CXX object CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -320,8 +320,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_3227c.dir/'
-         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_3227c.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccMWwhGX.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_13c30.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_13c30.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccp2lc5T.s
         GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)
         	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
         
@@ -342,15 +342,15 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: c81c05345ce537099dafd5580045814a
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_3227c.dir/'
-         as -v --64 -o CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccMWwhGX.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_13c30.dir/'
+         as -v --64 -o CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccp2lc5T.s
         GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_3227c
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3227c.dir/link.txt --verbose=1
-        /usr/bin/c++  -v CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_3227c 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_13c30
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_13c30.dir/link.txt --verbose=1
+        /usr/bin/c++  -v CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_13c30 
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
@@ -363,10 +363,10 @@ events:
         gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3227c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_3227c.'
-         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccNPpI8l.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_3227c /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3227c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_3227c.'
-        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ScyojP'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_13c30' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_13c30.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cc6HbG6F.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_13c30 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_13c30' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_13c30.'
+        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ubOhtI'
         
       exitCode: 0
   -
@@ -406,13 +406,13 @@ events:
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ScyojP']
+        ignore line: [Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ubOhtI']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3227c/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_3227c.dir/build.make CMakeFiles/cmTC_3227c.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ScyojP']
-        ignore line: [Building CXX object CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_13c30/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_13c30.dir/build.make CMakeFiles/cmTC_13c30.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ubOhtI']
+        ignore line: [Building CXX object CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -422,8 +422,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_3227c.dir/']
-        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_3227c.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccMWwhGX.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_13c30.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_13c30.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccp2lc5T.s]
         ignore line: [GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
         ignore line: []
@@ -444,15 +444,15 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: c81c05345ce537099dafd5580045814a]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_3227c.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccMWwhGX.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_13c30.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccp2lc5T.s]
         ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_3227c]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3227c.dir/link.txt --verbose=1]
-        ignore line: [/usr/bin/c++  -v CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_3227c ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_13c30]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_13c30.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/c++  -v CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_13c30 ]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
@@ -465,13 +465,13 @@ events:
         ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3227c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_3227c.']
-        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccNPpI8l.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_3227c /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_13c30' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_13c30.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cc6HbG6F.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_13c30 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccNPpI8l.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc6HbG6F.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -489,7 +489,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_3227c] ==> ignore
+          arg [cmTC_13c30] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o]
@@ -501,7 +501,7 @@ events:
           arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
-          arg [CMakeFiles/cmTC_3227c.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_13c30.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -536,8 +536,8 @@ events:
       - "CMakeLists.txt:45 (find_package)"
     description: "Detecting C OpenMP compiler info"
     directories:
-      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2"
-      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2"
+      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b"
+      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -546,13 +546,13 @@ events:
       variable: "OpenMP_COMPILE_RESULT_C_fopenmp"
       cached: true
       stdout: |
-        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2'
+        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fd96b/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_fd96b.dir/build.make CMakeFiles/cmTC_fd96b.dir/build
-        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2'
-        Building C object CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o
-        /usr/bin/cc   -fopenmp -v -o CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2/OpenMPTryFlag.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0fc30/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_0fc30.dir/build.make CMakeFiles/cmTC_0fc30.dir/build
+        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b'
+        Building C object CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o
+        /usr/bin/cc   -fopenmp -v -o CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b/OpenMPTryFlag.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -562,8 +562,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_fd96b.dir/'
-         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu -D_REENTRANT /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2/OpenMPTryFlag.c -quiet -dumpdir CMakeFiles/cmTC_fd96b.dir/ -dumpbase OpenMPTryFlag.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccfqOkwf.s
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_0fc30.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu -D_REENTRANT /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b/OpenMPTryFlag.c -quiet -dumpdir CMakeFiles/cmTC_0fc30.dir/ -dumpbase OpenMPTryFlag.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccFPU7jB.s
         GNU C17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)
         	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
         
@@ -580,15 +580,15 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 38987c28e967c64056a6454abdef726e
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_fd96b.dir/'
-         as -v --64 -o CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o /tmp/ccfqOkwf.s
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_0fc30.dir/'
+         as -v --64 -o CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o /tmp/ccFPU7jB.s
         GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.'
-        Linking C executable cmTC_fd96b
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fd96b.dir/link.txt --verbose=1
-        /usr/bin/cc  -fopenmp -v CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o -o cmTC_fd96b  -v 
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.'
+        Linking C executable cmTC_0fc30
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0fc30.dir/link.txt --verbose=1
+        /usr/bin/cc  -fopenmp -v CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o -o cmTC_0fc30  -v 
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
@@ -602,10 +602,10 @@ events:
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
         Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_fd96b' '-v' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_fd96b.'
-         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cc30j2mS.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_fd96b /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o -lgomp -lgcc --push-state --as-needed -lgcc_s --pop-state -lpthread -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_fd96b' '-v' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_fd96b.'
-        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2'
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_0fc30' '-v' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_0fc30.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cc0fh8FU.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0fc30 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o -lgomp -lgcc --push-state --as-needed -lgcc_s --pop-state -lpthread -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_0fc30' '-v' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_0fc30.'
+        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b'
         
       exitCode: 0
   -
@@ -617,13 +617,13 @@ events:
     message: |
       Parsed C OpenMP implicit link information from above output:
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2']
+        ignore line: [Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fd96b/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_fd96b.dir/build.make CMakeFiles/cmTC_fd96b.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2']
-        ignore line: [Building C object CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o]
-        ignore line: [/usr/bin/cc   -fopenmp -v -o CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2/OpenMPTryFlag.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0fc30/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_0fc30.dir/build.make CMakeFiles/cmTC_0fc30.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b']
+        ignore line: [Building C object CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o]
+        ignore line: [/usr/bin/cc   -fopenmp -v -o CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b/OpenMPTryFlag.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -633,8 +633,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_fd96b.dir/']
-        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu -D_REENTRANT /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ZGIAq2/OpenMPTryFlag.c -quiet -dumpdir CMakeFiles/cmTC_fd96b.dir/ -dumpbase OpenMPTryFlag.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccfqOkwf.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_0fc30.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu -D_REENTRANT /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-V4LP4b/OpenMPTryFlag.c -quiet -dumpdir CMakeFiles/cmTC_0fc30.dir/ -dumpbase OpenMPTryFlag.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccFPU7jB.s]
         ignore line: [GNU C17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
         ignore line: []
@@ -651,15 +651,15 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 38987c28e967c64056a6454abdef726e]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_fd96b.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o /tmp/ccfqOkwf.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_0fc30.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o /tmp/ccFPU7jB.s]
         ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.']
-        ignore line: [Linking C executable cmTC_fd96b]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fd96b.dir/link.txt --verbose=1]
-        ignore line: [/usr/bin/cc  -fopenmp -v CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o -o cmTC_fd96b  -v ]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o' '-c' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.']
+        ignore line: [Linking C executable cmTC_0fc30]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0fc30.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/cc  -fopenmp -v CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o -o cmTC_0fc30  -v ]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
@@ -673,13 +673,13 @@ events:
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
         ignore line: [Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_fd96b' '-v' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_fd96b.']
-        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cc30j2mS.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_fd96b /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o -lgomp -lgcc --push-state --as-needed -lgcc_s --pop-state -lpthread -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_0fc30' '-v' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_0fc30.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cc0fh8FU.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0fc30 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o -lgomp -lgcc --push-state --as-needed -lgcc_s --pop-state -lpthread -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o]
           arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cc30j2mS.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc0fh8FU.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
@@ -698,7 +698,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_fd96b] ==> ignore
+          arg [cmTC_0fc30] ==> ignore
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
@@ -707,7 +707,7 @@ events:
           arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
-          arg [CMakeFiles/cmTC_fd96b.dir/OpenMPTryFlag.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_0fc30.dir/OpenMPTryFlag.c.o] ==> ignore
           arg [-lgomp] ==> lib [gomp]
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
@@ -743,8 +743,8 @@ events:
       - "CMakeLists.txt:45 (find_package)"
     description: "Detecting CXX OpenMP compiler info"
     directories:
-      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW"
-      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW"
+      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF"
+      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -753,13 +753,13 @@ events:
       variable: "OpenMP_COMPILE_RESULT_CXX_fopenmp"
       cached: true
       stdout: |
-        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW'
+        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8d4c4/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_8d4c4.dir/build.make CMakeFiles/cmTC_8d4c4.dir/build
-        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW'
-        Building CXX object CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o
-        /usr/bin/c++   -fopenmp -v -std=gnu++17 -o CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW/OpenMPTryFlag.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8a13e/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_8a13e.dir/build.make CMakeFiles/cmTC_8a13e.dir/build
+        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF'
+        Building CXX object CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o
+        /usr/bin/c++   -fopenmp -v -std=gnu++17 -o CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF/OpenMPTryFlag.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -769,8 +769,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8d4c4.dir/'
-         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE -D_REENTRANT /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW/OpenMPTryFlag.cpp -quiet -dumpdir CMakeFiles/cmTC_8d4c4.dir/ -dumpbase OpenMPTryFlag.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -std=gnu++17 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccDiRv70.s
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8a13e.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE -D_REENTRANT /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF/OpenMPTryFlag.cpp -quiet -dumpdir CMakeFiles/cmTC_8a13e.dir/ -dumpbase OpenMPTryFlag.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -std=gnu++17 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc0VHH3Y.s
         GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)
         	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
         
@@ -791,15 +791,15 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: c81c05345ce537099dafd5580045814a
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8d4c4.dir/'
-         as -v --64 -o CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o /tmp/ccDiRv70.s
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8a13e.dir/'
+         as -v --64 -o CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o /tmp/cc0VHH3Y.s
         GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.'
-        Linking CXX executable cmTC_8d4c4
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8d4c4.dir/link.txt --verbose=1
-        /usr/bin/c++  -fopenmp -v CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o -o cmTC_8d4c4  -v 
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.'
+        Linking CXX executable cmTC_8a13e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8a13e.dir/link.txt --verbose=1
+        /usr/bin/c++  -fopenmp -v CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o -o cmTC_8a13e  -v 
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
@@ -813,10 +813,10 @@ events:
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
         Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_8d4c4' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_8d4c4.'
-         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cczzO0yO.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_8d4c4 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o
-        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_8d4c4' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_8d4c4.'
-        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW'
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_8a13e' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_8a13e.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccpTxs97.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_8a13e /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_8a13e' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_8a13e.'
+        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF'
         
       exitCode: 0
   -
@@ -828,13 +828,13 @@ events:
     message: |
       Parsed CXX OpenMP implicit link information from above output:
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW']
+        ignore line: [Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8d4c4/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_8d4c4.dir/build.make CMakeFiles/cmTC_8d4c4.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW']
-        ignore line: [Building CXX object CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o]
-        ignore line: [/usr/bin/c++   -fopenmp -v -std=gnu++17 -o CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW/OpenMPTryFlag.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8a13e/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_8a13e.dir/build.make CMakeFiles/cmTC_8a13e.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF']
+        ignore line: [Building CXX object CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o]
+        ignore line: [/usr/bin/c++   -fopenmp -v -std=gnu++17 -o CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF/OpenMPTryFlag.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -844,8 +844,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8d4c4.dir/']
-        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE -D_REENTRANT /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-keUCBW/OpenMPTryFlag.cpp -quiet -dumpdir CMakeFiles/cmTC_8d4c4.dir/ -dumpbase OpenMPTryFlag.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -std=gnu++17 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccDiRv70.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8a13e.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE -D_REENTRANT /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-Ad4xwF/OpenMPTryFlag.cpp -quiet -dumpdir CMakeFiles/cmTC_8a13e.dir/ -dumpbase OpenMPTryFlag.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -std=gnu++17 -version -fopenmp -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc0VHH3Y.s]
         ignore line: [GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
         ignore line: []
@@ -866,15 +866,15 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: c81c05345ce537099dafd5580045814a]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8d4c4.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o /tmp/ccDiRv70.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8a13e.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o /tmp/cc0VHH3Y.s]
         ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.']
-        ignore line: [Linking CXX executable cmTC_8d4c4]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8d4c4.dir/link.txt --verbose=1]
-        ignore line: [/usr/bin/c++  -fopenmp -v CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o -o cmTC_8d4c4  -v ]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.']
+        ignore line: [Linking CXX executable cmTC_8a13e]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8a13e.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/c++  -fopenmp -v CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o -o cmTC_8a13e  -v ]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
@@ -888,13 +888,13 @@ events:
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
         ignore line: [Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec]
-        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_8d4c4' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_8d4c4.']
-        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cczzO0yO.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_8d4c4 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_8a13e' '-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_8a13e.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccpTxs97.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_8a13e /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o]
           arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cczzO0yO.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccpTxs97.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
@@ -913,7 +913,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_8d4c4] ==> ignore
+          arg [cmTC_8a13e] ==> ignore
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
@@ -922,7 +922,7 @@ events:
           arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
-          arg [CMakeFiles/cmTC_8d4c4.dir/OpenMPTryFlag.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_8a13e.dir/OpenMPTryFlag.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgomp] ==> lib [gomp]
@@ -954,8 +954,8 @@ events:
       - "CMakeLists.txt:45 (find_package)"
     description: "Detecting C OpenMP version"
     directories:
-      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ewOi8u"
-      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ewOi8u"
+      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-sAbkbg"
+      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-sAbkbg"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -964,17 +964,17 @@ events:
       variable: "OpenMP_SPECTEST_C_"
       cached: true
       stdout: |
-        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ewOi8u'
+        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-sAbkbg'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e878d/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_e878d.dir/build.make CMakeFiles/cmTC_e878d.dir/build
-        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ewOi8u'
-        Building C object CMakeFiles/cmTC_e878d.dir/OpenMPCheckVersion.c.o
-        /usr/bin/cc   -fopenmp -o CMakeFiles/cmTC_e878d.dir/OpenMPCheckVersion.c.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ewOi8u/OpenMPCheckVersion.c
-        Linking C executable cmTC_e878d
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e878d.dir/link.txt --verbose=1
-        /usr/bin/cc  -fopenmp CMakeFiles/cmTC_e878d.dir/OpenMPCheckVersion.c.o -o cmTC_e878d 
-        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-ewOi8u'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_76ed0/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_76ed0.dir/build.make CMakeFiles/cmTC_76ed0.dir/build
+        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-sAbkbg'
+        Building C object CMakeFiles/cmTC_76ed0.dir/OpenMPCheckVersion.c.o
+        /usr/bin/cc   -fopenmp -o CMakeFiles/cmTC_76ed0.dir/OpenMPCheckVersion.c.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-sAbkbg/OpenMPCheckVersion.c
+        Linking C executable cmTC_76ed0
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_76ed0.dir/link.txt --verbose=1
+        /usr/bin/cc  -fopenmp CMakeFiles/cmTC_76ed0.dir/OpenMPCheckVersion.c.o -o cmTC_76ed0 
+        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-sAbkbg'
         
       exitCode: 0
   -
@@ -985,8 +985,8 @@ events:
       - "CMakeLists.txt:45 (find_package)"
     description: "Detecting CXX OpenMP version"
     directories:
-      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-WeFILv"
-      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-WeFILv"
+      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-awBmRq"
+      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-awBmRq"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -995,17 +995,17 @@ events:
       variable: "OpenMP_SPECTEST_CXX_"
       cached: true
       stdout: |
-        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-WeFILv'
+        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-awBmRq'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d1ed7/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_d1ed7.dir/build.make CMakeFiles/cmTC_d1ed7.dir/build
-        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-WeFILv'
-        Building CXX object CMakeFiles/cmTC_d1ed7.dir/OpenMPCheckVersion.cpp.o
-        /usr/bin/c++   -fopenmp -std=gnu++17 -o CMakeFiles/cmTC_d1ed7.dir/OpenMPCheckVersion.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-WeFILv/OpenMPCheckVersion.cpp
-        Linking CXX executable cmTC_d1ed7
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d1ed7.dir/link.txt --verbose=1
-        /usr/bin/c++  -fopenmp CMakeFiles/cmTC_d1ed7.dir/OpenMPCheckVersion.cpp.o -o cmTC_d1ed7 
-        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-WeFILv'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2a24a/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_2a24a.dir/build.make CMakeFiles/cmTC_2a24a.dir/build
+        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-awBmRq'
+        Building CXX object CMakeFiles/cmTC_2a24a.dir/OpenMPCheckVersion.cpp.o
+        /usr/bin/c++   -fopenmp -std=gnu++17 -o CMakeFiles/cmTC_2a24a.dir/OpenMPCheckVersion.cpp.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-awBmRq/OpenMPCheckVersion.cpp
+        Linking CXX executable cmTC_2a24a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2a24a.dir/link.txt --verbose=1
+        /usr/bin/c++  -fopenmp CMakeFiles/cmTC_2a24a.dir/OpenMPCheckVersion.cpp.o -o cmTC_2a24a 
+        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-awBmRq'
         
       exitCode: 0
   -
@@ -1019,8 +1019,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-GCZ2xC"
-      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-GCZ2xC"
+      source: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-syLIEA"
+      binary: "/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-syLIEA"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1029,17 +1029,17 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-GCZ2xC'
+        Change Dir: '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-syLIEA'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f431d/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_f431d.dir/build.make CMakeFiles/cmTC_f431d.dir/build
-        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-GCZ2xC'
-        Building C object CMakeFiles/cmTC_f431d.dir/src.c.o
-        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_f431d.dir/src.c.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-GCZ2xC/src.c
-        Linking C executable cmTC_f431d
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f431d.dir/link.txt --verbose=1
-        /usr/bin/cc CMakeFiles/cmTC_f431d.dir/src.c.o -o cmTC_f431d 
-        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-GCZ2xC'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_62ea5/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_62ea5.dir/build.make CMakeFiles/cmTC_62ea5.dir/build
+        gmake[1]: Entering directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-syLIEA'
+        Building C object CMakeFiles/cmTC_62ea5.dir/src.c.o
+        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_62ea5.dir/src.c.o -c /home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-syLIEA/src.c
+        Linking C executable cmTC_62ea5
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62ea5.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_62ea5.dir/src.c.o -o cmTC_62ea5 
+        gmake[1]: Leaving directory '/home/johnny/Godot/colony-sim-2/extensions/world/build/CMakeFiles/CMakeScratch/TryCompile-syLIEA'
         
       exitCode: 0
 ...

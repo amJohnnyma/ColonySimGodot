@@ -24,10 +24,11 @@ class Entity
         Vector2i position;           // Grid position (local to chunk!)
         float move_timer = 0.0f;
         bool active = true;
-        Entity(Vector2i pos, uint64_t id, int entity_sprite);
+        Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size = Vector2i(1,1));
         uint64_t entity_id;
         int entity_type;
         int entity_sprite;
+        Vector2i size = Vector2i(1,1);
     public:
         virtual ~Entity() = default;
 
@@ -41,5 +42,9 @@ class Entity
         virtual int get_type_id() const = 0;
         uint64_t get_entity_id() const { return entity_id; }
         int get_entity_sprite() const { return entity_sprite; }
+        Vector2i get_entity_size() const { return size; }
+        int get_entity_width() const { return size.x; }
+        int get_entity_height() const { return size.y; }
+
 
 };

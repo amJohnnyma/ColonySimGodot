@@ -3,7 +3,7 @@
 #include "godot_cpp/variant/utility_functions.hpp"
 #include <cstdint>
 
-Building::Building(Vector2i pos, uint64_t id, int entity_sprite, int type) : Entity(pos, id, entity_sprite), type(type) {
+Building::Building(Vector2i pos, uint64_t id, int entity_sprite,Vector2i size, int type) : Entity(pos, id, entity_sprite, size), type(type) {
     reset_timer();
     entity_type = 2;
 }
