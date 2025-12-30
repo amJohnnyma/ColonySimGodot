@@ -41,6 +41,7 @@ void World::init(int world_width_tiles, int world_height_tiles, int chunk_size_t
     world_chunks_y = (world_height_tiles + chunk_size - 1) / chunk_size;
 
     // No pre-generation: chunks load on-demand for massive worlds
+    init_thread_pool(4);
 }
 
 // Convert world-space position (Vector3) to chunk coordinates.
@@ -301,57 +302,133 @@ Dictionary World::get_visible_entities(
 
     return result;
 }
+void World::init_thread_pool(size_t thread_count) {
+    if (thread_count == 0) {
+        thread_count = std::max(2u, std::thread::hardware_concurrency() - 1);
+    }
+    thread_pool = std::make_unique<ThreadPool>(thread_count);
+}
 
 void World::update(const Vector2 &origin, int render_distance_chunks, float delta) {
-
-
-    for(auto ec : pendingEntityPlacements)
-    {
-        auto chunkRef = std::get<0>(ec);
-        auto entityRef = std::get<1>(ec);
-
-        chunkRef->entities.push_back(entityRef);
+    // Ensure thread pool exists
+    if (!thread_pool) {
+        init_thread_pool();
     }
-    pendingEntityPlacements.clear();
 
-    Vector2i origin_chunk = world_pos_to_chunk(origin);
-    int R = render_distance_chunks;
-    std::unordered_set<Vector2i, Vector2iHash> needed_chunks;
-
-    // Load and simulate nearby chunks
-    for (int dy = -R; dy <= R; ++dy) {
-        for (int dx = -R; dx <= R; ++dx) {
-            Vector2i c = origin_chunk + Vector2i(dx, dy);
-            if (!is_valid_chunk(c)) continue;
-            needed_chunks.insert(c);
-
-            auto chunk = get_chunk(c);
-            if (!chunk) chunk = load_chunk(c);
-            if (chunk) chunk->simulate(delta, true);
+    // 1. Process pending entities (single lock, batch operation)
+    {
+        std::lock_guard<std::mutex> pending_lock(pending_mutex);
+        if (!pendingEntityPlacements.empty()) {
+            std::lock_guard<std::mutex> chunk_lock(chunks_mutex);
+            for (auto& ec : pendingEntityPlacements) {
+                std::get<0>(ec)->entities.push_back(std::get<1>(ec));
+            }
+            pendingEntityPlacements.clear();
         }
     }
 
-    // Light simulation for loaded chunks outside render distance
-    for (auto &kv : chunks) {
-        const Vector2i &coord = kv.first;
-        auto &chunk = kv.second;
-        int dist_x = std::abs(coord.x - origin_chunk.x);
-        int dist_y = std::abs(coord.y - origin_chunk.y);
-        if (dist_x > R || dist_y > R) {
+    Vector2i origin_chunk = world_pos_to_chunk(origin);
+    const int R = render_distance_chunks;
+    const int diameter = 2 * R + 1;
+    
+    // Clear and reserve cache
+    sim_cache.clear();
+    sim_cache.full_sim.reserve(diameter * diameter);
+    sim_cache.needed.reserve(diameter * diameter);
+
+    // 2. Collect chunks in single locked section
+    {
+        std::lock_guard<std::mutex> lock(chunks_mutex);
+        
+        // Load/collect nearby chunks for full simulation
+        for (int dy = -R; dy <= R; ++dy) {
+            for (int dx = -R; dx <= R; ++dx) {
+                Vector2i c(origin_chunk.x + dx, origin_chunk.y + dy);
+                if (!is_valid_chunk(c)) continue;
+                
+                sim_cache.needed.insert(c);
+                auto chunk = get_chunk(c);
+                if (!chunk) {
+                    chunk = load_chunk(c);
+                }
+                if (chunk && !chunk->entities.empty()) {
+                    sim_cache.full_sim.push_back(chunk);
+                }
+            }
+        }
+        
+        // Collect distant chunks for light simulation
+        sim_cache.light_sim.reserve(chunks.size() / 4);
+        for (auto &kv : chunks) {
+            const Vector2i &coord = kv.first;
+            if (sim_cache.needed.find(coord) != sim_cache.needed.end()) {
+                continue; // Already in full sim
+            }
+            
+            int dist_x = std::abs(coord.x - origin_chunk.x);
+            int dist_y = std::abs(coord.y - origin_chunk.y);
+            if ((dist_x > R || dist_y > R) && !kv.second->entities.empty()) {
+                sim_cache.light_sim.push_back(kv.second);
+            }
+        }
+    }
+
+    // 3. Parallel full simulation (nearby chunks)
+    if (!sim_cache.full_sim.empty()) {
+        std::vector<std::future<void>> futures;
+        futures.reserve(sim_cache.full_sim.size());
+        
+        for (auto& chunk : sim_cache.full_sim) {
+            futures.push_back(thread_pool->enqueue([chunk, delta]() {
+                chunk->simulate(delta, true);
+            }));
+        }
+        
+        // Wait for completion
+        for (auto& fut : futures) {
+            fut.get();
+        }
+    }
+
+    // 4. Parallel light simulation (distant chunks)
+    constexpr int MIN_CHUNKS_FOR_PARALLEL = 8;
+    if (sim_cache.light_sim.size() >= MIN_CHUNKS_FOR_PARALLEL) {
+        std::vector<std::future<void>> futures;
+        futures.reserve(sim_cache.light_sim.size());
+        
+        for (auto& chunk : sim_cache.light_sim) {
+            futures.push_back(thread_pool->enqueue([chunk, delta]() {
+                chunk->simulate(delta, false);
+            }));
+        }
+        
+        for (auto& fut : futures) {
+            fut.get();
+        }
+    } else {
+        // Serial for small counts (avoid overhead)
+        for (auto& chunk : sim_cache.light_sim) {
             chunk->simulate(delta, false);
         }
     }
 
-    // Unload far chunks
-    std::vector<Vector2i> to_remove;
-    for (auto &kv : chunks) {
-        if (needed_chunks.find(kv.first) == needed_chunks.end()) {
-            to_remove.push_back(kv.first);
+    // 5. Unload far chunks (single lock)
+    {
+        std::lock_guard<std::mutex> lock(chunks_mutex);
+        std::vector<Vector2i> to_remove;
+        to_remove.reserve(chunks.size() / 8);
+        
+        for (auto &kv : chunks) {
+            if (sim_cache.needed.find(kv.first) == sim_cache.needed.end()) {
+                to_remove.push_back(kv.first);
+            }
+        }
+        
+        for (const auto &c : to_remove) {
+            unload_chunk(c);
         }
     }
-    for (auto &c : to_remove) unload_chunk(c);
 }
-
 
 
 void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite)
@@ -372,7 +449,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     {
 
         auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(1,1));
-        pendingEntityPlacements.push_back({chunk,e});
+        pendingEntityPlacements.push_back({chunk, e});
     }
     else if(type == "building")
     {

@@ -12,7 +12,6 @@ func _ready() -> void:
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	
 	$World.init(GameSettings.max_world_tiles, GameSettings.max_world_tiles, GameSettings.chunk_size)
-	
 	var half_width = $World.get_world_width_tiles() / 2.0
 	var half_height = $World.get_world_height_tiles() / 2.0
 	cam.target_position = Vector2(half_width, half_height)
@@ -29,8 +28,22 @@ func _ready() -> void:
 	var max_world_tile = GameSettings.max_world_tiles
 	var CHUNK_SIZE : int = GameSettings.chunk_size
 	var world_center_chunk : Vector2i = Vector2i((max_world_tile/2) / CHUNK_SIZE,(max_world_tile/2) / CHUNK_SIZE)
-
-
+	for chunk_x in range(2):  # 0,1
+		for chunk_y in range(2):  # 0,1
+			for local_y in range(CHUNK_SIZE):
+				for local_x in range(CHUNK_SIZE):
+					# World tile coord
+					var world_coord : Vector2i = Vector2i(
+						(chunk_x + world_center_chunk.x) * CHUNK_SIZE + local_x,
+						(chunk_y + world_center_chunk.y) * CHUNK_SIZE + local_y
+					)
+					
+					# Cycle through sprite indices (0-14)
+					var sprite_idx : int = (local_x + local_y) % NUM_SPRITES_COLONIST
+					
+					# Create entity
+					$World.create_entity("colonist", world_coord, 1, sprite_idx)
+'''
 	for chunk_x in range(2):  # 0,1
 		for chunk_y in range(2):  # 0,1
 			for sprite_idx in range(NUM_SPRITES_COLONIST):
@@ -75,7 +88,6 @@ func _ready() -> void:
 				$World.create_entity("item", world_coord, 1, sprite_idx)
 				
 	print("Items made: ", item_count_total)
-'''
 	for chunk_x in range(2):  # 0,1
 		for chunk_y in range(2):  # 0,1
 			count = 0

@@ -7,12 +7,14 @@
 #include <godot_cpp/variant/vector2i.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <unordered_map>
+#include <unordered_set>
 #include <memory>
 #include <cmath>
 #include "chunk.h"
 #include "entity.h"
 #include "godot_cpp/variant/dictionary.hpp"
 #include "templates/vector.hpp"
+#include "threadpool.h"
 
 using namespace godot;
 
@@ -28,13 +30,35 @@ struct Vector2iHash {
 class World : public  Node2D{
     GDCLASS(World, Node2D)
 
+    private:    
+        std::unique_ptr<ThreadPool> thread_pool;
+        
+        // Cache for better locality
+        struct ChunkSimCache {
+            std::vector<std::shared_ptr<Chunk>> full_sim;
+            std::vector<std::shared_ptr<Chunk>> light_sim;
+            std::unordered_set<Vector2i, Vector2iHash> needed;
+            
+            void clear() {
+                full_sim.clear();
+                light_sim.clear();
+                needed.clear();
+            }
+        };
+        ChunkSimCache sim_cache;
+
     private:
         std::unordered_map<Vector2i, std::shared_ptr<Chunk>, Vector2iHash> chunks;
-        std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
         int chunk_size = 16;
         int world_chunks_x = 0;
         int world_chunks_y = 0;
         uint64_t current_entity_id = 0;
+        void init_thread_pool(size_t thread_count = 0);
+
+    public:
+        std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
+        std::mutex chunks_mutex;  // Protects chunks map
+        std::mutex pending_mutex;
 
     protected:
         static void _bind_methods();

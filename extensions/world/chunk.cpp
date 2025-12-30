@@ -181,84 +181,113 @@ std::vector<std::tuple<Vector2i, int>> getNeighbouringChunks(Vector2i entityWorl
 }
 
 void Chunk::simulate(float delta, bool full_simulation) {
-    std::vector<std::shared_ptr<Entity>> to_transfer[4]; // N=0, E=1, S=2, W=3
-
-    //UtilityFunctions::print("Chunk(",coord.x, coord.y,") has ", entities.size(), "entities before");
+    if (entities.empty()) return; // Early exit
     
-    for (int i = 0; i < (int)entities.size(); ++i) {
-        if (!entities[i]) continue;
-     //   std::vector<std::tuple<Vector2i, int>> neighbourChunksCoords = getNeighbouringChunks(entities[i]->position, world, coord);
-        std::vector<int> availableDirs = {}; // getAvailableDirs(entityWorldToLocalCoord(entities[i]->position, world), neighbourChunksCoords);
+    // Use stack allocation for small arrays
+    constexpr int MAX_STACK_TRANSFERS = 64;
+    std::vector<std::shared_ptr<Entity>> to_transfer[4];
+    
+    // Pre-allocate if we have many entities
+    if (entities.size() > MAX_STACK_TRANSFERS) {
+        for (int i = 0; i < 4; ++i) {
+            to_transfer[i].reserve(entities.size() / 16);
+        }
+    }
+    
+    const int chunk_width = world->get_chunk_size();
+    const int world_width = world->get_world_width_tiles();
+    const int world_height = world->get_world_height_tiles();
+    
+    // Simulate all entities
+    for (auto& entity : entities) {
+        if (!entity) continue;
+        
         Vector2i new_pos;
-        EntitySimulationParam params = 
-        {
+        EntitySimulationParam params = {
             delta,
             new_pos,
-            availableDirs
+            {} // availableDirs empty since commented out
         };
-        bool moved = entities[i]->simulate(params);
+        
+        bool moved = entity->simulate(params);
         
         if (moved && full_simulation) {
-            // make sure they stay in world bounds
-            if(new_pos.x < 0 || new_pos.x >= world->get_world_width_tiles())  continue;
-            if(new_pos.y < 0 || new_pos.y >= world->get_world_height_tiles()) continue;
-
-            entities[i]->set_position(new_pos);
-           // UtilityFunctions::print("Entity moved from ", old_pos, "to ", new_pos);
-            //Vector2i local_pos(new_pos.x - chunk_origin.x, new_pos.y - chunk_origin.y);
-            Vector2i local_pos(new_pos % world->get_chunk_size());
+            // Bounds check
+            if (new_pos.x < 0 || new_pos.x >= world_width ||
+                new_pos.y < 0 || new_pos.y >= world_height) {
+                continue;
+            }
             
-            // Check if entity left this chunk's bounds
-            if (local_pos.x < 0) {
-                to_transfer[3].push_back(entities[i]);
-             //   UtilityFunctions::print("Transferring WEST");
-                entities[i] = nullptr;
+            entity->set_position(new_pos);
+            
+            // Fast modulo for local position (works for positive numbers)
+            int local_x = new_pos.x % chunk_width;
+            int local_y = new_pos.y % chunk_width;
+            
+            // Check if entity left chunk bounds
+            if (local_x < 0) {
+                to_transfer[3].push_back(entity);
+                entity = nullptr;
             }
-            else if (local_pos.x >= width) {
-                to_transfer[1].push_back(entities[i]);
-              //  UtilityFunctions::print("Transferring EAST");
-                entities[i] = nullptr;
+            else if (local_x >= width) {
+                to_transfer[1].push_back(entity);
+                entity = nullptr;
             }
-            else if (local_pos.y < 0) {
-                to_transfer[0].push_back(entities[i]);
-                //UtilityFunctions::print("Transferring NORTH");
-                entities[i] = nullptr;
+            else if (local_y < 0) {
+                to_transfer[0].push_back(entity);
+                entity = nullptr;
             }
-            else if (local_pos.y >= height) {
-                to_transfer[2].push_back(entities[i]);
-                //UtilityFunctions::print("Transferring SOUTH");
-                entities[i] = nullptr;
+            else if (local_y >= height) {
+                to_transfer[2].push_back(entity);
+                entity = nullptr;
             }
-            // else: entity stayed in chunk, no transfer needed
         }
     }
     
-    // Transfer entities to neighboring chunks
-    if (!to_transfer[0].empty()) transfer_entities(to_transfer[0], Vector2i(0, -1)); //n
-    if (!to_transfer[1].empty()) transfer_entities(to_transfer[1], Vector2i(1, 0)); //e
-    if (!to_transfer[2].empty()) transfer_entities(to_transfer[2], Vector2i(0, 1)); //s
-    if (!to_transfer[3].empty()) transfer_entities(to_transfer[3], Vector2i(-1, 0)); //w
-
-
-    entities.erase(
-        std::remove(entities.begin(), entities.end(), nullptr),
-        entities.end()
-    );
-   // UtilityFunctions::print("Chunk(",coord.x, coord.y,") has ", entities.size(), "entities after");
-}
-
-void Chunk::transfer_entities(std::vector<std::shared_ptr<Entity>>& entities_vec, Vector2i direction) {
-    Vector2i target_chunk = coord + direction;
-    auto target = world->get_chunk(target_chunk);
-    if (!target) {
-        target = world->load_chunk(target_chunk);
+    // Batch transfers (reduce lock contention)
+    if (to_transfer[0].size() + to_transfer[1].size() + 
+        to_transfer[2].size() + to_transfer[3].size() > 0) {
+        
+        if (!to_transfer[0].empty()) transfer_entities(to_transfer[0], Vector2i(0, -1));
+        if (!to_transfer[1].empty()) transfer_entities(to_transfer[1], Vector2i(1, 0));
+        if (!to_transfer[2].empty()) transfer_entities(to_transfer[2], Vector2i(0, 1));
+        if (!to_transfer[3].empty()) transfer_entities(to_transfer[3], Vector2i(-1, 0));
     }
-    if (target) {
-        for (auto& e : entities_vec) {
-            // Position is already wrapped by the calling function
-            target->entities.push_back(e);
+    
+    // Single erase operation (more efficient than loop)
+    if (!entities.empty()) {
+        auto new_end = std::remove(entities.begin(), entities.end(), nullptr);
+        if (new_end != entities.end()) {
+            entities.erase(new_end, entities.end());
         }
     }
+}
+
+void Chunk::transfer_entities(
+    std::vector<std::shared_ptr<Entity>>& entities_vec, 
+    Vector2i direction) 
+{
+    if (entities_vec.empty() || !world) return;
+    
+    Vector2i target_chunk = coord + direction;
+    std::shared_ptr<Chunk> target;
+    
+    {
+        std::lock_guard<std::mutex> lock(world->chunks_mutex);
+        target = world->get_chunk(target_chunk);
+        if (!target) {
+            target = world->load_chunk(target_chunk);
+        }
+    }
+    
+    if (target) {
+        std::lock_guard<std::mutex> lock(world->pending_mutex);
+        // Batch insert
+        for (auto& e : entities_vec) {
+            world->pendingEntityPlacements.emplace_back(target, e);
+        }
+    }
+    
     entities_vec.clear();
 }
 int Chunk::get_tile(int local_x, int local_y) const {

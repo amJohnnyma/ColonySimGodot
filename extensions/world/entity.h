@@ -29,6 +29,7 @@ class Entity
         int entity_type;
         int entity_sprite;
         Vector2i size = Vector2i(1,1);
+        float move_speed = 2.f;
     public:
         virtual ~Entity() = default;
 
@@ -45,6 +46,7 @@ class Entity
         Vector2i get_entity_size() const { return size; }
         int get_entity_width() const { return size.x; }
         int get_entity_height() const { return size.y; }
+        void set_move_speed(float speed) {move_speed = speed;}
 
 
 };
