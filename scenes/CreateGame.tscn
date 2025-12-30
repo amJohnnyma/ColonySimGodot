@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhnm03n2x1xj2"]
+
+[ext_resource type="PackedScene" uid="uid://dyd7htjf62nm7" path="res://scenes/create_game_ui.tscn" id="1_ykm82"]
+[ext_resource type="Script" uid="uid://bwvi1nq10v6nw" path="res://scripts/CreateGame.gd" id="2_hwm2m"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Create_Game" parent="CanvasLayer" instance=ExtResource("1_ykm82")]
+script = ExtResource("2_hwm2m")

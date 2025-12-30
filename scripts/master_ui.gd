@@ -110,7 +110,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 40, "Panel", button_id)
+				fill_grid_with_placeholders(build_grid_options, 40, button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		2:
@@ -118,7 +118,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 40, "Label", button_id)
+				fill_grid_with_placeholders(build_grid_options, 40, button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		3:
@@ -126,7 +126,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 40, "Button", button_id)
+				fill_grid_with_placeholders(build_grid_options, 40, button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		4:
@@ -134,7 +134,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 40, "TextureRect", button_id)
+				fill_grid_with_placeholders(build_grid_options, 40, button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 
@@ -142,7 +142,7 @@ func _on_build_category_button_pressed(button_id: int):
 ''''''
 
 # Function to fill the grid with placeholders
-func fill_grid_with_placeholders(grid: GridContainer, count: int = 20, placeholder_type: String = "Panel", button_id : int = -1):
+func fill_grid_with_placeholders(grid: GridContainer, count: int = 20,  button_id : int = -1):
 	# First clear any existing children (in case you refill)
 	clear_grid(grid)
 	build_scroll_container.visible = true
@@ -151,31 +151,43 @@ func fill_grid_with_placeholders(grid: GridContainer, count: int = 20, placehold
 	
 	for i in range(count):
 		var placeholder: Control
+
+		placeholder = Panel.new()
+		placeholder.custom_minimum_size = Vector2(50, 50)  # Adjust size as needed
+		#placeholder.size = Vector2(50,50)
+		placeholder.modulate = Color(0.3, 0.3, 0.3, 0.8)   # Gray semi-transparent
 		
-		match placeholder_type:
-			"Panel":
-				placeholder = Panel.new()
-				placeholder.custom_minimum_size = Vector2(50, 50)  # Adjust size as needed
-				placeholder.modulate = Color(0.3, 0.3, 0.3, 0.8)   # Gray semi-transparent
-			"Label":
-				placeholder = Label.new()
-				placeholder.text = "Item %d" % (i + 1)
-				placeholder.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-				placeholder.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-				placeholder.custom_minimum_size = Vector2(50, 50)
-			"Button":
-				placeholder = Button.new()
-				placeholder.text = "Btn %d" % (i + 1)
-				placeholder.custom_minimum_size = Vector2(50, 50)
-			"TextureRect":
-				placeholder = TextureRect.new()
-				placeholder.texture = preload("res://icon.svg")  # Use Godot icon or your placeholder image
-				placeholder.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
-				placeholder.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-				placeholder.custom_minimum_size = Vector2(50, 50)
-			_:
-				placeholder = Panel.new()  # fallback
+		# Create the button
+		var button = Button.new()
+		button.text = "Click Me"  # Optional: set button text
+		button.custom_minimum_size = Vector2(50, 50)  # Adjust size as needed
+		#button.size = Vector2(50,50)
+
+		# Create a custom StyleBoxFlat for the normal state (background)
+		var normal_style = StyleBoxFlat.new()
+		normal_style.bg_color = Color(0.2, 0.6, 0.8, 1)  # Example: blue-ish background
+		normal_style.corner_radius_top_left = 10
+		normal_style.corner_radius_top_right = 10
+		normal_style.corner_radius_bottom_right = 10
+		normal_style.corner_radius_bottom_left = 10
+		normal_style.border_color = Color(0.1, 0.4, 0.6, 1)
+
+		# Optional: hover style for better feedback
+		var hover_style = StyleBoxFlat.new()
+		hover_style.bg_color = Color(0.3, 0.7, 0.9, 1)  # Lighter on hover
+
+		# Apply the styles
+		button.add_theme_stylebox_override("normal", normal_style)
+		button.add_theme_stylebox_override("hover", hover_style)
+
+		# Optional: pressed and focus styles (copy and adjust as needed)
+		button.add_theme_stylebox_override("pressed", normal_style.duplicate())
+		button.add_theme_stylebox_override("focus", normal_style.duplicate())
 		
+
+		# Add the button to the placeholder panel (or wherever you need it)
+		placeholder.add_child(button)
+
 		# Optional: give it a name for debugging
 		placeholder.name = "Placeholder_%d" % i
 		

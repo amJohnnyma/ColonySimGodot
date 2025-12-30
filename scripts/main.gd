@@ -17,48 +17,5 @@ func _ready() -> void:
 	var half_height = $World.get_world_height_tiles() / 2.0
 	cam.target_position = Vector2(half_width, half_height)
 	
-
-'''
-func _unhandled_input(event: InputEvent) -> void:
-	if current_build_type == -1:
-		# print("No build type selected (click UI button first!)")
-		return
+	# Generate stuff in this area for starter stuff
 	
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		# print(">>> LEFT CLICK DETECTED IN WORLD!")
-		var tile_size = GameSettings.tile_size
-		var mouse_pos_screen: Vector2 = event.position
-		var mouse_pos_world: Vector2 = cam.global_position + (mouse_pos_screen - get_viewport_rect().size / 2) / cam.zoom
-		var tile_x: int = floor(mouse_pos_world.x / tile_size)
-		var tile_y: int = floor(mouse_pos_world.y / tile_size) + 1
-		var tile_pos := Vector2i(tile_x, tile_y)
-		# print(">>> PLACING ", SpriteAtlas.EntityType.keys()[current_build_type], " at ", tile_pos)
-		
-		# if place building
-		# elif place colonist
-		$World.create_entity(current_base_type, tile_pos, current_build_type)
-'''
-
-		
-'''
-func _input(event: InputEvent) -> void:
-
-	if current_build_type == -1:
-		#print("No build type selected (click UI button first!)")
-		return  
-
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		#print(">>> LEFT CLICK DETECTED!")
-
-		var tile_size = GameSettings.tile_size
-		var mouse_pos_screen: Vector2 = event.position
-		var mouse_pos_world: Vector2 = cam.global_position + (mouse_pos_screen - get_viewport_rect().size / 2) / cam.zoom
-
-		var tile_x: int = floor(mouse_pos_world.x / tile_size)
-		var tile_y: int = floor(mouse_pos_world.y / tile_size) + 1
-		var tile_pos := Vector2i(tile_x, tile_y)
-
-		#print(">>> PLACING ", SpriteAtlas.EntityType.keys()[current_build_type], " at ", tile_pos)
-
-		$World.place_building_in_chunk(tile_pos, current_build_type)
-'''

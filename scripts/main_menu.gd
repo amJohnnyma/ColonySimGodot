@@ -14,7 +14,7 @@ func _on_continue_pressed():
 	get_tree().change_scene_to_file("res://scenes/MainGame.tscn")
 	
 func _on_new_pressed():
-	pass
+	get_tree().change_scene_to_file("res://scenes/CreateGame.tscn")
 	
 func _on_settings_pressed():
 	pass
