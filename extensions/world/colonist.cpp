@@ -2,9 +2,9 @@
 #include "entity.h"
 #include <cstdint>
 
-Colonist::Colonist(Vector2i pos, uint64_t id) : Entity(pos, id) {
+Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite) : Entity(pos, id, entity_sprite) {
     reset_timer();
-    entity_type = 0;
+    entity_type = 1;
 }
 // Returns new position and true if crossed chunk border
 bool Colonist::simulate(EntitySimulationParam &params) {

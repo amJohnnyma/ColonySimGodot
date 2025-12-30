@@ -3,9 +3,9 @@
 #include "godot_cpp/variant/utility_functions.hpp"
 #include <cstdint>
 
-Building::Building(Vector2i pos, uint64_t id, int type) : Entity(pos, id), type(type) {
+Building::Building(Vector2i pos, uint64_t id, int entity_sprite, int type) : Entity(pos, id, entity_sprite), type(type) {
     reset_timer();
-    entity_type = 1;
+    entity_type = 2;
 }
 
 bool Building::simulate(EntitySimulationParam &params) {

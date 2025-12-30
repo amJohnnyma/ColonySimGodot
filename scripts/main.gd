@@ -19,3 +19,47 @@ func _ready() -> void:
 	
 	# Generate stuff in this area for starter stuff
 	
+	# Temporary to see all sprites
+	# void create_entity(const String &type, const Vector2i &coord,const int &entity_type, const int &entity_sprite);
+
+
+	const NUM_SPRITES_COLONIST : int = 15
+	const NUM_SPRITES_BUILDING : int = 64
+	var max_world_tile = GameSettings.max_world_tiles
+	var CHUNK_SIZE : int = GameSettings.chunk_size
+	var world_center_chunk : Vector2i = Vector2i((max_world_tile/2) / CHUNK_SIZE,(max_world_tile/2) / CHUNK_SIZE)
+
+
+	for chunk_x in range(2):  # 0,1
+		for chunk_y in range(2):  # 0,1
+			for sprite_idx in range(NUM_SPRITES_COLONIST):
+	# Local coord: horizontal row
+				var local_x : int = sprite_idx  # 0-14
+				var local_y : int = 0            # Top row
+
+				# World tile coord
+				var world_coord : Vector2i = Vector2i(
+					(chunk_x + world_center_chunk.x) * CHUNK_SIZE + local_x,
+					(chunk_y + world_center_chunk.y) * CHUNK_SIZE + local_y
+				)
+
+	# Create entity (sprite_idx = 0-14 for full sheet)
+				$World.create_entity("colonist", world_coord, 1, sprite_idx)
+	var count : int = 0
+	for chunk_x in range(2):  # 0,1
+		for chunk_y in range(2):  # 0,1
+			count = 0
+			for sprite_idx in range(NUM_SPRITES_BUILDING):
+	# Local coord: horizontal row
+				var local_x : int = sprite_idx%8
+				var local_y : int = 1 + floor(count/8)            # Top row
+
+				# World tile coord
+				var world_coord : Vector2i = Vector2i(
+					(chunk_x + world_center_chunk.x) * CHUNK_SIZE + local_x,
+					(chunk_y + world_center_chunk.y) * CHUNK_SIZE + local_y
+				)
+				count+=1
+
+	# Create entity (sprite_idx = 0-14 for full sheet)
+				$World.create_entity("building", world_coord, 1, sprite_idx)

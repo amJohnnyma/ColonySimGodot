@@ -27,7 +27,7 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_chunk_entity_capacity"), &World::get_chunk_entity_capacity);
     ClassDB::bind_method(D_METHOD("get_visible_chunks", "cam_pos", "world_min", "world_max", "max_render_distance"),&World::get_visible_chunks);
     ClassDB::bind_method(D_METHOD("get_visible_entities", "chunk_coords", "cull_min", "cull_max", "max_entities"),&World::get_visible_entities);
-    ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type"),&World::create_entity);
+    ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite"),&World::create_entity);
 
 }
 
@@ -239,11 +239,13 @@ Dictionary World::get_visible_entities(
     PackedVector2Array positions;
     PackedInt64Array entity_ids;
     PackedInt32Array types;
+    PackedInt32Array entity_sprites;
 
     // Pre-allocate for performance
     positions.resize(max_entities);
     entity_ids.resize(max_entities);
     types.resize(max_entities);
+    entity_sprites.resize(max_entities);
 
     int count = 0;
 
@@ -268,6 +270,7 @@ Dictionary World::get_visible_entities(
             positions.set(count, pos);
             entity_ids.set(count, static_cast<int64_t>(entity_ptr->get_entity_id()));
             types.set(count, entity_ptr->get_type_id());
+            entity_sprites.set(count, entity_ptr->get_entity_sprite());
 
             count++;
         }
@@ -277,12 +280,14 @@ Dictionary World::get_visible_entities(
     positions.resize(count);
     entity_ids.resize(count);
     types.resize(count);
+    entity_sprites.resize(count);
 
     // Build and return the dictionary
     Dictionary result;
     result["positions"]  = positions;
     result["entity_ids"] = entity_ids;
     result["types"]      = types;
+    result["entity_sprites"] = entity_sprites;
     result["count"]      = count;
 
     return result;
@@ -340,7 +345,7 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
 
 
 
-void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type)
+void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite)
 {
     Vector2i chunk_coord = world_tile_to_chunk(tile_coord.x, tile_coord.y);
    // UtilityFunctions::print("-> Chunk: ", chunk_coord);
@@ -357,14 +362,12 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     if(type == "colonist")
     {
 
-        auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id());
-        e->set_type(entity_type);
+        auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite);
         pendingEntityPlacements.push_back({chunk,e});
     }
     else if(type == "building")
     {
-        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_type);
-        e->set_type(entity_type);
+        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, entity_type);
         pendingEntityPlacements.push_back({chunk,e});
     }
     else 

@@ -1,7 +1,7 @@
 #include "entity.h"
 #include <cstdint>
 
-Entity::Entity(Vector2i pos, uint64_t id) : position(pos), entity_id(id) {
+Entity::Entity(Vector2i pos, uint64_t id, int entity_sprite) : position(pos), entity_id(id), entity_sprite(entity_sprite) {
     reset_timer();
 }
 

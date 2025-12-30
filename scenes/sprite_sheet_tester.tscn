@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://idftotww16gy"]
+
+[ext_resource type="Script" uid="uid://dxrjiqiqi63tt" path="res://scripts/SpriteSheetTester.gd" id="1_eodom"]
+[ext_resource type="Texture2D" uid="uid://ca2up0f2wqb0x" path="res://sprites/player-sheet.png" id="1_xk55p"]
+
+[node name="SpriteSheetTester" type="Node2D"]
+script = ExtResource("1_eodom")
+sprite_texture = ExtResource("1_xk55p")
+test_region = Rect2i(0, 0, 960, 512)
+
+[node name="SheetSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_xk55p")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 960, 512)
+
+[node name="UI" type="CanvasLayer" parent="."]

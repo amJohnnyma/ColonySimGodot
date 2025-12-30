@@ -38,24 +38,19 @@ void Chunk::generate(int wx, int wy) {
             );
             float v = float((n + 1.0) * 0.5);
             tileColors[y * width + x] = Color(v * bd.color[0], v * bd.color[1], v * bd.color[2], bd.color[3]);
-
+/*
             if (n < bd.temp_entity_spawn_rate) {
                 Vector2 world_pos(
                     coord.x * width + x + 0.5f,
                     coord.y * height + y + 0.5f
                 );
-                auto e = std::make_shared<Colonist>(world_pos, world->get_next_entity_id());
-
-                thread_local static std::mt19937 gen(std::random_device{}());
-                std::uniform_int_distribution<int> dist(0, 1);
-
-                e->set_type(dist(gen));
-
+                auto e = std::make_shared<Colonist>(world_pos, world->get_next_entity_id(), 1);
                 entities.push_back(e);
             }
-            
+  */
         }
     }
+
 }
 
 Vector2i entityWorldToLocalCoord(Vector2i worldCoord, World* world)

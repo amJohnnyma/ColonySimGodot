@@ -45,6 +45,9 @@ func _ready():
 	expanded_panel_job.visible = false
 	expanded_panel_diplomacy.visible = false
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_spritetester"):  # Bind to F9 or whatever
+		$SpriteSheetTester.toggle_visible()
 
 func _on_main_button_pressed(button_id: int, panel_id : int):
 	match button_id:
