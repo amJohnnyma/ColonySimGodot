@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/world.dir/colonist.cpp.o.d"
   "CMakeFiles/world.dir/entity.cpp.o"
   "CMakeFiles/world.dir/entity.cpp.o.d"
+  "CMakeFiles/world.dir/item.cpp.o"
+  "CMakeFiles/world.dir/item.cpp.o.d"
   "CMakeFiles/world.dir/perlin_noise.cpp.o"
   "CMakeFiles/world.dir/perlin_noise.cpp.o.d"
   "CMakeFiles/world.dir/register_types.cpp.o"

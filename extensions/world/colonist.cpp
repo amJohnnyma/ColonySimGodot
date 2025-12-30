@@ -8,6 +8,7 @@ Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) 
 }
 // Returns new position and true if crossed chunk border
 bool Colonist::simulate(EntitySimulationParam &params) {
+    return false;
     if (!active) return false;
 
     move_timer -= params.delta;

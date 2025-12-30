@@ -8,6 +8,7 @@
 #include "entity.h"
 #include "colonist.h"
 #include "building.h"
+#include "item.h"
 
 class World;  // Forward declaration — NO CIRCULAR INCLUDE!
 

@@ -225,6 +225,30 @@ entity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entity.cpp.s
 .PHONY : entity.cpp.s
 
+item.o: item.cpp.o
+.PHONY : item.o
+
+# target to build an object file
+item.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/item.cpp.o
+.PHONY : item.cpp.o
+
+item.i: item.cpp.i
+.PHONY : item.i
+
+# target to preprocess a source file
+item.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/item.cpp.i
+.PHONY : item.cpp.i
+
+item.s: item.cpp.s
+.PHONY : item.s
+
+# target to generate assembly for a file
+item.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/item.cpp.s
+.PHONY : item.cpp.s
+
 perlin_noise.o: perlin_noise.cpp.o
 .PHONY : perlin_noise.o
 
@@ -318,6 +342,9 @@ help:
 	@echo "... entity.o"
 	@echo "... entity.i"
 	@echo "... entity.s"
+	@echo "... item.o"
+	@echo "... item.i"
+	@echo "... item.s"
 	@echo "... perlin_noise.o"
 	@echo "... perlin_noise.i"
 	@echo "... perlin_noise.s"

@@ -380,6 +380,12 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(1,1), entity_type);
         pendingEntityPlacements.push_back({chunk,e});
     }
+    else if(type == "item")
+    {
+        // temporarily make a building this size
+        auto e = std::make_shared<Item>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(1,1));
+        pendingEntityPlacements.push_back({chunk,e});
+    }
     else 
     {
 

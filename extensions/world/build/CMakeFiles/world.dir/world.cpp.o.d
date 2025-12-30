@@ -306,5 +306,6 @@ CMakeFiles/world.dir/world.cpp.o: \
  /usr/include/c++/13/pstl/glue_numeric_defs.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/colonist.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/building.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
  /usr/include/c++/13/unordered_set \
  /usr/include/c++/13/bits/unordered_set.h
