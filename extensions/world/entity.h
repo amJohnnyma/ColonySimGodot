@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <godot_cpp/variant/vector2i.hpp>
 #include <random>
+#include "entityJob.h"
 
 
 #include <godot_cpp/variant/utility_functions.hpp>
@@ -21,7 +22,9 @@ struct EntitySimulationParam
 class Entity 
 {
     protected:
-        Vector2i position;           // Grid position (local to chunk!)
+        EntityJob currentJob;
+        std::vector<EntityJob> jobList;
+        Vector2i position;           
         float move_timer = 0.0f;
         bool active = true;
         Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size = Vector2i(1,1));

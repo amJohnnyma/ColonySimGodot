@@ -12,6 +12,7 @@
 #include <cmath>
 #include "chunk.h"
 #include "entity.h"
+#include "entityJob.h"
 #include "godot_cpp/variant/dictionary.hpp"
 #include "templates/vector.hpp"
 #include "threadpool.h"
@@ -46,6 +47,7 @@ class World : public  Node2D{
             }
         };
         ChunkSimCache sim_cache;
+        void init_thread_pool(size_t thread_count = 0);
 
     private:
         std::unordered_map<Vector2i, std::shared_ptr<Chunk>, Vector2iHash> chunks;
@@ -53,12 +55,13 @@ class World : public  Node2D{
         int world_chunks_x = 0;
         int world_chunks_y = 0;
         uint64_t current_entity_id = 0;
-        void init_thread_pool(size_t thread_count = 0);
+        std::vector<EntityJob> availableJobs;
 
     public:
         std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
         std::mutex chunks_mutex;  // Protects chunks map
         std::mutex pending_mutex;
+        std::mutex availableJobs_mutex;
 
     protected:
         static void _bind_methods();

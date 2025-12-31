@@ -14,7 +14,7 @@ extends Node2D
 var chunks: Dictionary = {}
 var sprite_pool: Array[Sprite2D] = []  # Renamed: this is our pool of Sprite2D objects
 var cam_pos: Vector2
-const ENTITY_POOL_SIZE: int = 5000
+const ENTITY_POOL_SIZE: int = 20000
 var cs: float
 
 func _ready() -> void:

@@ -17,7 +17,7 @@ class World;  // Forward declaration — NO CIRCULAR INCLUDE!
 using namespace godot;
 
 
-class Chunk : public std::enable_shared_from_this<Chunk> {
+class Chunk {
     public:
         World* world = nullptr;
         Vector2i coord;
