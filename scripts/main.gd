@@ -21,6 +21,9 @@ func _ready() -> void:
 	# Temporary to see all sprites
 	# void create_entity(const String &type, const Vector2i &coord,const int &entity_type, const int &entity_sprite);
 
+# Put this in your Main.gd or any control/test script
+
+
 
 	const NUM_SPRITES_COLONIST : int = 15
 	const NUM_SPRITES_BUILDING : int = 135
@@ -105,3 +108,36 @@ func _ready() -> void:
 	# Create entity (sprite_idx = 0-14 for full sheet)
 				$World.create_entity("building", world_coord, 1, sprite_idx)
 '''
+
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		# Get the world position under the mouse click
+		var camera = get_viewport().get_camera_2d()
+		if camera == null:
+			print("No Camera2D found!")
+			return
+		
+		var world_click_pos = camera.get_global_mouse_position()
+		# Alternative if no camera: get_viewport().get_mouse_position() then project it
+		
+		# Call your World function (adjust the path if World is not a sibling)
+		var world = $World  # Change this to match your scene tree, e.g. get_node("/root/World")
+		# Or if World is an autoload: var world = World
+		
+		var result = world.get_entities_at_world_pos(world_click_pos)
+		
+		var count = result.get("count", 0)
+		if count == 0:
+			print("No entities found at ", world_click_pos)
+			return
+		
+		print("Found %d entit(y/ies) at %s:" % [count, world_click_pos])
+		
+		var ids = result["entity_ids"]
+		var types = result["types"]
+		var sprites = result["entity_sprites"]
+		
+		for i in count:
+			print("  - ID: ", ids[i],
+				  " | Type: ", types[i],
+				  " | Sprite: ", sprites[i])

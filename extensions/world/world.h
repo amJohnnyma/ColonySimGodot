@@ -83,11 +83,13 @@ class World : public  Node2D{
         Vector2i world_tile_to_chunk(int tile_x, int tile_y) const;
         Vector2i world_tile_to_local(int tile_x, int tile_y) const;
         bool is_valid_chunk(const Vector2i &coord) const;
+        Vector2i world_pos_to_tile(const Vector2 &pos) const;
         
         Array get_chunk_colors(const Vector2i &coord);
         int get_chunk_entity_count(const Vector2i &coord) const;
         Vector2i get_entity_position(const Vector2i &chunk_coord, int entity_index) const;
         int get_chunk_entity_capacity() const;
+        Dictionary get_entities_at_world_pos(const Vector2 coord);
 
         
         

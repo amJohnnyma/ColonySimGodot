@@ -6,7 +6,7 @@ extends Node2D
 @export var entity_sprite_scene: PackedScene
 @export var max_render_distance_chunks: int = 1
 @export var render_buffer_chunks: int = 1
-@export var simulation_distance: int = 8
+@export var simulation_distance: int = 60
 
 @onready var entity_container: Node2D = $EntityContainer
 @onready var MainNode = get_parent()

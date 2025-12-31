@@ -1,5 +1,6 @@
 #include "world.h"
 #include "chunk.h"
+#include "core/math.hpp"
 #include "variant/vector2i.hpp"
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <cmath>
@@ -29,6 +30,7 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_visible_chunks", "cam_pos", "world_min", "world_max", "max_render_distance"),&World::get_visible_chunks);
     ClassDB::bind_method(D_METHOD("get_visible_entities", "chunk_coords", "cull_min", "cull_max", "max_entities"),&World::get_visible_entities);
     ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite"),&World::create_entity);
+    ClassDB::bind_method(D_METHOD("get_entities_at_world_pos","coord"),&World::get_entities_at_world_pos);
 
 }
 
@@ -50,6 +52,13 @@ Vector2i World::world_pos_to_chunk(const Vector2 &pos) const {
     int tile_x = static_cast<int>(std::floor(pos.x));
     int tile_y = static_cast<int>(std::floor(pos.y)); // treat z as world Y for 2D grid
     return world_tile_to_chunk(tile_x, tile_y);
+}
+
+Vector2i World::world_pos_to_tile(const Vector2 &pos) const {
+    int tile_x = static_cast<int>(std::floor(pos.x));
+    int tile_y = static_cast<int>(std::floor(pos.y)); // treat z as world Y for 2D grid
+    return Vector2i(tile_x, tile_y);
+    
 }
 
 Vector2i World::world_tile_to_chunk(int tile_x,int tile_y) const {
@@ -232,6 +241,64 @@ TypedArray<Vector2i> World::get_visible_chunks(
     
     return result;
 }
+
+Dictionary World::get_entities_at_world_pos(const Vector2 coord) {  
+    Dictionary result;
+    Vector2i entity_coord = world_pos_to_tile(coord);  // Assuming this returns Vector2i
+    Vector2i chunk_coord = world_pos_to_chunk(entity_coord);
+    auto chunk = load_chunk(chunk_coord);
+    if (chunk == nullptr) {
+        result["count"] = 0;
+        return result;
+    }
+
+    int max_entities = chunk_size;  // Arbitrary cap; adjust as needed
+    PackedInt64Array entity_ids;
+    PackedInt32Array types;
+    PackedInt32Array entity_sprites;
+    PackedInt32Array entity_widths;  // Plural for consistency
+    PackedInt32Array entity_heights;
+
+    // Pre-allocate for performance
+    entity_ids.resize(max_entities);
+    types.resize(max_entities);
+    entity_sprites.resize(max_entities);
+    entity_widths.resize(max_entities);
+    entity_heights.resize(max_entities);
+
+    int count = 0;
+    for (const auto& entity_ptr : chunk->entities) {  // const ref for safety
+        Vector2 entity_pos = entity_ptr->get_position();
+        // Exact match; for float tolerance: if (abs(entity_pos.x - entity_coord.x) < 0.01f && same for y)
+        if (Math::absf(entity_pos.x - entity_coord.x) < 0.01f && Math::absf(entity_pos.y - entity_coord.y) < 0.01f) {
+            if (count >= max_entities) {
+                break;
+            }
+            entity_ids[count] = static_cast<int64_t>(entity_ptr->get_entity_id());  // Fixed: [] instead of .set
+            types[count] = entity_ptr->get_type_id();
+            entity_sprites[count] = entity_ptr->get_entity_sprite();
+            entity_widths[count] = entity_ptr->get_entity_width();
+            entity_heights[count] = entity_ptr->get_entity_height();
+            count++;
+        }
+    }
+
+    // Trim arrays to actual count (optional, but cleaner)
+    entity_ids.resize(count);
+    types.resize(count);
+    entity_sprites.resize(count);
+    entity_widths.resize(count);
+    entity_heights.resize(count);
+
+    result["entity_ids"] = entity_ids;
+    result["types"] = types;
+    result["entity_sprites"] = entity_sprites;
+    result["entity_width"] = entity_widths;  // Kept singular to match your API
+    result["entity_height"] = entity_heights;
+    result["count"] = count;
+    return result;
+}
+
 Dictionary World::get_visible_entities(
     const TypedArray<Vector2i>& chunk_coords,
     const Vector2& cull_min,
