@@ -22,7 +22,7 @@ struct EntitySimulationParam
 class Entity 
 {
     protected:
-        EntityJob currentJob;
+        EntityJob* currentJob = nullptr;
         std::vector<EntityJob> jobList;
         Vector2i position;           
         float move_timer = 0.0f;
@@ -33,6 +33,7 @@ class Entity
         int entity_sprite;
         Vector2i size = Vector2i(1,1);
         float move_speed = 2.f;
+        float base_move_speed = 0.5f;
     public:
         virtual ~Entity() = default;
 
@@ -50,6 +51,8 @@ class Entity
         int get_entity_width() const { return size.x; }
         int get_entity_height() const { return size.y; }
         void set_move_speed(float speed) {move_speed = speed;}
+
+        void add_job(EntityJob job);
 
 
 };

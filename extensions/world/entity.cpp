@@ -1,5 +1,8 @@
 #include "entity.h"
+#include "entityJob.h"
+#include <algorithm>
 #include <cstdint>
+#include <cmath>
 
 Entity::Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) : position(pos), entity_id(id), entity_sprite(entity_sprite), size(size) {
     reset_timer();
@@ -7,7 +10,27 @@ Entity::Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) : po
 
 void Entity::reset_timer() {
     thread_local static std::mt19937 gen(std::random_device{}());
-    std::uniform_real_distribution<float> dist(move_speed - 0.5f, move_speed + 0.5f);
+    std::uniform_real_distribution<float> dist(0, move_speed);
     move_timer = dist(gen);
+}
+
+// this should be an override -> move speed for items and buildings ???? Should defnitely be removed from Entity base
+void Entity::add_job(EntityJob job)
+{
+    job.isValid = true;
+    job.complete = false;
+    job.move_algo = "default";
+    job.priority = 0;
+    move_speed = base_move_speed / job.moveSpeedMultiplier;
+
+    thread_local static std::mt19937 gen(std::random_device{}());
+    std::uniform_int_distribution<int> dist(-10, 10);
+    int target_coord_x = std::clamp(position.x +dist(gen), 0, 768);
+    int target_coord_y = std::clamp(position.y +dist(gen), 0, 768);
+
+
+    job.target_coord = Vector2i(target_coord_x,target_coord_y);
+
+    jobList.push_back(job);
 }
 

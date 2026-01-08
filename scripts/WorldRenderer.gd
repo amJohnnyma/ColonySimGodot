@@ -4,7 +4,7 @@ extends Node2D
 @export var world: World
 @export var chunk_renderer_scene: PackedScene
 @export var entity_sprite_scene: PackedScene
-@export var max_render_distance_chunks: int = 1
+@export var max_render_distance_chunks: int = 10
 @export var render_buffer_chunks: int = 1
 @export var simulation_distance: int = 60
 
@@ -50,13 +50,29 @@ func _process(delta: float) -> void:
 	cam_pos = cam.global_position
 	var cam_zoom: Vector2 = cam.zoom
 
-	# === 1. Calculate world-space bounds ===
+	# === 1. Calculate base screen bounds (zoom-affected) ===
 	var viewport_half: Vector2 = viewport_rect.size * 0.5
 	var screen_top_left: Vector2 = cam_pos - viewport_half / cam_zoom
 	var screen_bottom_right: Vector2 = cam_pos + viewport_half / cam_zoom
+
+	# === 2. Add a MINIMUM world-space buffer that ignores zoom ===
+	# This ensures you always render at least X tiles/chunks around the camera
+	const MIN_WORLD_BUFFER_TILES: float = 512.0  # Adjust: e.g., always render ~8 chunks out at 64-tile chunks
+
+	var min_buffer = MIN_WORLD_BUFFER_TILES
+	var world_min: Vector2 = Vector2(
+		min(screen_top_left.x, cam_pos.x - min_buffer),
+		min(screen_top_left.y, cam_pos.y - min_buffer)
+	)
+	var world_max: Vector2 = Vector2(
+		max(screen_bottom_right.x, cam_pos.x + min_buffer),
+		max(screen_bottom_right.y, cam_pos.y + min_buffer)
+	)
+
+	# Optional: also keep your original buffer_chunks for extra padding
 	var buffer_world: float = render_buffer_chunks * cs
-	var world_min: Vector2 = screen_top_left - Vector2(buffer_world, buffer_world)
-	var world_max: Vector2 = screen_bottom_right + Vector2(buffer_world, buffer_world)
+	world_min -= Vector2(buffer_world, buffer_world)
+	world_max += Vector2(buffer_world, buffer_world)
 
 	# === 2. Get visible chunks ===
 	var visible_chunks: Array[Vector2i] = world.get_visible_chunks(

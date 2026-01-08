@@ -15,5 +15,6 @@ struct EntityJob
     godot::Vector2i target_coord;
     std::string move_algo = "default";
     int priority = 999;
+    float moveSpeedMultiplier = 1.f;
 
 };

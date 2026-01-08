@@ -9,74 +9,86 @@ Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) 
     entity_type = 1;
     homeCoord = pos;
 
-    // TEMP JOB ON INIT. MOVE TO 0,0
     EntityJob job;
     job.isValid = true;
     job.complete = false;
     job.move_algo = "default";
-    job.priority = 0;
-    job.target_coord = Vector2i(0,0);
+    job.priority = 10;
+    job.moveSpeedMultiplier = 500.f;
 
-    currentJob = job;
+    job.target_coord = Vector2i(std::clamp(position.x + 100, 0 , 768), std::clamp(position.y + 100, 0 , 768));
+
+    jobList.push_back(job);
+
 }
 // Returns new position and true if crossed chunk border
-bool Colonist::simulate(EntitySimulationParam &params) {
+bool Colonist::simulate(EntitySimulationParam &params)
+{
     if (!active) return false;
 
     move_timer -= params.delta;
     if (move_timer > 0.0f) return false;
-    
-    if(!currentJob.isValid)
+
+    // Clean up completed jobs
+    jobList.erase(
+        std::remove_if(jobList.begin(), jobList.end(),
+            [](const EntityJob& j) { return j.complete; }),
+        jobList.end()
+    );
+
+    // If no current job or current one is complete/nullptr
+    if (currentJob == nullptr || currentJob->complete)
     {
-        for(auto& job : jobList)
+        if (!jobList.empty())
         {
-           if(job.isValid)
-           {
-               currentJob = job;
-           } 
+            // Pick highest priority job
+            auto it = std::max_element(jobList.begin(), jobList.end(),
+                [](const EntityJob& a, const EntityJob& b) {
+                    return a.priority < b.priority;
+                });
+            currentJob = &(*it);  // Point to the actual job in the list
+        }
+        else
+        {
+            // Create new wander job
+            EntityJob wander;
+            wander.move_algo = "default";
+            wander.moveSpeedMultiplier = 1.0f;
+            add_job(wander);
+            currentJob = &jobList.back();  // Point to the newly added one
         }
     }
 
-    if(!currentJob.isValid)
+    // Execute movement
+    bool moved = false;
+    if (currentJob->move_algo == "default")
     {
-        return false;
-    }
-    if(currentJob.complete)
-    {
-        reset_timer();
-        return false;
-    }
-
-    std::string move_algo = currentJob.move_algo;
-
-    
-    if(move_algo == "default")
-    {
-        return default_movement(params);
-    }
-    else if(move_algo == "random")
-    {
-        return random_movement(params);
+        moved = default_movement(params);
     }
     else
     {
-        return random_movement(params);
+        moved = random_movement(params);
     }
 
+    // If job completed this tick, reset timer and let cleanup handle removal next frame
+    if (currentJob->complete)
+    {
+        reset_timer();
+        // currentJob pointer will be invalidated next frame after erase()
+        // That's fine — we'll pick a new one
+    }
 
-
-
+    return moved;
 }
-
 bool Colonist::default_movement(EntitySimulationParam &params)
 {
-    Vector2i target = currentJob.target_coord;
+    Vector2i target = currentJob->target_coord;
     Vector2i current = position;
 
     // If already at target, mark job complete
     if (current == target)
     {
-        currentJob.complete = true;
+        currentJob->complete = true;
         return false; // No movement needed
     }
 

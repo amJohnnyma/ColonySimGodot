@@ -1,6 +1,7 @@
 #include "entity.h"
 #include "variant/vector2i.hpp"
 #include <cstdint>
+#include <algorithm>
 
 class Colonist : public Entity
 {
@@ -13,5 +14,5 @@ class Colonist : public Entity
         int get_type_id() const override { return entity_type; }
         bool default_movement(EntitySimulationParam &params);
         bool random_movement(EntitySimulationParam &params);
-        bool has_job() {return currentJob.isValid;}
+        bool has_job() {return currentJob->isValid;}
 };
