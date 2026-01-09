@@ -56,7 +56,7 @@ Vector2i World::world_pos_to_chunk(const Vector2 &pos) const {
 
 Vector2i World::world_pos_to_tile(const Vector2 &pos) const {
     int tile_x = static_cast<int>(std::floor(pos.x));
-    int tile_y = static_cast<int>(std::floor(pos.y)); // treat z as world Y for 2D grid
+    int tile_y = static_cast<int>(std::floor(pos.y + 1)); // treat z as world Y for 2D grid
     return Vector2i(tile_x, tile_y);
     
 }
@@ -245,6 +245,7 @@ TypedArray<Vector2i> World::get_visible_chunks(
 Dictionary World::get_entities_at_world_pos(const Vector2 coord) {  
     Dictionary result;
     Vector2i entity_coord = world_pos_to_tile(coord);  // Assuming this returns Vector2i
+
     Vector2i chunk_coord = world_pos_to_chunk(entity_coord);
     auto chunk = load_chunk(chunk_coord);
     if (chunk == nullptr) {

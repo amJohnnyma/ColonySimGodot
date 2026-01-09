@@ -884,8 +884,8 @@ extends Node
 
 @export var sheet_offsets: Dictionary = {
 	1: Vector2(32, -32),
-	2: Vector2(16, 16),
-	3: Vector2(8, 8),
+	2: Vector2(16, -16),
+	3: Vector2(8, -8),
 	4: Vector2(0, 0),
 }
 

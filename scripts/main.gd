@@ -38,8 +38,8 @@ func _ready() -> void:
 	const NUM_SPRITES_BUILDING : int = 135
 	const NUM_SPRITES_ITEMS : int = 27 * 26
 	
-	const NUM_BUILDINGS : int = 1000
-	const NUM_COLONISTS : int = 4000
+	const NUM_BUILDINGS : int = 10
+	const NUM_COLONISTS : int = 40
 	const ITEMS_PER_BUILDING_MIN : int = 1
 	const ITEMS_PER_BUILDING_MAX : int = 2
 	
@@ -147,6 +147,7 @@ func _input(event):
 		
 		var result = $World.get_entities_at_world_pos(world_click_pos)
 		var count = result.get("count", 0)
+		world_click_pos.y += 1
 		
 		if count == 0:
 			print("No entities found at ", world_click_pos)
