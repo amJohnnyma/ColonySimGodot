@@ -4,9 +4,9 @@ extends Node2D
 @export var world: World
 @export var chunk_renderer_scene: PackedScene
 @export var entity_sprite_scene: PackedScene
-@export var max_render_distance_chunks: int = 3
-@export var render_buffer_chunks: int = 1
-@export var simulation_distance: int = 20
+var max_render_distance_chunks: int = GameSettings.max_render_distance_chunks
+var render_buffer_chunks: int = GameSettings.render_buffer_chunks
+var simulation_distance: int = GameSettings.simulation_distance
 
 @onready var entity_container: Node2D = $EntityContainer
 @onready var MainNode = get_parent()
