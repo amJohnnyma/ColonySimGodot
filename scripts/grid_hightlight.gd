@@ -58,7 +58,6 @@ func _draw() -> void:
 	if current_tile.x == -999:
 		return
 	
-	var tile_size: float = GameSettings.tile_size
 	var origin = Vector2(current_tile) * tile_size
 	
 	# Draw tile border slightly lifted

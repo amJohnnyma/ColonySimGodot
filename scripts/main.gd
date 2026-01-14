@@ -44,8 +44,8 @@ func _ready() -> void:
 	const NUM_SPRITES_BUILDING : int = 135
 	const NUM_SPRITES_ITEMS : int = 27 * 26
 	
-	const NUM_BUILDINGS : int = 1000
-	const NUM_COLONISTS : int = 4000
+	const NUM_BUILDINGS : int = 1
+	const NUM_COLONISTS : int = 4
 	const ITEMS_PER_BUILDING_MIN : int = 1
 	const ITEMS_PER_BUILDING_MAX : int = 2
 	
@@ -155,36 +155,55 @@ func _on_building_selected(sheet_id: int, variant_id: int) -> void:
 		selectedSprite[2] = 1
 		print("Main received selection → sheet: %d  variant: %d" % [sheet_id, variant_id])
 
-func _update_place_ghost(sprite : AtlasTexture, scale : Vector2, offset : Vector2) -> void:
-	$GameSystems/GridHighlight.update_selected_sprite_ghost(sprite, scale, offset, selectedSprite[2])
+func _update_place_ghost(sprite : AtlasTexture, c_scale : Vector2, offset : Vector2) -> void:
+	$GameSystems/GridHighlight.update_selected_sprite_ghost(sprite, c_scale, offset, selectedSprite[2])
 
 
 
-'''
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var camera := get_viewport().get_camera_2d()
-		if camera == null:
-			print("No Camera2D found!")
-			return
-		
-		var world_click_pos := camera.get_global_mouse_position()
-		
-		var result = $World.get_entities_at_world_pos(world_click_pos)
-		var count = result.get("count", 0)
-		world_click_pos.y += 1
-		
-		if count == 0:
-			print("No entities found at ", world_click_pos)
-			return
-		
-		print("Found %d entit(y/ies) at %s:" % [count, world_click_pos])
-		var ids = result["entity_ids"]
-		var types = result["types"]
-		var sprites = result["entity_sprites"]
-		
-		for i in count:
-			print(" - ID: ", ids[i],
-				  " | Type: ", types[i],
-				  " | Sprite: ", sprites[i])
-'''
+		if selectedSprite[2]:
+			print("Placing sprite")
+			var camera := get_viewport().get_camera_2d()
+			if camera == null:
+				print("No Camera2D found!")
+				return
+			
+			var world_click_pos := camera.get_global_mouse_position()
+			var tile_x = floori(world_click_pos.x / GameSettings.tile_size)
+			var tile_y = floori(world_click_pos.y / GameSettings.tile_size)
+			var new_tile = Vector2i(tile_x, tile_y + 1)
+			print("Tile place: ", new_tile)
+			var type = "building"
+			if selectedSprite[0] == 1:
+				type = "colonist"
+			elif selectedSprite[0] == 2:
+				type = "building"
+			elif selectedSprite[0] == 3:
+				type = "item"
+			$World.create_entity(type, new_tile, selectedSprite[0], selectedSprite[1])
+		else:
+			var camera := get_viewport().get_camera_2d()
+			if camera == null:
+				print("No Camera2D found!")
+				return
+			
+			var world_click_pos := camera.get_global_mouse_position()
+			
+			var result = $World.get_entities_at_world_pos(world_click_pos)
+			var count = result.get("count", 0)
+			world_click_pos.y += 1
+			
+			if count == 0:
+				print("No entities found at ", world_click_pos)
+				return
+			
+			print("Found %d entit(y/ies) at %s:" % [count, world_click_pos])
+			var ids = result["entity_ids"]
+			var types = result["types"]
+			var sprites = result["entity_sprites"]
+			
+			for i in count:
+				print(" - ID: ", ids[i],
+					  " | Type: ", types[i],
+					  " | Sprite: ", sprites[i])

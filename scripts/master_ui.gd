@@ -210,21 +210,21 @@ func fill_grid_with_sprites(grid: GridContainer, button_id: int = -1) -> void:
 func _on_sprite_gui_input(event: InputEvent, index: int, sheet_id: int, variant_id : int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		print("Clicked sprite %d → sheet %d variant %d" % [index, sheet_id, variant_id])
-		if sheet_id == 2:
-			building_selected.emit(sheet_id, variant_id)
-			var full_tex = SpriteAtlas.get_texture(sheet_id)
-			var region  = SpriteAtlas.get_region(sheet_id, variant_id)
-			var scale_ghost = SpriteAtlas.get_scale(sheet_id)
-			var offset = SpriteAtlas.get_offset(sheet_id, variant_id)
+		building_selected.emit(sheet_id, variant_id)
+		var full_tex = SpriteAtlas.get_texture(sheet_id)
+		var region  = SpriteAtlas.get_region(sheet_id, variant_id)
+		var scale_ghost = SpriteAtlas.get_scale(sheet_id)
+		var offset = SpriteAtlas.get_offset(sheet_id, variant_id)
 
-			var ghost_atlas = AtlasTexture.new()
-			ghost_atlas.atlas = full_tex
-			ghost_atlas.region = region
-			update_place_ghost.emit(ghost_atlas, scale_ghost, offset)
+		var ghost_atlas = AtlasTexture.new()
+		ghost_atlas.atlas = full_tex
+		ghost_atlas.region = region
+		update_place_ghost.emit(ghost_atlas, scale_ghost, offset)
 
 
 		
 func clear_grid(grid: GridContainer):
 	for child in grid.get_children():
 		child.queue_free()  # Safely removes and frees the node
+		update_place_ghost.emit(null, Vector2.ZERO ,Vector2.ZERO)
 	build_scroll_container.visible = false
