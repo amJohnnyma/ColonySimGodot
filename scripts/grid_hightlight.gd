@@ -5,6 +5,9 @@ extends Node2D
 @export var line_width: float = 0.1
 @export var highlight_offset_y: float = 0.01  # Tiny lift to avoid z-fight with tiles
 
+var current_ghost_texture: Texture2D = null
+var ghost_visible: bool = false
+
 var current_tile: Vector2 = Vector2(-999, -999)  # Invalid start
 
 
@@ -58,3 +61,16 @@ func _draw():
 	
 	# Optional: draw cross for extra clarity
 	# draw_line(p1 + size_vec/2, p3 - size_vec/2, line_color, line_width)
+	
+	if not ghost_visible or current_ghost_texture == null:
+		return
+	
+	var draw_pos = p1
+	
+	draw_texture(current_ghost_texture, draw_pos, Color(1,1,1,0.5))
+
+
+func update_selected_sprite_ghost(atlas_tex: AtlasTexture, custom_scale: Vector2 = Vector2.ONE, custom_offset: Vector2 = Vector2.ZERO) -> void:
+	current_ghost_texture = atlas_tex
+	ghost_visible = true
+	queue_redraw()

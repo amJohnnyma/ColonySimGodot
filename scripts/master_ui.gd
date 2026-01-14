@@ -8,6 +8,9 @@ signal panel_toggled(is_visible: bool, panel_id : int)
 #build menu signals
 signal build_category_button_pressed(button_id : int)
 
+signal building_selected(sheet_id: int, variant_id: int)
+signal update_place_ghost(atlas_texture: AtlasTexture)
+
 # References to UI elements
 @onready var main_action_container = $MainActionContainer
 @onready var expanded_panel_build = $BuildExpandedPanel
@@ -178,7 +181,7 @@ func fill_grid_with_sprites(grid: GridContainer, button_id: int = -1) -> void:
 		sprite.self_modulate = Color(1, 1, 1, 1)
 		sprite.name = "Sprite_%d_var%d" % [sheet_id, variant_id]
 		
-		# ── Create per-cell AtlasTexture (important: do NOT share one instance) ──
+		
 		var atlas_tex := AtlasTexture.new()
 		atlas_tex.atlas  = full_sheet_texture
 		atlas_tex.region = region
@@ -192,16 +195,9 @@ func fill_grid_with_sprites(grid: GridContainer, button_id: int = -1) -> void:
 
 		sprite.custom_minimum_size = Vector2(64, 64)  # ← tune this to your GridContainer cell size
 
-		# If you still need extra scaling (most people don't after using AtlasTexture)
-		# sprite.scale = SpriteAtlas.get_scale(sheet_id)
-
-		# Centering / pivot simulation
-		# (usually not needed — AtlasTexture crops exactly to region)
-		# But if your get_offset() accounts for margins/pivot → you can use:
-		# sprite.pivot_offset = SpriteAtlas.get_offset(sheet_id, variant_id)
-
 		# Make clickable
 		sprite.mouse_filter = Control.MOUSE_FILTER_STOP
+		sprite.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		sprite.gui_input.connect(_on_sprite_gui_input.bind(i, sheet_id, variant_id))
 		
 
@@ -212,10 +208,24 @@ func fill_grid_with_sprites(grid: GridContainer, button_id: int = -1) -> void:
 
 
 # Example input handler (optional)
-func _on_sprite_gui_input(event: InputEvent, index: int, sheet_id: int, variant_id: int) -> void:
+func _on_sprite_gui_input(event: InputEvent, index: int, sheet_id: int, variant_id : int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		print("Clicked sprite %d → sheet %d variant %d" % [index, sheet_id, variant_id])
-	# queue_free() / open editor / equip / etc...
+		if sheet_id == 2:
+			building_selected.emit(sheet_id, variant_id)
+			var full_tex = SpriteAtlas.get_texture(sheet_id)
+			var region  = SpriteAtlas.get_region(sheet_id, variant_id)
+			var scale = SpriteAtlas.get_scale(sheet_id)
+			var offset = SpriteAtlas.get_offset(sheet_id, variant_id)
+
+			var ghost_atlas = AtlasTexture.new()
+			ghost_atlas.atlas = full_tex
+			ghost_atlas.region = region
+			ghost_atlas.scale = scale
+			ghost_atlas.offset = offset
+			update_place_ghost.emit(ghost_atlas)
+
+
 		
 func clear_grid(grid: GridContainer):
 	for child in grid.get_children():

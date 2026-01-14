@@ -118,9 +118,6 @@ extends Node
  85: Rect2(160,  64,  32,  32) # 5 2 (top left)
 
 },
-
-
-
 3: { # Auto-generated sheet
   0: Rect2(  0,   0, 16, 16), # 0 0 (top left)
   1: Rect2( 16,   0, 16, 16), # 1 0 (top left)
@@ -799,31 +796,7 @@ extends Node
  674: Rect2(416, 384, 16, 16), # 26 24 (top left)
  675: Rect2(  0, 400, 16, 16), # 0 25 (top left)
  676: Rect2( 16, 400, 16, 16), # 1 25 (top left)
- 677: Rect2( 32, 400, 16, 16), # 2 25 (top left)
- 678: Rect2( 48, 400, 16, 16), # 3 25 (top left)
- 679: Rect2( 64, 400, 16, 16), # 4 25 (top left)
- 680: Rect2( 80, 400, 16, 16), # 5 25 (top left)
- 681: Rect2( 96, 400, 16, 16), # 6 25 (top left)
- 682: Rect2(112, 400, 16, 16), # 7 25 (top left)
- 683: Rect2(128, 400, 16, 16), # 8 25 (top left)
- 684: Rect2(144, 400, 16, 16), # 9 25 (top left)
- 685: Rect2(160, 400, 16, 16), # 10 25 (top left)
- 686: Rect2(176, 400, 16, 16), # 11 25 (top left)
- 687: Rect2(192, 400, 16, 16), # 12 25 (top left)
- 688: Rect2(208, 400, 16, 16), # 13 25 (top left)
- 689: Rect2(224, 400, 16, 16), # 14 25 (top left)
- 690: Rect2(240, 400, 16, 16), # 15 25 (top left)
- 691: Rect2(256, 400, 16, 16), # 16 25 (top left)
- 692: Rect2(272, 400, 16, 16), # 17 25 (top left)
- 693: Rect2(288, 400, 16, 16), # 18 25 (top left)
- 694: Rect2(304, 400, 16, 16), # 19 25 (top left)
- 695: Rect2(320, 400, 16, 16), # 20 25 (top left)
- 696: Rect2(336, 400, 16, 16), # 21 25 (top left)
- 697: Rect2(352, 400, 16, 16), # 22 25 (top left)
- 698: Rect2(368, 400, 16, 16), # 23 25 (top left)
- 699: Rect2(384, 400, 16, 16), # 24 25 (top left)
- 700: Rect2(400, 400, 16, 16), # 25 25 (top left)
- 701: Rect2(416, 400, 16, 16) # 26 25 (top left)
+
 },
 	# Add more sheets here...
 }

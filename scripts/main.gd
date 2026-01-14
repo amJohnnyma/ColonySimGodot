@@ -3,6 +3,9 @@ extends Node2D
 
 @export var world_scale: float = 1.0
 @onready var cam: Camera2D = $Camera2D
+@onready var ui: Control = $UI/GameUI
+
+@export var selectedSprite : Array = [0,0]
 
 # Helper function - now correctly placed at script level
 func random_pos(rng) -> Vector2i:
@@ -28,6 +31,9 @@ func _ready() -> void:
 	var half_width = $World.get_world_width_tiles() / 2.0
 	var half_height = $World.get_world_height_tiles() / 2.0
 	cam.target_position = Vector2(half_width, half_height)
+	
+	ui.building_selected.connect(_on_building_selected)
+	ui.update_place_ghost.connect(_update_place_ghost)
 	
 	# ===================================================================
 	# TEMPORARY: Large-scale procedural generation for testing sprites
@@ -136,6 +142,23 @@ func _ready() -> void:
 	# END OF TEMPORARY GENERATION
 	# ===================================================================
 
+func _on_building_selected(sheet_id: int, variant_id: int) -> void:
+	# unselect it now
+	if sheet_id == selectedSprite[0] and variant_id == selectedSprite[1]:
+		selectedSprite[0] = 0
+		selectedSprite[1] = 0
+		print("Main received deselection → sheet: %d  variant: %d" % [sheet_id, variant_id])
+	else:
+		selectedSprite[0] = sheet_id
+		selectedSprite[1] = variant_id
+		print("Main received selection → sheet: %d  variant: %d" % [sheet_id, variant_id])
+
+func _update_place_ghost(sprite : AtlasTexture) -> void:
+	$GameSystems/GridHighlight.update_selected_sprite_ghost(sprite)
+
+
+
+'''
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var camera := get_viewport().get_camera_2d()
@@ -162,3 +185,4 @@ func _input(event):
 			print(" - ID: ", ids[i],
 				  " | Type: ", types[i],
 				  " | Sprite: ", sprites[i])
+'''
