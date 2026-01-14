@@ -5,7 +5,7 @@ extends Node2D
 @onready var cam: Camera2D = $Camera2D
 @onready var ui: Control = $UI/GameUI
 
-@export var selectedSprite : Array = [0,0]
+@export var selectedSprite : Array = [0,0, 0]
 
 # Helper function - now correctly placed at script level
 func random_pos(rng) -> Vector2i:
@@ -147,14 +147,16 @@ func _on_building_selected(sheet_id: int, variant_id: int) -> void:
 	if sheet_id == selectedSprite[0] and variant_id == selectedSprite[1]:
 		selectedSprite[0] = 0
 		selectedSprite[1] = 0
+		selectedSprite[2] = 0
 		print("Main received deselection → sheet: %d  variant: %d" % [sheet_id, variant_id])
 	else:
 		selectedSprite[0] = sheet_id
 		selectedSprite[1] = variant_id
+		selectedSprite[2] = 1
 		print("Main received selection → sheet: %d  variant: %d" % [sheet_id, variant_id])
 
-func _update_place_ghost(sprite : AtlasTexture) -> void:
-	$GameSystems/GridHighlight.update_selected_sprite_ghost(sprite)
+func _update_place_ghost(sprite : AtlasTexture, scale : Vector2, offset : Vector2) -> void:
+	$GameSystems/GridHighlight.update_selected_sprite_ghost(sprite, scale, offset, selectedSprite[2])
 
 
 

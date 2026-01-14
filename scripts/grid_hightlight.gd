@@ -1,76 +1,94 @@
-@tool  # So it works in editor too — great for debugging!
+@tool
 extends Node2D
 
-@export var line_color: Color = Color.RED
-@export var line_width: float = 0.1
-@export var highlight_offset_y: float = 0.01  # Tiny lift to avoid z-fight with tiles
+@export var line_color: Color = Color(1, 0, 0, 0.8)      # semi-transparent red
+@export var line_width: float = 2.0
+@export var highlight_offset_y: float = 0.5
 
-var current_ghost_texture: Texture2D = null
-var ghost_visible: bool = false
+@onready var ghost_sprite: Sprite2D = $Ghost
 
-var current_tile: Vector2 = Vector2(-999, -999)  # Invalid start
+var current_tile: Vector2i = Vector2i(-999, -999)
+
+var tile_size = GameSettings.tile_size
 
 
-func _process(_delta):
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		# Optional: make ghost visible in editor for testing
+		# ghost_sprite.visible = true
+		pass
+
+
+func _process(_delta: float) -> void:
 	update_highlight()
+	
+	if ghost_sprite == null:
+		return
+	# Follow mouse in world space
+	if ghost_sprite.visible:
+		var cam = get_viewport().get_camera_2d()
+		if cam:
+			var mouse_screen = get_viewport().get_mouse_position()
+			var mouse_world = cam.get_canvas_transform().affine_inverse() * mouse_screen
+			var tile_x = floori(mouse_world.x / tile_size)
+			var tile_y = floori(mouse_world.y / tile_size)
+			var new_tile = Vector2i(tile_x, tile_y + 1)
+			ghost_sprite.global_position = new_tile
 
-func update_highlight():
-	var cam: Camera2D = get_viewport().get_camera_2d()
+
+func update_highlight() -> void:
+	var cam = get_viewport().get_camera_2d()
 	if not cam:
 		return
-		
-	var tile_size = GameSettings.tile_size
 	
-	var mouse_pos_screen: Vector2 = get_viewport().get_mouse_position()
-	var mouse_pos_world: Vector2 = cam.global_position + (mouse_pos_screen - get_viewport_rect().size / 2) / cam.zoom
+	var mouse_screen = get_viewport().get_mouse_position()
+	var mouse_world = cam.get_canvas_transform().affine_inverse() * mouse_screen
 	
-	# Convert world position → tile coordinate
-	var tile_x: int = floor(mouse_pos_world.x / tile_size)
-	var tile_y: int = floor(mouse_pos_world.y / tile_size)
-	var new_tile := Vector2(tile_x, tile_y)
+	var tile_x = floori(mouse_world.x / tile_size)
+	var tile_y = floori(mouse_world.y / tile_size)
+	var new_tile = Vector2i(tile_x, tile_y)
 	
 	if new_tile != current_tile:
 		current_tile = new_tile
-		queue_redraw()  # Only redraw when mouse moves to new tile
+		queue_redraw()
 
-func _draw():
+
+func _draw() -> void:
 	if current_tile.x == -999:
 		return
-	var tile_size : float = GameSettings.tile_size
-
-	# Compute the four corners of the tile (in local space of this Node2D)
-	var origin := current_tile * tile_size
-	var size_vec := Vector2(tile_size, tile_size)
 	
-	var p1 := origin
-	var p2 := origin + Vector2(size_vec.x, 0)
-	var p3 := origin + size_vec
-	var p4 := origin + Vector2(0, size_vec.y)
+	var tile_size: float = GameSettings.tile_size
+	var origin = Vector2(current_tile) * tile_size
 	
-	# Slight Y offset to draw above tiles
-	p1.y += highlight_offset_y
-	p2.y += highlight_offset_y
-	p3.y += highlight_offset_y
-	p4.y += highlight_offset_y
+	# Draw tile border slightly lifted
+	var p1 = origin + Vector2(0, highlight_offset_y)
+	var p2 = origin + Vector2(tile_size, highlight_offset_y)
+	var p3 = origin + Vector2(tile_size, tile_size + highlight_offset_y)
+	var p4 = origin + Vector2(0, tile_size + highlight_offset_y)
 	
-	# Draw the four red lines
 	draw_line(p1, p2, line_color, line_width)
 	draw_line(p2, p3, line_color, line_width)
 	draw_line(p3, p4, line_color, line_width)
 	draw_line(p4, p1, line_color, line_width)
-	
-	# Optional: draw cross for extra clarity
-	# draw_line(p1 + size_vec/2, p3 - size_vec/2, line_color, line_width)
-	
-	if not ghost_visible or current_ghost_texture == null:
+
+
+func update_selected_sprite_ghost(
+	atlas_tex: AtlasTexture,
+	custom_scale: Vector2 = Vector2.ONE,
+	custom_offset: Vector2 = Vector2.ZERO,
+	visible : bool = true
+) -> void:
+	if !visible:
+		ghost_sprite.visible = false
 		return
-	
-	var draw_pos = p1
-	
-	draw_texture(current_ghost_texture, draw_pos, Color(1,1,1,0.5))
+	ghost_sprite.texture = atlas_tex
+	ghost_sprite.scale   = custom_scale
+	ghost_sprite.offset  = custom_offset          # this controls pivot/alignment
+	ghost_sprite.modulate.a = 0.6                 # ghost transparency
+	ghost_sprite.visible = true
 
 
-func update_selected_sprite_ghost(atlas_tex: AtlasTexture, custom_scale: Vector2 = Vector2.ONE, custom_offset: Vector2 = Vector2.ZERO) -> void:
-	current_ghost_texture = atlas_tex
-	ghost_visible = true
-	queue_redraw()
+func clear_ghost() -> void:
+	ghost_sprite.visible = false
+	ghost_sprite.texture = null
