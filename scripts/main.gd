@@ -38,8 +38,8 @@ func _ready() -> void:
 	const NUM_SPRITES_BUILDING : int = 135
 	const NUM_SPRITES_ITEMS : int = 27 * 26
 	
-	const NUM_BUILDINGS : int = 10
-	const NUM_COLONISTS : int = 40
+	const NUM_BUILDINGS : int = 1000
+	const NUM_COLONISTS : int = 4000
 	const ITEMS_PER_BUILDING_MIN : int = 1
 	const ITEMS_PER_BUILDING_MAX : int = 2
 	

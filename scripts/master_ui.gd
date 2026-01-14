@@ -113,7 +113,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 40, button_id)
+				fill_grid_with_sprites(build_grid_options, button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		2:
@@ -121,7 +121,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 40, button_id)
+				fill_grid_with_sprites(build_grid_options, button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		3:
@@ -129,7 +129,7 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 40, button_id)
+				fill_grid_with_sprites(build_grid_options, button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 		4:
@@ -137,67 +137,86 @@ func _on_build_category_button_pressed(button_id: int):
 				clear_grid(build_grid_options)
 				currentShownGrid = -1
 			else:
-				fill_grid_with_placeholders(build_grid_options, 40, button_id)
+				fill_grid_with_sprites(build_grid_options, button_id)
 				build_category_button_pressed.emit(button_id)
 			pass
 
 
-''''''
 
-# Function to fill the grid with placeholders
-func fill_grid_with_placeholders(grid: GridContainer, count: int = 20,  button_id : int = -1):
-	# First clear any existing children (in case you refill)
+func fill_grid_with_sprites(grid: GridContainer, button_id: int = -1) -> void:
 	clear_grid(grid)
 	build_scroll_container.visible = true
 	currentShownGrid = button_id
-	
-	
-	for i in range(count):
-		var placeholder: Control
 
-		placeholder = Panel.new()
-		placeholder.custom_minimum_size = Vector2(50, 50)  # Adjust size as needed
-		#placeholder.size = Vector2(50,50)
-		placeholder.modulate = Color(0.3, 0.3, 0.3, 0.8)   # Gray semi-transparent
+	# Protect against invalid button_id / sheet
+	if button_id <= 0 or button_id > SpriteAtlas.sheet_regions.size():
+		print("Invalid sheet id:", button_id)
+		return
+
+	var sheet_id := button_id
+	# If your sheets are already 0-based in the atlas → remove the -1
+
+	# How many variants/sprites exist on this sheet
+	var variant_count: int = SpriteAtlas.sheet_regions[sheet_id].size()
+	if variant_count <= 0:
+		print("Sheet", sheet_id, "has no regions defined")
+		return
+
+	var full_sheet_texture: Texture2D = SpriteAtlas.get_texture(sheet_id)
+
+	for i in variant_count:
+		var variant_id: int = i
+		var region: Rect2 = SpriteAtlas.get_region(sheet_id, variant_id)
+
+		if region.size == Vector2.ZERO:
+			continue  # skip invalid/empty regions
+
+
+
+		var sprite := TextureRect.new()
+		sprite.modulate = Color(1, 1, 1, 1)         
+		sprite.self_modulate = Color(1, 1, 1, 1)
+		sprite.name = "Sprite_%d_var%d" % [sheet_id, variant_id]
 		
-		# Create the button
-		var button = Button.new()
-		button.text = "Click Me"  # Optional: set button text
-		button.custom_minimum_size = Vector2(50, 50)  # Adjust size as needed
-		#button.size = Vector2(50,50)
+		# ── Create per-cell AtlasTexture (important: do NOT share one instance) ──
+		var atlas_tex := AtlasTexture.new()
+		atlas_tex.atlas  = full_sheet_texture
+		atlas_tex.region = region
 
-		# Create a custom StyleBoxFlat for the normal state (background)
-		var normal_style = StyleBoxFlat.new()
-		normal_style.bg_color = Color(0.2, 0.6, 0.8, 1)  # Example: blue-ish background
-		normal_style.corner_radius_top_left = 10
-		normal_style.corner_radius_top_right = 10
-		normal_style.corner_radius_bottom_right = 10
-		normal_style.corner_radius_bottom_left = 10
-		normal_style.border_color = Color(0.1, 0.4, 0.6, 1)
+		sprite.texture = atlas_tex
 
-		# Optional: hover style for better feedback
-		var hover_style = StyleBoxFlat.new()
-		hover_style.bg_color = Color(0.3, 0.7, 0.9, 1)  # Lighter on hover
+		# UI-friendly display settings
+		sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		sprite.expand_mode  = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		# Good alternatives: EXPAND_KEEP_SIZE, EXPAND_FIT_HEIGHT_PROPORTIONAL
 
-		# Apply the styles
-		button.add_theme_stylebox_override("normal", normal_style)
-		button.add_theme_stylebox_override("hover", hover_style)
+		sprite.custom_minimum_size = Vector2(64, 64)  # ← tune this to your GridContainer cell size
 
-		# Optional: pressed and focus styles (copy and adjust as needed)
-		button.add_theme_stylebox_override("pressed", normal_style.duplicate())
-		button.add_theme_stylebox_override("focus", normal_style.duplicate())
+		# If you still need extra scaling (most people don't after using AtlasTexture)
+		# sprite.scale = SpriteAtlas.get_scale(sheet_id)
+
+		# Centering / pivot simulation
+		# (usually not needed — AtlasTexture crops exactly to region)
+		# But if your get_offset() accounts for margins/pivot → you can use:
+		# sprite.pivot_offset = SpriteAtlas.get_offset(sheet_id, variant_id)
+
+		# Make clickable
+		sprite.mouse_filter = Control.MOUSE_FILTER_STOP
+		sprite.gui_input.connect(_on_sprite_gui_input.bind(i, sheet_id, variant_id))
 		
 
-		# Add the button to the placeholder panel (or wherever you need it)
-		placeholder.add_child(button)
+		grid.add_child(sprite)
 
-		# Optional: give it a name for debugging
-		placeholder.name = "Placeholder_%d" % i
+	# Optional: force layout refresh
+	grid.queue_sort()
+
+
+# Example input handler (optional)
+func _on_sprite_gui_input(event: InputEvent, index: int, sheet_id: int, variant_id: int) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		print("Clicked sprite %d → sheet %d variant %d" % [index, sheet_id, variant_id])
+	# queue_free() / open editor / equip / etc...
 		
-		# Add to grid
-		grid.add_child(placeholder)
-
-
 func clear_grid(grid: GridContainer):
 	for child in grid.get_children():
 		child.queue_free()  # Safely removes and frees the node
