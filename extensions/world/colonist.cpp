@@ -3,22 +3,12 @@
 #include "entityJob.h"
 #include "variant/vector2i.hpp"
 #include <cstdint>
+#include <random>
 
 Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) : Entity(pos, id, entity_sprite, size) {
     reset_timer();
     entity_type = 1;
     homeCoord = pos;
-
-    EntityJob job;
-    job.isValid = true;
-    job.complete = false;
-    job.move_algo = "default";
-    job.priority = 10;
-    job.moveSpeedMultiplier = 500.f;
-
-    job.target_coord = Vector2i(std::clamp(position.x + 100, 0 , 768), std::clamp(position.y + 100, 0 , 768));
-
-    jobList.push_back(job);
 
 }
 // Returns new position and true if crossed chunk border
@@ -54,6 +44,16 @@ bool Colonist::simulate(EntitySimulationParam &params)
             EntityJob wander;
             wander.move_algo = "default";
             wander.moveSpeedMultiplier = 1.0f;
+            thread_local static std::mt19937 gen(std::random_device{}());
+            std::uniform_int_distribution<int> dist(0, 10);
+            std::uniform_int_distribution<int> dir(0,1);
+            int fdir = dir(gen);
+            if(fdir == 0)
+                fdir = -1;
+
+            int distance = dist(gen);
+            distance *= fdir;
+            wander.target_coord = {position.x + distance, position.y + distance};
             add_job(wander);
             currentJob = &jobList.back();  // Point to the newly added one
         }
