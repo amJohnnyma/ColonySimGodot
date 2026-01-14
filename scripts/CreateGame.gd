@@ -9,4 +9,6 @@ func _on_back_pressed():
 
 
 func _on_create_pressed():
-	pass
+	GameSettings.max_world_tiles = $Panel/VBoxContainer/VBoxContainer/OptionPanel1/HBoxContainer/HSlider.value
+	GameSettings.chunk_size = pow(2, $Panel/VBoxContainer/VBoxContainer/OptionPanel3/HBoxContainer/HSlider.value)
+	get_tree().change_scene_to_file("res://scenes/MainGame.tscn")

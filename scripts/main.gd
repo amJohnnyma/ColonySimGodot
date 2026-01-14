@@ -34,7 +34,8 @@ func _ready() -> void:
 	
 	ui.building_selected.connect(_on_building_selected)
 	ui.update_place_ghost.connect(_update_place_ghost)
-	
+
+'''
 	# ===================================================================
 	# TEMPORARY: Large-scale procedural generation for testing sprites
 	# ===================================================================
@@ -141,7 +142,7 @@ func _ready() -> void:
 	# ===================================================================
 	# END OF TEMPORARY GENERATION
 	# ===================================================================
-
+'''
 func _on_building_selected(sheet_id: int, variant_id: int) -> void:
 	# unselect it now
 	if sheet_id == selectedSprite[0] and variant_id == selectedSprite[1]:

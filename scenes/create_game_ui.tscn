@@ -58,10 +58,11 @@ text = "World Size"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-min_value = 1.0
-max_value = 20.0
-value = 11.0
-tick_count = 20
+min_value = 1000.0
+max_value = 10000.0
+step = 100.0
+value = 1000.0
+tick_count = 100
 ticks_on_borders = true
 ticks_position = 3
 
@@ -108,16 +109,16 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer/OptionPanel3/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Option3"
+text = "ChunkSize"
 
 [node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/VBoxContainer/OptionPanel3/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-min_value = 1.0
-max_value = 20.0
-value = 11.0
-tick_count = 20
+min_value = 3.0
+max_value = 8.0
+value = 8.0
+tick_count = 1
 ticks_on_borders = true
 ticks_position = 3
 
