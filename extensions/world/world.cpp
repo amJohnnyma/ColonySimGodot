@@ -12,7 +12,7 @@ using namespace godot;
 void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("init", "world_width_tiles", "world_height_tiles", "chunk_size_tiles"),
                          &World::init);
-    ClassDB::bind_method(D_METHOD("update", "origin", "render_distance_chunks", "delta"),
+    ClassDB::bind_method(D_METHOD("update", "origin", "render_distance_chunks", "delta", "paused"),
                          &World::update);
     ClassDB::bind_method(D_METHOD("get_tile", "world_x", "world_y"), &World::get_tile);
     ClassDB::bind_method(D_METHOD("set_tile", "world_x", "world_y", "value"), &World::set_tile);
@@ -31,6 +31,7 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_visible_entities", "chunk_coords", "cull_min", "cull_max", "max_entities"),&World::get_visible_entities);
     ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite"),&World::create_entity);
     ClassDB::bind_method(D_METHOD("get_entities_at_world_pos","coord"),&World::get_entities_at_world_pos);
+    ClassDB::bind_method(D_METHOD("create_temp_job","jobPos", "entityPos"),&World::create_temp_job);
 
 }
 
@@ -387,7 +388,7 @@ void World::init_thread_pool(size_t thread_count) {
     thread_pool = std::make_unique<ThreadPool>(thread_count);
 }
 
-void World::update(const Vector2 &origin, int render_distance_chunks, float delta) {
+void World::update(const Vector2 &origin, int render_distance_chunks, float delta, bool paused) {
     // Ensure thread pool exists
     if (!thread_pool) {
         init_thread_pool();
@@ -404,6 +405,8 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
             pendingEntityPlacements.clear();
         }
     }
+
+    if (paused) return;
 
     Vector2i origin_chunk = world_pos_to_chunk(origin);
     const int R = render_distance_chunks;
@@ -552,4 +555,35 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
 
 
 
+}
+
+void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos)
+{
+    Vector2i chunk_coord = world_tile_to_chunk(entityPos.x,entityPos.y);
+
+    auto chunk = load_chunk(chunk_coord);
+    if (!chunk) {
+        UtilityFunctions::push_warning("Failed to load chunk for placement at ",entityPos);
+        return;
+    }
+
+    //inneficient but doesnt matter its temporarily
+    for (const auto& e: chunk->entities)
+    {
+        if(e->get_position() == entityPos)
+        {
+
+
+            EntityJob wander;
+            wander.move_algo = "default";
+            wander.moveSpeedMultiplier = 1.0f;
+            wander.priority = 100;
+
+            wander.target_coord = {jobPos.x, jobPos.y};
+            e->add_job(wander);
+
+            UtilityFunctions::print("Created job to go from ", entityPos, " to ", jobPos);
+            return;
+        }
+    }
 }

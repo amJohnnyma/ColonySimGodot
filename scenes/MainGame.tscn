@@ -61,10 +61,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_vs82q")
 
-[node name="EntityClickPopup" parent="UI/MasterControl" instance=ExtResource("10_rtryj")]
+[node name="EntityClickPopup" parent="UI/MasterControl" node_paths=PackedStringArray("main") instance=ExtResource("10_rtryj")]
 visible = false
 layout_mode = 1
 script = ExtResource("11_qsiih")
+main = NodePath("../../..")
 
 [node name="GameUI" parent="UI/MasterControl" instance=ExtResource("8_q8u5g")]
 top_level = true

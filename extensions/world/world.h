@@ -68,7 +68,7 @@ class World : public  Node2D{
 
     public:
         void init(int world_width_tiles, int world_height_tiles, int chunk_size_tiles);
-        void update(const Vector2 &origin, int render_distance_chunks, float delta);
+        void update(const Vector2 &origin, int render_distance_chunks, float delta, bool paused);
         
         int get_tile(int world_x, int world_y) const;
         void set_tile(int world_x, int world_y, int value);
@@ -117,4 +117,6 @@ class World : public  Node2D{
 
         // The building system
         void create_entity(const String &type, const Vector2i &coord,const int &entity_type, const int &entity_sprite);
+
+        void create_temp_job(const Vector2i jobPos, const Vector2i entityPos);
 };

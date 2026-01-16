@@ -1,0 +1,135 @@
+// In Colonist class
+private:
+    int currentJobIndex = -1;  // Instead of EntityJob* currentJob
+
+bool Colonist::simulate(EntitySimulationParam &params)
+{
+    if (!active) return false;
+    move_timer -= params.delta;
+    if (move_timer > 0.0f) return false;
+    
+    // Clean up completed jobs
+    jobList.erase(
+        std::remove_if(jobList.begin(), jobList.end(),
+            [](const EntityJob& j) { return j.complete; }),
+        jobList.end()
+    );
+    
+    // Invalidate index if out of range
+    if (currentJobIndex >= jobList.size()) {
+        currentJobIndex = -1;
+    }
+    
+    // If no current job or current one is complete
+    if (currentJobIndex == -1 || 
+        (currentJobIndex < jobList.size() && jobList[currentJobIndex].complete))
+    {
+        if (!jobList.empty())
+        {
+            // Pick highest priority job
+            auto it = std::max_element(jobList.begin(), jobList.end(),
+                [](const EntityJob& a, const EntityJob& b) {
+                    return a.priority < b.priority;
+                });
+            currentJobIndex = std::distance(jobList.begin(), it);
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    // Execute movement
+    bool moved = false;
+    EntityJob& current = jobList[currentJobIndex];
+    
+    if (current.move_algo == "default")
+    {
+        moved = default_movement(params);
+    }
+    else
+    {
+        moved = random_movement(params);
+    }
+    
+    if (current.complete)
+    {
+        reset_timer();
+        currentJobIndex = -1;
+    }
+    
+    return moved;
+}
+
+bool Colonist::default_movement(EntitySimulationParam &params)
+{
+    if (currentJobIndex < 0 || currentJobIndex >= jobList.size()) {
+        return false;
+    }
+    
+    EntityJob& currentJob = jobList[currentJobIndex];
+    Vector2i target = currentJob.target_coord;
+    Vector2i current = position;
+    
+    if (current == target)
+    {
+        currentJob.complete = true;
+        return false;
+    }
+    
+    Vector2i delta = target - current;
+    int dx = delta.x;
+    int dy = delta.y;
+    
+    Vector2i move(0, 0);
+    if (std::abs(dx) > std::abs(dy))
+    {
+        move.x = (dx > 0) ? 1 : -1;
+    }
+    else if (std::abs(dy) > 0)
+    {
+        move.y = (dy > 0) ? 1 : -1;
+    }
+    else
+    {
+        move.x = (dx > 0) ? 1 : -1;
+    }
+    
+    params.out_new_pos = position + move;
+    reset_timer();
+    return true;
+}
+
+void World::update(const Vector2 &origin, int render_distance_chunks, float delta, bool paused) {
+    // ... existing code ...
+    
+    // 3. Parallel full simulation (nearby chunks)
+    if (!sim_cache.full_sim.empty()) {
+        std::vector<std::future<void>> futures;
+        futures.reserve(sim_cache.full_sim.size());
+        
+        for (auto& chunk : sim_cache.full_sim) {
+            futures.push_back(thread_pool->enqueue([chunk, delta]() {
+                chunk->simulate(delta, true);
+            }));
+        }
+        
+        for (auto& fut : futures) {
+            fut.get();
+        }
+        
+        // Process pending IMMEDIATELY after simulation
+        {
+            std::lock_guard<std::mutex> pending_lock(pending_mutex);
+            if (!pendingEntityPlacements.empty()) {
+                std::lock_guard<std::mutex> chunk_lock(chunks_mutex);
+                for (auto& ec : pendingEntityPlacements) {
+                    std::get<0>(ec)->entities.push_back(std::get<1>(ec));
+                }
+                pendingEntityPlacements.clear();
+            }
+        }
+    }
+    
+    // ... rest of code ...
+}

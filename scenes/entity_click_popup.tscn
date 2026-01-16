@@ -72,7 +72,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_uxrx7")
-stretch_mode = 3
+expand_mode = 5
 
 [node name="JoblistButtonMargin" type="MarginContainer" parent="MarginContainer/Panel/EntityJobPanel"]
 custom_minimum_size = Vector2(100, 100)
@@ -103,6 +103,65 @@ theme_override_constants/margin_bottom = 20
 [node name="Joblist" type="Panel" parent="MarginContainer/Panel/EntityJobPanel/JoblistMargin"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rakx5")
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/EntityJobPanel/JoblistMargin/Joblist"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+autowrap_mode = 2
+
+[node name="JobCreatePanel" type="Panel" parent="MarginContainer/Panel/EntityJobPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 264.0
+offset_top = 124.0
+offset_right = -34.0
+offset_bottom = -117.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -46.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuButton" type="MenuButton" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+text = "JobType"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Pos_x"
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Pos_y"
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "CreateJob"
 
 [node name="CloseButton" type="Button" parent="."]
 layout_mode = 0

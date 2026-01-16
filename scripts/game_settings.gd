@@ -7,3 +7,4 @@ extends Node2D
 @export var max_render_distance_chunks: int = 3
 @export var render_buffer_chunks: int = 1
 @export var simulation_distance: int = 20
+@export var paused : bool = true

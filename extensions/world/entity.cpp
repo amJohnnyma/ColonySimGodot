@@ -20,16 +20,8 @@ void Entity::add_job(EntityJob job)
     job.isValid = true;
     job.complete = false;
     job.move_algo = "default";
-    job.priority = 0;
     move_speed = base_move_speed / job.moveSpeedMultiplier;
 
-    thread_local static std::mt19937 gen(std::random_device{}());
-    std::uniform_int_distribution<int> dist(-10, 10);
-    int target_coord_x = std::clamp(position.x +dist(gen), 0, 768);
-    int target_coord_y = std::clamp(position.y +dist(gen), 0, 768);
-
-
-    job.target_coord = Vector2i(target_coord_x,target_coord_y);
 
     jobList.push_back(job);
 }

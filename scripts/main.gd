@@ -166,6 +166,8 @@ func _update_place_ghost(sprite : AtlasTexture, c_scale : Vector2, offset : Vect
 
 
 func _unhandled_input(event):
+	if event is InputEventKey and event.keycode == KEY_P and event.pressed:
+		GameSettings.paused = !GameSettings.paused
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if selectedSprite[2]:
 			print("Placing sprite")
@@ -223,3 +225,8 @@ func _unhandled_input(event):
 			$UI/MasterControl/EntityClickPopup.visible=true
 			
 			selectedEntity.entities_selected(ids, types, sprites, pos)
+
+
+func create_entity_job(pos : Vector2i, entityPos : Vector2i):
+	# For making an entity job -> Temporary
+	$World.create_temp_job(pos, entityPos)
