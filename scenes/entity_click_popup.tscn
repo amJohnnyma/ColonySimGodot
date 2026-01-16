@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7gru2s185m08"]
+[gd_scene load_steps=3 format=3 uid="uid://c7gru2s185m08"]
+
+[ext_resource type="Texture2D" uid="uid://71nui0fwoium" path="res://icon.svg" id="1_uxrx7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rakx5"]
 
@@ -61,6 +63,16 @@ theme_override_constants/margin_bottom = 20
 [node name="Icon" type="Panel" parent="MarginContainer/Panel/EntityJobPanel/IconMargin"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rakx5")
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/EntityJobPanel/IconMargin/Icon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_uxrx7")
+stretch_mode = 3
 
 [node name="JoblistButtonMargin" type="MarginContainer" parent="MarginContainer/Panel/EntityJobPanel"]
 custom_minimum_size = Vector2(100, 100)

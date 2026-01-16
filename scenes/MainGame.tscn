@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4buet0jfu1wt"]
+[gd_scene load_steps=13 format=3 uid="uid://b4buet0jfu1wt"]
 
 [ext_resource type="Script" uid="uid://c24qbluo3e5pl" path="res://scripts/WorldRenderer.gd" id="1_elqb8"]
 [ext_resource type="Script" uid="uid://cjt5nf5s7y8ul" path="res://scripts/main.gd" id="1_rvslj"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b4x0pgtbs0r18" path="res://scenes/game_ui.tscn" id="8_q8u5g"]
 [ext_resource type="Script" uid="uid://8ks538tawrff" path="res://scripts/master_ui.gd" id="9_vs82q"]
 [ext_resource type="PackedScene" uid="uid://c7gru2s185m08" path="res://scenes/entity_click_popup.tscn" id="10_rtryj"]
+[ext_resource type="Script" uid="uid://b548ejt61cf1d" path="res://scripts/EntitySelected.gd" id="11_qsiih"]
 
 [node name="Main_Game" type="Node2D"]
 script = ExtResource("1_rvslj")
@@ -63,6 +64,7 @@ script = ExtResource("9_vs82q")
 [node name="EntityClickPopup" parent="UI/MasterControl" instance=ExtResource("10_rtryj")]
 visible = false
 layout_mode = 1
+script = ExtResource("11_qsiih")
 
 [node name="GameUI" parent="UI/MasterControl" instance=ExtResource("8_q8u5g")]
 top_level = true

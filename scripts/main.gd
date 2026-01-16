@@ -4,6 +4,7 @@ extends Node2D
 @export var world_scale: float = 1.0
 @onready var cam: Camera2D = $Camera2D
 @onready var ui: Control = $UI/MasterControl
+@onready var selectedEntity : Control = $UI/MasterControl/EntityClickPopup
 
 @export var selectedSprite : Array = [0,0, 0]
 
@@ -34,6 +35,7 @@ func _ready() -> void:
 	
 	ui.building_selected.connect(_on_building_selected)
 	ui.update_place_ghost.connect(_update_place_ghost)
+
 
 '''
 	# ===================================================================
@@ -205,12 +207,19 @@ func _unhandled_input(event):
 			var ids = result["entity_ids"]
 			var types = result["types"]
 			var sprites = result["entity_sprites"]
+			var pos_x = result["x_pos"]
+			var pos_y = result["y_pos"]
+			
+			var pos : Array[Vector2i] 
 			
 			for i in count:
 				print(" - ID: ", ids[i],
 					  " | Type: ", types[i],
 					  " | Sprite: ", sprites[i])
+				pos.push_back(Vector2i(pos_x[i], pos_y[i]))
 					
 			# Show hide correct UI
 			$UI/MasterControl/GameUI.visible=false
 			$UI/MasterControl/EntityClickPopup.visible=true
+			
+			selectedEntity.entities_selected(ids, types, sprites, pos)

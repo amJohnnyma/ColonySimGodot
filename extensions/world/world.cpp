@@ -259,6 +259,8 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     PackedInt32Array entity_sprites;
     PackedInt32Array entity_widths;  // Plural for consistency
     PackedInt32Array entity_heights;
+    PackedInt32Array x_pos; // this will be for retrieving data about specific entities later
+    PackedInt32Array y_pos;
 
     // Pre-allocate for performance
     entity_ids.resize(max_entities);
@@ -266,6 +268,8 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     entity_sprites.resize(max_entities);
     entity_widths.resize(max_entities);
     entity_heights.resize(max_entities);
+    x_pos.resize(max_entities);
+    y_pos.resize(max_entities);
 
     int count = 0;
     for (const auto& entity_ptr : chunk->entities) {  // const ref for safety
@@ -280,6 +284,8 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
             entity_sprites[count] = entity_ptr->get_entity_sprite();
             entity_widths[count] = entity_ptr->get_entity_width();
             entity_heights[count] = entity_ptr->get_entity_height();
+            x_pos[count] = entity_ptr->get_position().x;
+            y_pos[count] = entity_ptr->get_position().y;
             count++;
         }
     }
@@ -290,12 +296,16 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     entity_sprites.resize(count);
     entity_widths.resize(count);
     entity_heights.resize(count);
+    x_pos.resize(count);
+    y_pos.resize(count);
 
     result["entity_ids"] = entity_ids;
     result["types"] = types;
     result["entity_sprites"] = entity_sprites;
     result["entity_width"] = entity_widths;  // Kept singular to match your API
     result["entity_height"] = entity_heights;
+    result["x_pos"] = x_pos;
+    result["y_pos"] = y_pos;
     result["count"] = count;
     return result;
 }
