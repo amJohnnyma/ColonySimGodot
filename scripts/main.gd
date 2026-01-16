@@ -3,7 +3,7 @@ extends Node2D
 
 @export var world_scale: float = 1.0
 @onready var cam: Camera2D = $Camera2D
-@onready var ui: Control = $UI/GameUI
+@onready var ui: Control = $UI/MasterControl
 
 @export var selectedSprite : Array = [0,0, 0]
 
@@ -157,6 +157,8 @@ func _on_building_selected(sheet_id: int, variant_id: int) -> void:
 		print("Main received selection → sheet: %d  variant: %d" % [sheet_id, variant_id])
 
 func _update_place_ghost(sprite : AtlasTexture, c_scale : Vector2, offset : Vector2) -> void:
+	if selectedSprite[0] == 0:
+		selectedSprite[2] = 0
 	$GameSystems/GridHighlight.update_selected_sprite_ghost(sprite, c_scale, offset, selectedSprite[2])
 
 
@@ -208,3 +210,7 @@ func _unhandled_input(event):
 				print(" - ID: ", ids[i],
 					  " | Type: ", types[i],
 					  " | Sprite: ", sprites[i])
+					
+			# Show hide correct UI
+			$UI/MasterControl/GameUI.visible=false
+			$UI/MasterControl/EntityClickPopup.visible=true

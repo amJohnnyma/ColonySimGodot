@@ -85,7 +85,7 @@ alignment = 1
 [node name="Cat1Button" type="Button" parent="BuildExpandedPanel/BuildCategories"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Cat1
+text = "Colonist
 "
 alignment = 0
 icon_alignment = 1
@@ -93,15 +93,14 @@ icon_alignment = 1
 [node name="Cat2Button" type="Button" parent="BuildExpandedPanel/BuildCategories"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Cat2
-"
+text = "Building"
 alignment = 0
 icon_alignment = 1
 
 [node name="Cat3Button" type="Button" parent="BuildExpandedPanel/BuildCategories"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Cat3
+text = "Item
 "
 alignment = 0
 icon_alignment = 1

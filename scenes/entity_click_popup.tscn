@@ -1,0 +1,101 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7gru2s185m08"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rakx5"]
+
+[node name="EntityClickPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 50
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TabBar" type="TabBar" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 212.0
+grow_vertical = 0
+current_tab = 0
+tab_count = 3
+tab_0/title = "Job"
+tab_1/title = "Inventory"
+tab_2/title = "Other"
+
+[node name="EntityJobPanel" type="Panel" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IconMargin" type="MarginContainer" parent="MarginContainer/Panel/EntityJobPanel"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Icon" type="Panel" parent="MarginContainer/Panel/EntityJobPanel/IconMargin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rakx5")
+
+[node name="JoblistButtonMargin" type="MarginContainer" parent="MarginContainer/Panel/EntityJobPanel"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+offset_top = 400.0
+offset_right = 100.0
+offset_bottom = 500.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Button" type="Button" parent="MarginContainer/Panel/EntityJobPanel/JoblistButtonMargin"]
+layout_mode = 2
+text = "CreateJob"
+
+[node name="JoblistMargin" type="MarginContainer" parent="MarginContainer/Panel/EntityJobPanel"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+offset_top = 100.0
+offset_right = 261.0
+offset_bottom = 399.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Joblist" type="Panel" parent="MarginContainer/Panel/EntityJobPanel/JoblistMargin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rakx5")
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 51.0
+offset_right = 93.0
+offset_bottom = 153.0
+text = "X"

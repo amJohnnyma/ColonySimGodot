@@ -12,14 +12,14 @@ signal building_selected(sheet_id: int, variant_id: int)
 signal update_place_ghost(atlas_texture: AtlasTexture, scale : Vector2, offset : Vector2)
 
 # References to UI elements
-@onready var main_action_container = $MainActionContainer
-@onready var expanded_panel_build = $BuildExpandedPanel
-@onready var expanded_panel_job = $JobExpandedPanel
-@onready var expanded_panel_diplomacy = $DiplomacyExpandedPanel
+@onready var main_action_container = $GameUI/MainActionContainer
+@onready var expanded_panel_build = $GameUI/BuildExpandedPanel
+@onready var expanded_panel_job = $GameUI/JobExpandedPanel
+@onready var expanded_panel_diplomacy = $GameUI/DiplomacyExpandedPanel
 
 # Build specific UI elements
-@onready var build_grid_options = $BuildExpandedPanel/ScrollContainer/GridContainer
-@onready var build_scroll_container = $BuildExpandedPanel/ScrollContainer
+@onready var build_grid_options = $GameUI/BuildExpandedPanel/ScrollContainer/GridContainer
+@onready var build_scroll_container = $GameUI/BuildExpandedPanel/ScrollContainer
 var currentShownGrid : int = -1
 
 func _ready():
@@ -27,19 +27,21 @@ func _ready():
 	mouse_filter = MOUSE_FILTER_IGNORE
 	
 	# Connect button signals
-	$MainActionContainer/BuildExpandButton.pressed.connect(_on_main_button_pressed.bind(1,1))
-	$MainActionContainer/JobExpandButton.pressed.connect(_on_main_button_pressed.bind(2,2))
-	$MainActionContainer/DiplomacyExpandButton.pressed.connect(_on_main_button_pressed.bind(3,3))
+	$GameUI/MainActionContainer/BuildExpandButton.pressed.connect(_on_main_button_pressed.bind(1,1))
+	$GameUI/MainActionContainer/JobExpandButton.pressed.connect(_on_main_button_pressed.bind(2,2))
+	$GameUI/MainActionContainer/DiplomacyExpandButton.pressed.connect(_on_main_button_pressed.bind(3,3))
 	
-	$BuildExpandedPanel/CloseBuildExpandedButton.pressed.connect(_on_close_panel.bind(1))
-	$JobExpandedPanel/CloseJobExpandedButton.pressed.connect(_on_close_panel.bind(2))
-	$DiplomacyExpandedPanel/CloseDiplomacyExpandedButton.pressed.connect(_on_close_panel.bind(3))
+	$GameUI/BuildExpandedPanel/CloseBuildExpandedButton.pressed.connect(_on_close_panel.bind(1))
+	$GameUI/JobExpandedPanel/CloseJobExpandedButton.pressed.connect(_on_close_panel.bind(2))
+	$GameUI/DiplomacyExpandedPanel/CloseDiplomacyExpandedButton.pressed.connect(_on_close_panel.bind(3))
+	$EntityClickPopup/CloseButton.pressed.connect(_on_close_panel.bind(4))
+	
 	
 	#build buttons
-	$BuildExpandedPanel/BuildCategories/Cat1Button.pressed.connect(_on_build_category_button_pressed.bind(1))
-	$BuildExpandedPanel/BuildCategories/Cat2Button.pressed.connect(_on_build_category_button_pressed.bind(2))
-	$BuildExpandedPanel/BuildCategories/Cat3Button.pressed.connect(_on_build_category_button_pressed.bind(3))
-	$BuildExpandedPanel/BuildCategories/Cat4Button.pressed.connect(_on_build_category_button_pressed.bind(4))
+	$GameUI/BuildExpandedPanel/BuildCategories/Cat1Button.pressed.connect(_on_build_category_button_pressed.bind(1))
+	$GameUI/BuildExpandedPanel/BuildCategories/Cat2Button.pressed.connect(_on_build_category_button_pressed.bind(2))
+	$GameUI/BuildExpandedPanel/BuildCategories/Cat3Button.pressed.connect(_on_build_category_button_pressed.bind(3))
+	$GameUI/BuildExpandedPanel/BuildCategories/Cat4Button.pressed.connect(_on_build_category_button_pressed.bind(4))
 
 
 	
@@ -48,9 +50,7 @@ func _ready():
 	expanded_panel_job.visible = false
 	expanded_panel_diplomacy.visible = false
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("toggle_spritetester"):  # Bind to F9 or whatever
-		$SpriteSheetTester.toggle_visible()
+
 
 func _on_main_button_pressed(button_id: int, panel_id : int):
 	match button_id:
@@ -108,6 +108,12 @@ func _on_close_panel(panel_id: int):
 			# Emit signals
 			panel_toggled.emit(false, panel_id)
 			pass
+		4:
+			$GameUI.visible = true
+			$EntityClickPopup.visible = false
+	building_selected.emit(0, 0)
+	update_place_ghost.emit(null, Vector2.ZERO, Vector2.ZERO)
+
 
 func _on_build_category_button_pressed(button_id: int):
 	match button_id:
