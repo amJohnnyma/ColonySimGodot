@@ -274,6 +274,7 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
 
     int count = 0;
     for (const auto& entity_ptr : chunk->entities) {  // const ref for safety
+        if (!entity_ptr) continue;
         Vector2 entity_pos = entity_ptr->get_position();
         // Exact match; for float tolerance: if (abs(entity_pos.x - entity_coord.x) < 0.01f && same for y)
         if (Math::absf(entity_pos.x - entity_coord.x) < 0.01f && Math::absf(entity_pos.y - entity_coord.y) < 0.01f) {
@@ -288,6 +289,32 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
             x_pos[count] = entity_ptr->get_position().x;
             y_pos[count] = entity_ptr->get_position().y;
             count++;
+        }
+    }
+    {
+        std::lock_guard<std::mutex> lock(pending_mutex);
+        for (const auto& [pending_chunk, entity_ptr] : pendingEntityPlacements) {
+            if (!entity_ptr) continue;
+            
+            // Check if this pending entity is for our target chunk
+            if (pending_chunk->coord != chunk_coord) continue;
+            
+            Vector2 entity_pos = entity_ptr->get_position();
+            
+            if (Math::absf(entity_pos.x - entity_coord.x) < 0.01f && 
+                Math::absf(entity_pos.y - entity_coord.y) < 0.01f) {
+                
+                if (count >= max_entities) break;
+                
+                entity_ids[count] = static_cast<int64_t>(entity_ptr->get_entity_id());
+                types[count] = entity_ptr->get_type_id();
+                entity_sprites[count] = entity_ptr->get_entity_sprite();
+                entity_widths[count] = entity_ptr->get_entity_width();
+                entity_heights[count] = entity_ptr->get_entity_height();
+                x_pos[count] = entity_ptr->get_position().x;
+                y_pos[count] = entity_ptr->get_position().y;
+                count++;
+            }
         }
     }
 
