@@ -615,7 +615,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     else if(type == "building")
     {
         // temporarily make a building this size
-        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(1,1), entity_type);
+        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(2,2), entity_type);
         pendingEntityPlacements.push_back({chunk,e});
     }
     else if(type == "item")
@@ -673,7 +673,7 @@ void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, con
             if (/*entity_tile_x == entityPos.x && entity_tile_y == entityPos.y &&*/ e->get_entity_id() == id) {
                 EntityJob wander;
                 wander.move_algo = "default";
-                wander.moveSpeedMultiplier = 5.0f;
+                wander.moveSpeedMultiplier = 15.0f;
                 wander.priority = 100;
                 wander.target_coord = {jobPos.x, jobPos.y};
                 e->add_job(wander);

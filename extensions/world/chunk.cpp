@@ -65,83 +65,150 @@ Vector2i entityWorldToLocalCoord(Vector2i worldCoord, World* world)
     if (y < 0) y += cs;
     return Vector2i(x, y);
 }
-//entity pos in local coords
-// neighbour chunks are only if applicable (On a chunk border)
-std::vector<int> Chunk::getAvailableDirs(Vector2i current, std::vector<std::tuple<Vector2i, int>> neighbourChunks)
+
+// Helper function to check if two entity rectangles overlap
+bool entities_overlap(Vector2i pos1, Vector2i size1, Vector2i pos2, Vector2i size2)
 {
-    std::vector<int> ret = {};
+    // Position is bottom-left corner
+    // Entity at pos (2,2) with size (2,2) occupies: (2,2), (3,2), (2,1), (3,1)
+    // X range: [pos.x, pos.x + size.x - 1] → [2, 3]
+    // Y range: [pos.y - size.y + 1, pos.y] → [1, 2]
+    
+    int left1 = pos1.x;
+    int right1 = pos1.x + size1.x - 1;
+    int top1 = pos1.y - size1.y + 1;  // Y decreases going up
+    int bottom1 = pos1.y;
+    
+    int left2 = pos2.x;
+    int right2 = pos2.x + size2.x - 1;
+    int top2 = pos2.y - size2.y + 1;
+    int bottom2 = pos2.y;
+    
+    // Check for no overlap using AABB collision
+    // No overlap if one rectangle is completely to the left, right, above, or below the other
+    if (right1 < left2 || right2 < left1 ||
+        bottom1 < top2 || bottom2 < top1)
+    {
+        return false; // No overlap
+    }
+    
+    return true; // Overlap detected
+}
+std::vector<int> Chunk::getAvailableDirs(Vector2i current_world, Vector2i current_size,
+                                          std::vector<std::tuple<Vector2i, int>> neighbourChunks)
+{
+    std::vector<int> blocked_dirs;
+    
     if (!world) {
         UtilityFunctions::print("ERROR: Chunk::world is null!");
-        return ret; // or {0,1,2,3} or whatever is safe
+        return {0, 1, 2, 3}; // Return all dirs as available if no world
     }
 
-    std::vector<std::shared_ptr<Chunk>> neighbour = {};
-    int chunkSize = world->get_chunk_size();
-
-    for(auto& coord : neighbourChunks)
-    {
-        // get the chunk coord
-        // Check entities that will interfere with the direction
-        // 0N -> Entity.pos.y = chunksize - 1 && Entity.pos.x == current.x -> Entity in other chunk on square we want
-        // 1E -> Entity.pos.x = 0 && Entity.pos.y == current.y
-        // 2S -> Entity.pos.y = 0 && Entity.pos.x == current.x
-        // 3W -> Entity.pos.x = chunksize - 1 && Entity.pos.y == current.y
-        
-        auto chunk = world->get_chunk(std::get<0>(coord));
-        auto dir = std::get<1>(coord);
-
-        if (!chunk) {
-            // Neighbour chunk not loaded — be safe: either skip or assume blocked
-            // For now, let's assume direction is BLOCKED (don't add it)
-            continue;
-        }
-
-        for(auto &e : chunk->entities)
-        {
-            if (!e) continue;
-            Vector2i eLocal = entityWorldToLocalCoord(e->get_position(), world);
-            switch(dir)
-            {
-                case 0:
-                    if(eLocal.y == chunkSize -1 && eLocal.x != current.x)
-                        ret.push_back(dir);
-                    break;
-                case 1:
-                    if(eLocal.x == 0 && eLocal.y != current.y)
-                        ret.push_back(dir);
-                    break;
-                case 2:
-                    if(eLocal.y == 0 && eLocal.x != current.x)
-                        ret.push_back(dir);
-                    break;
-                case 3:
-                    if(eLocal.x == chunkSize -1 && eLocal.y != current.y)
-                        ret.push_back(dir);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
     const Vector2i dirs[4] = {
         Vector2i(0, -1), Vector2i(1, 0),
         Vector2i(0, 1), Vector2i(-1, 0)
     };
-    // and check current chunk
-    for(auto& e : entities)
+    
+    UtilityFunctions::print("Checking collision for entity at world pos: ", current_world.x, ",", current_world.y, 
+                           " size: ", current_size.x, "x", current_size.y);
+    
+    // Check current chunk entities
+    UtilityFunctions::print("  Current chunk has ", entities.size(), " entities");
+    for (size_t i = 0; i < entities.size(); i++)
     {
-        if (!e) continue;
-        Vector2i eLocal = entityWorldToLocalCoord(e->get_position(), world);
-        for(int i = 0; i < 4; i ++)
+        const auto& e = entities[i];
+        if (!e) {
+            UtilityFunctions::print("  Entity ", i, " is null, skipping");
+            continue;
+        }
+        
+        Vector2i eWorld = e->get_position();
+        Vector2i eSize = e->get_entity_size();
+        
+        UtilityFunctions::print("  Checking against entity at: ", eWorld.x, ",", eWorld.y, 
+                               " size: ", eSize.x, "x", eSize.y);
+        
+        // Skip self-collision (same position)
+        if (eWorld == current_world) {
+            UtilityFunctions::print("    Same position, skipping self");
+            continue;
+        }
+        
+        // Check each direction
+        for (int dir = 0; dir < 4; dir++)
         {
-            if(current + dirs[i] != eLocal) ret.push_back(i);
-
+            Vector2i test_pos = current_world + dirs[dir];
+            
+            // Check if moving in this direction would cause overlap
+            if (entities_overlap(test_pos, current_size, eWorld, eSize))
+            {
+                UtilityFunctions::print("    Direction ", dir, " blocked by this entity (test_pos: ", 
+                                       test_pos.x, ",", test_pos.y, ")");
+                blocked_dirs.push_back(dir);
+            }
         }
     }
-
-    return ret;
+    
+    // Check neighbour chunk entities
+    UtilityFunctions::print("  Checking ", neighbourChunks.size(), " neighbour chunks");
+    for (const auto& [chunk_coord, dir] : neighbourChunks)
+    {
+        UtilityFunctions::print("  Neighbour chunk at: ", chunk_coord.x, ",", chunk_coord.y, " dir: ", dir);
+        
+        auto chunk = world->get_chunk(chunk_coord);
+        if (!chunk) {
+            UtilityFunctions::print("    Chunk is null, skipping");
+            continue;
+        }
+        
+        UtilityFunctions::print("    Neighbour has ", chunk->entities.size(), " entities");
+        
+        for (size_t i = 0; i < chunk->entities.size(); i++)
+        {
+            const auto& e = chunk->entities[i];
+            if (!e) {
+                UtilityFunctions::print("    Entity ", i, " is null, skipping");
+                continue;
+            }
+            
+            Vector2i eWorld = e->get_position();
+            Vector2i eSize = e->get_entity_size();
+            
+            // Skip self
+            if (eWorld == current_world) {
+                UtilityFunctions::print("    Same position as current entity, skipping");
+                continue;
+            }
+            
+            // Check the direction toward this neighbour chunk
+            Vector2i test_pos = current_world + dirs[dir];
+            
+            if (entities_overlap(test_pos, current_size, eWorld, eSize))
+            {
+                UtilityFunctions::print("    Direction ", dir, " blocked by neighbour entity");
+                blocked_dirs.push_back(dir);
+            }
+        }
+    }
+    
+    // Remove duplicates
+    std::sort(blocked_dirs.begin(), blocked_dirs.end());
+    blocked_dirs.erase(std::unique(blocked_dirs.begin(), blocked_dirs.end()), blocked_dirs.end());
+    
+    // Return available directions (all except blocked)
+    std::vector<int> available;
+    for (int i = 0; i < 4; i++)
+    {
+        if (std::find(blocked_dirs.begin(), blocked_dirs.end(), i) == blocked_dirs.end())
+        {
+            available.push_back(i);
+        }
+    }
+    
+    UtilityFunctions::print("  Available dirs: ", available.size(), " out of 4");
+    
+    return available;
 }
-
 // tuple int = dir -> 0,1,2,3 N E S W
 std::vector<std::tuple<Vector2i, int>> getNeighbouringChunks(Vector2i entityWorldCoord, World* world, Vector2i chunkCoord)
 {
@@ -181,6 +248,96 @@ std::vector<std::tuple<Vector2i, int>> getNeighbouringChunks(Vector2i entityWorl
 
     return ret;
 }
+void Chunk::simulate(float delta, bool full_simulation) {
+    if (entities.empty()) return;
+
+    constexpr int MAX_STACK_TRANSFERS = 64;
+    std::vector<std::shared_ptr<Entity>> to_transfer[4];
+
+    if (entities.size() > MAX_STACK_TRANSFERS) {
+        for (int i = 0; i < 4; ++i) {
+            to_transfer[i].reserve(entities.size() / 16);
+        }
+    }
+
+    const int chunk_size = world->get_chunk_size();
+    const int world_width  = world->get_world_width_tiles();
+    const int world_height = world->get_world_height_tiles();
+
+    std::vector<std::shared_ptr<Entity>> staying_entities;
+    staying_entities.reserve(entities.size());
+
+    for (const auto& entity : entities) {
+        if (!entity) continue;
+
+        Vector2i new_pos;
+        Vector2i entity_world_pos = entity->get_position();
+        
+        // Get neighbouring chunks if entity is on border
+        auto neighbourChunks = getNeighbouringChunks(entity_world_pos, world, coord);
+        
+        // Get available directions based on collisions (using world coordinates)
+        std::vector<int> availableDirs = getAvailableDirs(entity_world_pos, 
+                                                           entity->get_entity_size(),
+                                                           neighbourChunks);
+        
+        EntitySimulationParam params = {
+            delta,
+            new_pos,
+            availableDirs
+        };
+
+        bool moved = entity->simulate(params);
+
+        if (moved) {
+            // Bounds check
+            if (new_pos.x < 0 || new_pos.x >= world_width ||
+                new_pos.y < 0 || new_pos.y >= world_height) {
+                staying_entities.push_back(entity);
+                continue;
+            }
+
+            entity->set_position(new_pos);
+            Vector2i new_chunk = world->world_pos_to_chunk(new_pos);
+
+            if (new_chunk == coord) {
+                staying_entities.push_back(entity);
+            }
+            else {
+                Vector2i direction = new_chunk - coord;
+                
+                if (direction.x != 0 && direction.y == 0) {
+                    if (direction.x > 0) to_transfer[1].push_back(entity);
+                    else to_transfer[3].push_back(entity);
+                }
+                else if (direction.y != 0 && direction.x == 0) {
+                    if (direction.y > 0) to_transfer[2].push_back(entity);
+                    else to_transfer[0].push_back(entity);
+                }
+                else {
+                    if (std::abs(direction.x) > std::abs(direction.y)) {
+                        if (direction.x > 0) to_transfer[1].push_back(entity);
+                        else to_transfer[3].push_back(entity);
+                    } else {
+                        if (direction.y > 0) to_transfer[2].push_back(entity);
+                        else to_transfer[0].push_back(entity);
+                    }
+                }
+            }
+        }
+        else {
+            staying_entities.push_back(entity);
+        }
+    }
+
+    entities = std::move(staying_entities);
+
+    if (!to_transfer[0].empty()) transfer_entities(to_transfer[0], Vector2i(0, -1));
+    if (!to_transfer[1].empty()) transfer_entities(to_transfer[1], Vector2i(1, 0));
+    if (!to_transfer[2].empty()) transfer_entities(to_transfer[2], Vector2i(0, 1));
+    if (!to_transfer[3].empty()) transfer_entities(to_transfer[3], Vector2i(-1, 0));
+}
+/*
 void Chunk::simulate(float delta, bool full_simulation) {
     if (entities.empty()) return; // Early exit
 
@@ -286,6 +443,7 @@ void Chunk::simulate(float delta, bool full_simulation) {
     if (!to_transfer[2].empty()) transfer_entities(to_transfer[2], Vector2i(0, 1));
     if (!to_transfer[3].empty()) transfer_entities(to_transfer[3], Vector2i(-1, 0));
 }
+*/
 void Chunk::transfer_entities(
     std::vector<std::shared_ptr<Entity>>& entities_vec, 
     Vector2i direction) 

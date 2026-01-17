@@ -143,8 +143,8 @@ func _process(delta: float) -> void:
 		if sprite.offset != new_offset:
 			sprite.offset = new_offset
 			
-		sprite.scale.x *= width
-		sprite.scale.y *= height
+		#sprite.scale.x *= width
+		#sprite.scale.y *= height
 
 		sprite.visible = true
 

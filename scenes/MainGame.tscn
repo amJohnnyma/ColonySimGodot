@@ -35,7 +35,6 @@ entity_sprite_scene = ExtResource("5_nxtc6")
 [node name="Benchmark" type="Node2D" parent="."]
 visible = false
 script = ExtResource("5_vcsgt")
-sample_frames = 5000
 show_overlay = false
 
 [node name="GameSystems" type="Node2D" parent="."]

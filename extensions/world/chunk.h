@@ -41,5 +41,6 @@ class Chunk {
         void set_tile(int local_x, int local_y, int value);
         std::vector<Color> get_tile_colors() const;
         
-        std::vector<int> getAvailableDirs(Vector2i current, std::vector<std::tuple<Vector2i, int>> neighbourChunks);
+        std::vector<int> getAvailableDirs(Vector2i current_world, Vector2i current_size,
+                                          std::vector<std::tuple<Vector2i, int>> neighbourChunks);
 };

@@ -52,6 +52,7 @@ bool Colonist::simulate(EntitySimulationParam &params)
             wander.moveSpeedMultiplier = 0.2f; // move at 20% base speed
                                                //
             jobList.push_back(wander);
+            currentJobIndex = 0;
 
             update_move_speed_from_job(wander);
         }
@@ -63,6 +64,9 @@ bool Colonist::simulate(EntitySimulationParam &params)
     if (current.move_algo == "default")
     {
         moved = default_movement(params);
+    }
+    else if (current.move_algo == "aco")
+    {
     }
     else
     {
@@ -115,9 +119,44 @@ bool Colonist::default_movement(EntitySimulationParam &params)
         move.x = (dx > 0) ? 1 : -1;
     }
 
+    Vector2i desired_pos = position + move;
+    if (is_position_available(desired_pos, params))
+    {
+        params.out_new_pos = desired_pos;
+        reset_timer();
+        return true;
+    }
 
-    params.out_new_pos = position + move;
-    reset_timer();
+    // Try alternative directions toward target
+    const Vector2i dirs[4] = {
+        Vector2i(0, -1), Vector2i(1, 0),
+        Vector2i(0, 1), Vector2i(-1, 0)
+    };
+    
+    // Sort directions by how much they help reach target
+    std::vector<std::pair<int, Vector2i>> scored_dirs;
+    for (const auto& dir : dirs)
+    {
+        Vector2i test_pos = position + dir;
+        // Score: negative manhattan distance (closer is better)
+        int score = -(std::abs(target.x - test_pos.x) + std::abs(target.y - test_pos.y));
+        scored_dirs.push_back({score, dir});
+    }
+    
+    std::sort(scored_dirs.begin(), scored_dirs.end(),
+        [](const auto& a, const auto& b) { return a.first > b.first; });
+    
+    // Try each direction in order
+    for (const auto& [score, dir] : scored_dirs)
+    {
+        Vector2i test_pos = position + dir;
+        if (is_position_available(test_pos, params))
+        {
+            params.out_new_pos = test_pos;
+            reset_timer();
+            return true;
+        }
+    }
 
     return true; // Successfully moved toward target
 }
@@ -128,10 +167,26 @@ bool Colonist::random_movement(EntitySimulationParam &params)
         Vector2i(0, -1), Vector2i(1, 0),
         Vector2i(0, 1), Vector2i(-1, 0)
     };
+    
     thread_local static std::mt19937 gen(std::random_device{}());
-    std::uniform_int_distribution<int> dist(0, 3);
-
-    params.out_new_pos = position + dirs[dist(gen)];
-    reset_timer();
-    return true;  // Moved
+    
+    // Shuffle directions to get random order
+    std::vector<int> indices = {0, 1, 2, 3};
+    std::shuffle(indices.begin(), indices.end(), gen);
+    
+    // Try each direction in random order
+    for (int idx : indices)
+    {
+        Vector2i test_pos = position + dirs[idx];
+        if (is_position_available(test_pos, params))
+        {
+            params.out_new_pos = test_pos;
+            reset_timer();
+            return true;
+        }
+    }
+    
+    // No valid moves - stay in place
+    return false;
 }
+

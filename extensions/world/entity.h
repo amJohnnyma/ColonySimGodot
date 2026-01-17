@@ -56,5 +56,7 @@ class Entity
 
         void add_job(EntityJob job);
 
+        bool is_position_available(Vector2i pos, EntitySimulationParam &params);
+
 
 };
