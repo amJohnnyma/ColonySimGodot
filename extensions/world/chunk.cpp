@@ -109,11 +109,11 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current_world, Vector2i curren
         Vector2i(0, 1), Vector2i(-1, 0)
     };
     
-    UtilityFunctions::print("Checking collision for entity at world pos: ", current_world.x, ",", current_world.y, 
-                           " size: ", current_size.x, "x", current_size.y);
+    //UtilityFunctions::print("Checking collision for entity at world pos: ", current_world.x, ",", current_world.y, 
+     //                      " size: ", current_size.x, "x", current_size.y);
     
     // Check current chunk entities
-    UtilityFunctions::print("  Current chunk has ", entities.size(), " entities");
+    //UtilityFunctions::print("  Current chunk has ", entities.size(), " entities");
     for (size_t i = 0; i < entities.size(); i++)
     {
         const auto& e = entities[i];
@@ -125,12 +125,12 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current_world, Vector2i curren
         Vector2i eWorld = e->get_position();
         Vector2i eSize = e->get_entity_size();
         
-        UtilityFunctions::print("  Checking against entity at: ", eWorld.x, ",", eWorld.y, 
-                               " size: ", eSize.x, "x", eSize.y);
+    //    UtilityFunctions::print("  Checking against entity at: ", eWorld.x, ",", eWorld.y, 
+      //                         " size: ", eSize.x, "x", eSize.y);
         
         // Skip self-collision (same position)
         if (eWorld == current_world) {
-            UtilityFunctions::print("    Same position, skipping self");
+        //    UtilityFunctions::print("    Same position, skipping self");
             continue;
         }
         
@@ -142,18 +142,18 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current_world, Vector2i curren
             // Check if moving in this direction would cause overlap
             if (entities_overlap(test_pos, current_size, eWorld, eSize))
             {
-                UtilityFunctions::print("    Direction ", dir, " blocked by this entity (test_pos: ", 
-                                       test_pos.x, ",", test_pos.y, ")");
+            //    UtilityFunctions::print("    Direction ", dir, " blocked by this entity (test_pos: ", 
+              //                         test_pos.x, ",", test_pos.y, ")");
                 blocked_dirs.push_back(dir);
             }
         }
     }
     
     // Check neighbour chunk entities
-    UtilityFunctions::print("  Checking ", neighbourChunks.size(), " neighbour chunks");
+ //   UtilityFunctions::print("  Checking ", neighbourChunks.size(), " neighbour chunks");
     for (const auto& [chunk_coord, dir] : neighbourChunks)
     {
-        UtilityFunctions::print("  Neighbour chunk at: ", chunk_coord.x, ",", chunk_coord.y, " dir: ", dir);
+   //     UtilityFunctions::print("  Neighbour chunk at: ", chunk_coord.x, ",", chunk_coord.y, " dir: ", dir);
         
         auto chunk = world->get_chunk(chunk_coord);
         if (!chunk) {
@@ -161,7 +161,7 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current_world, Vector2i curren
             continue;
         }
         
-        UtilityFunctions::print("    Neighbour has ", chunk->entities.size(), " entities");
+      //  UtilityFunctions::print("    Neighbour has ", chunk->entities.size(), " entities");
         
         for (size_t i = 0; i < chunk->entities.size(); i++)
         {
@@ -176,7 +176,7 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current_world, Vector2i curren
             
             // Skip self
             if (eWorld == current_world) {
-                UtilityFunctions::print("    Same position as current entity, skipping");
+             //   UtilityFunctions::print("    Same position as current entity, skipping");
                 continue;
             }
             
@@ -185,7 +185,7 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current_world, Vector2i curren
             
             if (entities_overlap(test_pos, current_size, eWorld, eSize))
             {
-                UtilityFunctions::print("    Direction ", dir, " blocked by neighbour entity");
+           //     UtilityFunctions::print("    Direction ", dir, " blocked by neighbour entity");
                 blocked_dirs.push_back(dir);
             }
         }
@@ -205,7 +205,7 @@ std::vector<int> Chunk::getAvailableDirs(Vector2i current_world, Vector2i curren
         }
     }
     
-    UtilityFunctions::print("  Available dirs: ", available.size(), " out of 4");
+  //  UtilityFunctions::print("  Available dirs: ", available.size(), " out of 4");
     
     return available;
 }

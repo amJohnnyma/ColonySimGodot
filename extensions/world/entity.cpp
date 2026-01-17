@@ -56,7 +56,7 @@ bool Entity::is_position_available(Vector2i pos, EntitySimulationParam &params)
     bool is_available = std::find(params.availableDirs.begin(), 
                                    params.availableDirs.end(), dir) != params.availableDirs.end();
     
-    UtilityFunctions::print("Checking dir ", dir, " -> ", (is_available ? "available" : "blocked"));
+    //UtilityFunctions::print("Checking dir ", dir, " -> ", (is_available ? "available" : "blocked"));
     
     return is_available;
 }

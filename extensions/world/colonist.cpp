@@ -22,7 +22,7 @@ bool Colonist::simulate(EntitySimulationParam &params)
     // Clean up completed jobs
     jobList.erase(
         std::remove_if(jobList.begin(), jobList.end(),
-            [](const EntityJob& j) { return j.complete || j.priority == 0; }),
+            [](const EntityJob& j) { return j.complete;}),
         jobList.end()
     );
 
@@ -158,7 +158,7 @@ bool Colonist::default_movement(EntitySimulationParam &params)
         }
     }
 
-    return true; // Successfully moved toward target
+    return false; 
 }
 
 bool Colonist::random_movement(EntitySimulationParam &params)
@@ -185,6 +185,8 @@ bool Colonist::random_movement(EntitySimulationParam &params)
             return true;
         }
     }
+
+    jobList[currentJobIndex].complete = true;
     
     // No valid moves - stay in place
     return false;
