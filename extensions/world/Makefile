@@ -1,3 +1,8 @@
+# cd extensions/world/bin
+# rm -rf *
+# cmake .. -DCMAKE_BUILD_TYPE=editor
+# make -j8
+
 
 CXX = g++
 CXXFLAGS = -std=c++17 -O2 -Wall -I. 

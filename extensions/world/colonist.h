@@ -14,5 +14,4 @@ class Colonist : public Entity
         int get_type_id() const override { return entity_type; }
         bool default_movement(EntitySimulationParam &params);
         bool random_movement(EntitySimulationParam &params);
-        bool has_job() {return currentJob->isValid;}
 };

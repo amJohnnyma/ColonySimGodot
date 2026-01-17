@@ -57,7 +57,7 @@ Vector2i World::world_pos_to_chunk(const Vector2 &pos) const {
 
 Vector2i World::world_pos_to_tile(const Vector2 &pos) const {
     int tile_x = static_cast<int>(std::floor(pos.x));
-    int tile_y = static_cast<int>(std::floor(pos.y + 1)); // treat z as world Y for 2D grid
+    int tile_y = static_cast<int>(std::floor(pos.y)); // treat z as world Y for 2D grid
     return Vector2i(tile_x, tile_y);
     
 }
@@ -93,19 +93,48 @@ std::shared_ptr<Chunk> World::get_chunk(const Vector2i &coord) {
 }
 
 std::shared_ptr<Chunk> World::load_chunk(const Vector2i &coord) {
-    if (!is_valid_chunk(coord)) return nullptr;
-    auto existing = get_chunk(coord);
-    if (existing) return existing;
+    std::lock_guard<std::mutex> lock(chunks_mutex);
 
-    auto c = std::make_shared<Chunk>(chunk_size, chunk_size, coord, this);
-    c->generate(1,1);
-    //c->load();
-    chunks.emplace(coord, c);
-    return c;
+    // 1. Already loaded → return it
+    auto it = chunks.find(coord);
+    if (it != chunks.end()) {
+        return it->second;
+    }
+
+    // 2. In backup → restore it
+    auto backup_it = unloaded_chunk_backup.find(coord);
+    if (backup_it != unloaded_chunk_backup.end()) {
+        auto chunk = std::move(backup_it->second);
+        unloaded_chunk_backup.erase(backup_it);
+        
+        chunks[coord] = chunk;
+        UtilityFunctions::print("Restored chunk from backup: ", coord, 
+            " (entities: ", chunk->entities.size(), ")");
+        return chunk;
+    }
+
+    // 3. Brand new chunk → generate
+    auto new_chunk = std::make_shared<Chunk>(chunk_size, chunk_size, coord, this);
+    new_chunk->generate(coord.x * chunk_size, coord.y * chunk_size);  // assuming your generate signature
+    chunks[coord] = new_chunk;
+
+    UtilityFunctions::print("Generated new chunk: ", coord);
+    return new_chunk;
 }
 
+// world.cpp
 void World::unload_chunk(const Vector2i &coord) {
-    chunks.erase(coord);
+    std::lock_guard<std::mutex> lock(chunks_mutex);
+    
+    auto it = chunks.find(coord);
+    if (it == chunks.end()) return;
+
+    // Move to backup instead of destroying
+    unloaded_chunk_backup[coord] = std::move(it->second);
+    chunks.erase(it);
+
+    UtilityFunctions::print("Backed up chunk ", coord, " (entities: ", 
+        unloaded_chunk_backup[coord]->entities.size(), ")");
 }
 
 int World::get_chunk_entity_count(const Vector2i &coord) const {
@@ -245,25 +274,22 @@ TypedArray<Vector2i> World::get_visible_chunks(
 
 Dictionary World::get_entities_at_world_pos(const Vector2 coord) {  
     Dictionary result;
-    Vector2i entity_coord = world_pos_to_tile(coord);  // Assuming this returns Vector2i
+    
+    // Convert world position to tile coordinate
+    Vector2i click_tile(
+        static_cast<int>(std::floor(coord.x)),
+        static_cast<int>(std::floor(coord.y))
+    );
 
-    Vector2i chunk_coord = world_pos_to_chunk(entity_coord);
-    auto chunk = load_chunk(chunk_coord);
-    if (chunk == nullptr) {
-        result["count"] = 0;
-        return result;
-    }
-
-    int max_entities = chunk_size;  // Arbitrary cap; adjust as needed
+    int max_entities = 100; // Increased to handle edge cases
     PackedInt64Array entity_ids;
     PackedInt32Array types;
     PackedInt32Array entity_sprites;
-    PackedInt32Array entity_widths;  // Plural for consistency
+    PackedInt32Array entity_widths;
     PackedInt32Array entity_heights;
-    PackedInt32Array x_pos; // this will be for retrieving data about specific entities later
+    PackedInt32Array x_pos;
     PackedInt32Array y_pos;
 
-    // Pre-allocate for performance
     entity_ids.resize(max_entities);
     types.resize(max_entities);
     entity_sprites.resize(max_entities);
@@ -273,37 +299,50 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     y_pos.resize(max_entities);
 
     int count = 0;
-    for (const auto& entity_ptr : chunk->entities) {  // const ref for safety
-        if (!entity_ptr) continue;
-        Vector2 entity_pos = entity_ptr->get_position();
-        // Exact match; for float tolerance: if (abs(entity_pos.x - entity_coord.x) < 0.01f && same for y)
-        if (Math::absf(entity_pos.x - entity_coord.x) < 0.01f && Math::absf(entity_pos.y - entity_coord.y) < 0.01f) {
-            if (count >= max_entities) {
-                break;
+    
+    // Calculate the expected chunk
+    Vector2i primary_chunk = world_pos_to_chunk(click_tile);
+    
+    // Check this chunk and all 8 neighbors to handle edge cases
+    // This is necessary because entities might be:
+    // 1. Still in pendingEntityPlacements
+    // 2. In a neighboring chunk due to timing
+    // 3. On chunk boundaries
+    std::vector<Vector2i> chunks_to_check;
+    chunks_to_check.reserve(9);
+    
+    for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -1; dx <= 1; dx++) {
+            Vector2i check_chunk(primary_chunk.x + dx, primary_chunk.y + dy);
+            if (is_valid_chunk(check_chunk)) {
+                chunks_to_check.push_back(check_chunk);
             }
-            entity_ids[count] = static_cast<int64_t>(entity_ptr->get_entity_id());  // Fixed: [] instead of .set
-            types[count] = entity_ptr->get_type_id();
-            entity_sprites[count] = entity_ptr->get_entity_sprite();
-            entity_widths[count] = entity_ptr->get_entity_width();
-            entity_heights[count] = entity_ptr->get_entity_height();
-            x_pos[count] = entity_ptr->get_position().x;
-            y_pos[count] = entity_ptr->get_position().y;
-            count++;
         }
     }
-    {
-        std::lock_guard<std::mutex> lock(pending_mutex);
-        for (const auto& [pending_chunk, entity_ptr] : pendingEntityPlacements) {
+    
+    // Lock to safely read chunks
+    std::lock_guard<std::mutex> lock(chunks_mutex);
+    
+    // Check all relevant chunks
+    for (const auto& chunk_coord : chunks_to_check) {
+        auto it = chunks.find(chunk_coord);
+        if (it == chunks.end()) continue;
+        
+        auto& chunk = it->second;
+        if (!chunk) continue;
+        
+        // Check entities in this chunk
+        for (const auto& entity_ptr : chunk->entities) {
             if (!entity_ptr) continue;
-            
-            // Check if this pending entity is for our target chunk
-            if (pending_chunk->coord != chunk_coord) continue;
             
             Vector2 entity_pos = entity_ptr->get_position();
             
-            if (Math::absf(entity_pos.x - entity_coord.x) < 0.01f && 
-                Math::absf(entity_pos.y - entity_coord.y) < 0.01f) {
-                
+            // Convert entity position to tile
+            int entity_tile_x = static_cast<int>(std::floor(entity_pos.x));
+            int entity_tile_y = static_cast<int>(std::floor(entity_pos.y));
+            
+            // Check if entity is at clicked tile
+            if (entity_tile_x == click_tile.x && entity_tile_y == click_tile.y) {
                 if (count >= max_entities) break;
                 
                 entity_ids[count] = static_cast<int64_t>(entity_ptr->get_entity_id());
@@ -311,14 +350,39 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
                 entity_sprites[count] = entity_ptr->get_entity_sprite();
                 entity_widths[count] = entity_ptr->get_entity_width();
                 entity_heights[count] = entity_ptr->get_entity_height();
-                x_pos[count] = entity_ptr->get_position().x;
-                y_pos[count] = entity_ptr->get_position().y;
+                x_pos[count] = entity_pos.x;
+                y_pos[count] = entity_pos.y;
+                count++;
+            }
+        }
+    }
+    
+    // Also check pending entities (they might not be in chunks yet)
+    {
+        std::lock_guard<std::mutex> pending_lock(pending_mutex);
+        for (const auto& [pending_chunk, entity_ptr] : pendingEntityPlacements) {
+            if (!entity_ptr) continue;
+            
+            Vector2 entity_pos = entity_ptr->get_position();
+            int entity_tile_x = static_cast<int>(std::floor(entity_pos.x));
+            int entity_tile_y = static_cast<int>(std::floor(entity_pos.y));
+            
+            if (entity_tile_x == click_tile.x && entity_tile_y == click_tile.y) {
+                if (count >= max_entities) break;
+                
+                entity_ids[count] = static_cast<int64_t>(entity_ptr->get_entity_id());
+                types[count] = entity_ptr->get_type_id();
+                entity_sprites[count] = entity_ptr->get_entity_sprite();
+                entity_widths[count] = entity_ptr->get_entity_width();
+                entity_heights[count] = entity_ptr->get_entity_height();
+                x_pos[count] = entity_pos.x;
+                y_pos[count] = entity_pos.y;
                 count++;
             }
         }
     }
 
-    // Trim arrays to actual count (optional, but cleaner)
+    // Trim arrays to actual count
     entity_ids.resize(count);
     types.resize(count);
     entity_sprites.resize(count);
@@ -330,14 +394,19 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     result["entity_ids"] = entity_ids;
     result["types"] = types;
     result["entity_sprites"] = entity_sprites;
-    result["entity_width"] = entity_widths;  // Kept singular to match your API
+    result["entity_width"] = entity_widths;
     result["entity_height"] = entity_heights;
     result["x_pos"] = x_pos;
     result["y_pos"] = y_pos;
     result["count"] = count;
+    
+    // Debug output
+    if (count > 0) {
+        UtilityFunctions::print("Found ", count, " entities at tile ", click_tile);
+    }
+    
     return result;
 }
-
 Dictionary World::get_visible_entities(
     const TypedArray<Vector2i>& chunk_coords,
     const Vector2& cull_min,
@@ -496,6 +565,17 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
         for (auto& fut : futures) {
             fut.get();
         }
+
+        {
+            std::lock_guard<std::mutex> pending_lock(pending_mutex);
+            if (!pendingEntityPlacements.empty()) {
+                std::lock_guard<std::mutex> chunk_lock(chunks_mutex);
+                for (auto& ec : pendingEntityPlacements) {
+                    std::get<0>(ec)->entities.push_back(std::get<1>(ec));
+                }
+                pendingEntityPlacements.clear();
+            }
+        }
     }
 
     // 4. Parallel light simulation (distant chunks)
@@ -513,10 +593,22 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
         for (auto& fut : futures) {
             fut.get();
         }
+
     } else {
         // Serial for small counts (avoid overhead)
         for (auto& chunk : sim_cache.light_sim) {
             chunk->simulate(delta, false);
+        }
+    }
+
+    {
+        std::lock_guard<std::mutex> pending_lock(pending_mutex);
+        if (!pendingEntityPlacements.empty()) {
+            std::lock_guard<std::mutex> chunk_lock(chunks_mutex);
+            for (auto& ec : pendingEntityPlacements) {
+                std::get<0>(ec)->entities.push_back(std::get<1>(ec));
+            }
+            pendingEntityPlacements.clear();
         }
     }
 
@@ -586,31 +678,77 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
 
 void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos)
 {
-    Vector2i chunk_coord = world_tile_to_chunk(entityPos.x,entityPos.y);
-
-    auto chunk = load_chunk(chunk_coord);
-    if (!chunk) {
-        UtilityFunctions::push_warning("Failed to load chunk for placement at ",entityPos);
-        return;
-    }
-
-    //inneficient but doesnt matter its temporarily
-    for (const auto& e: chunk->entities)
-    {
-        if(e->get_position() == entityPos)
-        {
-
-
-            EntityJob wander;
-            wander.move_algo = "default";
-            wander.moveSpeedMultiplier = 1.0f;
-            wander.priority = 100;
-
-            wander.target_coord = {jobPos.x, jobPos.y};
-            e->add_job(wander);
-
-            UtilityFunctions::print("Created job to go from ", entityPos, " to ", jobPos);
-            return;
+    Vector2i primary_chunk = world_tile_to_chunk(entityPos.x, entityPos.y);
+    
+    // Search this chunk and all 8 neighbors (same as get_entities_at_world_pos)
+    std::vector<Vector2i> chunks_to_check;
+    chunks_to_check.reserve(9);
+    
+    for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = -1; dx <= 1; dx++) {
+            Vector2i check_chunk(primary_chunk.x + dx, primary_chunk.y + dy);
+            if (is_valid_chunk(check_chunk)) {
+                chunks_to_check.push_back(check_chunk);
+            }
         }
     }
+    
+    // Lock to safely read chunks
+    std::lock_guard<std::mutex> lock(chunks_mutex);
+    
+    // Search all relevant chunks for the entity
+    for (const auto& chunk_coord : chunks_to_check) {
+        auto chunk = get_chunk(chunk_coord);
+        if (!chunk) continue;
+        
+        for (const auto& e : chunk->entities) {
+            if (!e) continue;
+            
+            Vector2 entity_world_pos = e->get_position();
+            int entity_tile_x = static_cast<int>(std::floor(entity_world_pos.x));
+            int entity_tile_y = static_cast<int>(std::floor(entity_world_pos.y));
+            
+            // Check if this entity is at the target position
+            if (entity_tile_x == entityPos.x && entity_tile_y == entityPos.y) {
+                EntityJob wander;
+                wander.move_algo = "default";
+                wander.moveSpeedMultiplier = 1.0f;
+                wander.priority = 100;
+                wander.target_coord = {jobPos.x, jobPos.y};
+                e->add_job(wander);
+                
+                UtilityFunctions::print("Created job to go from ", entityPos, " to ", jobPos, 
+                    " (found in chunk ", chunk_coord, ")");
+                return;
+            }
+        }
+    }
+    
+    // Also check pending entities
+    {
+        std::lock_guard<std::mutex> pending_lock(pending_mutex);
+        for (const auto& [pending_chunk, e] : pendingEntityPlacements) {
+            if (!e) continue;
+            
+            Vector2 entity_world_pos = e->get_position();
+            int entity_tile_x = static_cast<int>(std::floor(entity_world_pos.x));
+            int entity_tile_y = static_cast<int>(std::floor(entity_world_pos.y));
+            
+            if (entity_tile_x == entityPos.x && entity_tile_y == entityPos.y) {
+                EntityJob wander;
+                wander.move_algo = "default";
+                wander.moveSpeedMultiplier = 1.0f;
+                wander.priority = 100;
+                wander.target_coord = {jobPos.x, jobPos.y};
+                e->add_job(wander);
+                
+                UtilityFunctions::print("Created job to go from ", entityPos, " to ", jobPos,
+                    " (found in pending)");
+                return;
+            }
+        }
+    }
+    
+    UtilityFunctions::push_warning("Failed to find entity at ", entityPos, 
+        " (searched chunk ", primary_chunk, " and neighbors)");
 }

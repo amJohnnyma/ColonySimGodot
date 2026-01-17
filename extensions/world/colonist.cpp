@@ -26,8 +26,10 @@ bool Colonist::simulate(EntitySimulationParam &params)
         jobList.end()
     );
 
+    if (currentJobIndex >= jobList.size()) { currentJobIndex = -1; }
     // If no current job or current one is complete/nullptr
-    if (currentJob == nullptr || currentJob->complete)
+    if (currentJobIndex == -1 ||
+            currentJobIndex < jobList.size() && jobList[currentJobIndex].complete)
     {
         if (!jobList.empty())
         {
@@ -36,7 +38,7 @@ bool Colonist::simulate(EntitySimulationParam &params)
                 [](const EntityJob& a, const EntityJob& b) {
                     return a.priority < b.priority;
                 });
-            currentJob = &(*it);  // Point to the actual job in the list
+            currentJobIndex = std::distance(jobList.begin(), it);
         }
         else
         {
@@ -56,13 +58,14 @@ bool Colonist::simulate(EntitySimulationParam &params)
             distance *= fdir;
             wander.target_coord = {position.x + distance, position.y + distance};
             add_job(wander);
-            currentJob = &jobList.back();  // Point to the newly added one
+            currentJobIndex = jobList.size() - 1;
         }
     }
 
     // Execute movement
     bool moved = false;
-    if (currentJob->move_algo == "default")
+    EntityJob& current = jobList[currentJobIndex];        
+    if (current.move_algo == "default")
     {
         moved = default_movement(params);
     }
@@ -72,7 +75,7 @@ bool Colonist::simulate(EntitySimulationParam &params)
     }
 
     // If job completed this tick, reset timer and let cleanup handle removal next frame
-    if (currentJob->complete)
+    if (current.complete)
     {
         reset_timer();
         // currentJob pointer will be invalidated next frame after erase()
@@ -83,13 +86,15 @@ bool Colonist::simulate(EntitySimulationParam &params)
 }
 bool Colonist::default_movement(EntitySimulationParam &params)
 {
-    Vector2i target = currentJob->target_coord;
+    if(currentJobIndex < 0 || currentJobIndex >= jobList.size()) { return false; }
+    EntityJob& currentJob = jobList[currentJobIndex];
+    Vector2i target = currentJob.target_coord;
     Vector2i current = position;
 
     // If already at target, mark job complete
     if (current == target)
     {
-        currentJob->complete = true;
+        currentJob.complete = true;
         return false; // No movement needed
     }
 

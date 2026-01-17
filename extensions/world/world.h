@@ -33,6 +33,7 @@ class World : public  Node2D{
 
     private:    
         std::unique_ptr<ThreadPool> thread_pool;
+        std::unordered_map<Vector2i, std::shared_ptr<Chunk>, Vector2iHash> unloaded_chunk_backup;
         
         // Cache for better locality
         struct ChunkSimCache {

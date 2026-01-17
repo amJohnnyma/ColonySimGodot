@@ -1,7 +1,7 @@
 # Benchmark.gd — GUARANTEED to show output
 extends Node2D
 
-@export var sample_frames: int = 600   # 10 seconds at 60 FPS
+@export var sample_frames: int = 10   # 10 seconds at 60 FPS
 @export var show_overlay: bool = true
 
 var frame_count := 0

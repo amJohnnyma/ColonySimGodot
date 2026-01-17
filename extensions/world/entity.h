@@ -22,7 +22,7 @@ struct EntitySimulationParam
 class Entity 
 {
     protected:
-        EntityJob* currentJob = nullptr;
+        int currentJobIndex = -1;
         std::vector<EntityJob> jobList;
         Vector2i position;           
         float move_timer = 0.0f;

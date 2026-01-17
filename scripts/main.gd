@@ -196,10 +196,10 @@ func _unhandled_input(event):
 				return
 			
 			var world_click_pos := camera.get_global_mouse_position()
-			
+			world_click_pos.y += 1
 			var result = $World.get_entities_at_world_pos(world_click_pos)
 			var count = result.get("count", 0)
-			world_click_pos.y += 1
+			
 			
 			if count == 0:
 				print("No entities found at ", world_click_pos)
