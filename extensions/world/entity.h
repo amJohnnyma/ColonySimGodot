@@ -32,8 +32,8 @@ class Entity
         int entity_type;
         int entity_sprite;
         Vector2i size = Vector2i(1,1);
-        float move_speed = 2.f;
-        float base_move_speed = 0.5f;
+        float move_speed = 0.f;
+        float base_move_speed = 1.0f;
     public:
         virtual ~Entity() = default;
 
@@ -51,6 +51,8 @@ class Entity
         int get_entity_width() const { return size.x; }
         int get_entity_height() const { return size.y; }
         void set_move_speed(float speed) {move_speed = speed;}
+
+        void update_move_speed_from_job(const EntityJob& job);
 
         void add_job(EntityJob job);
 

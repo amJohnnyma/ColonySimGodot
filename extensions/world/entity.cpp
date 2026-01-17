@@ -10,8 +10,8 @@ Entity::Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) : po
 
 void Entity::reset_timer() {
     thread_local static std::mt19937 gen(std::random_device{}());
-    std::uniform_real_distribution<float> dist(0, move_speed);
-    move_timer = dist(gen);
+    std::uniform_real_distribution<float> dist(0.9f, 1.1f);
+    move_timer = move_speed * dist(gen);
 }
 
 // this should be an override -> move speed for items and buildings ???? Should defnitely be removed from Entity base
@@ -20,9 +20,12 @@ void Entity::add_job(EntityJob job)
     job.isValid = true;
     job.complete = false;
     job.move_algo = "default";
-    move_speed = base_move_speed / job.moveSpeedMultiplier;
 
 
     jobList.push_back(job);
 }
-
+void Entity::update_move_speed_from_job(const EntityJob& job)
+{
+    // Correct: multiply by the multiplier (0.2 = slower, 2.0 = faster)
+    move_speed = base_move_speed / job.moveSpeedMultiplier;
+}

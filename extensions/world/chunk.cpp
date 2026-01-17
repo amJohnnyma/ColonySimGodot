@@ -182,109 +182,109 @@ std::vector<std::tuple<Vector2i, int>> getNeighbouringChunks(Vector2i entityWorl
     return ret;
 }
 void Chunk::simulate(float delta, bool full_simulation) {
-if (entities.empty()) return; // Early exit
+    if (entities.empty()) return; // Early exit
 
-// Use stack allocation for small arrays
-constexpr int MAX_STACK_TRANSFERS = 64;
-std::vector<std::shared_ptr<Entity>> to_transfer[4];
+    // Use stack allocation for small arrays
+    constexpr int MAX_STACK_TRANSFERS = 64;
+    std::vector<std::shared_ptr<Entity>> to_transfer[4];
 
-// Pre-allocate if we have many entities
-if (entities.size() > MAX_STACK_TRANSFERS) {
-    for (int i = 0; i < 4; ++i) {
-        to_transfer[i].reserve(entities.size() / 16);
+    // Pre-allocate if we have many entities
+    if (entities.size() > MAX_STACK_TRANSFERS) {
+        for (int i = 0; i < 4; ++i) {
+            to_transfer[i].reserve(entities.size() / 16);
+        }
     }
-}
 
-const int chunk_size = world->get_chunk_size();
-const int world_width  = world->get_world_width_tiles();
-const int world_height = world->get_world_height_tiles();
+    const int chunk_size = world->get_chunk_size();
+    const int world_width  = world->get_world_width_tiles();
+    const int world_height = world->get_world_height_tiles();
 
-// We'll collect entities that stay in this chunk
-std::vector<std::shared_ptr<Entity>> staying_entities;
-staying_entities.reserve(entities.size());
+    // We'll collect entities that stay in this chunk
+    std::vector<std::shared_ptr<Entity>> staying_entities;
+    staying_entities.reserve(entities.size());
 
-// Simulate all entities
-for (const auto& entity : entities) {
-    if (!entity) continue;
+    // Simulate all entities
+    for (const auto& entity : entities) {
+        if (!entity) continue;
 
-    Vector2i new_pos;
-    EntitySimulationParam params = {
-        delta,
-        new_pos,
-        {} // availableDirs empty since commented out
-    };
+        Vector2i new_pos;
+        EntitySimulationParam params = {
+            delta,
+            new_pos,
+            {} // availableDirs empty since commented out
+        };
 
-    bool moved = entity->simulate(params);
+        bool moved = entity->simulate(params);
 
-    if (moved) {  // Removed && full_simulation — always apply movement if moved
-        // Bounds check (world edges)
-        if (new_pos.x < 0 || new_pos.x >= world_width ||
-            new_pos.y < 0 || new_pos.y >= world_height) {
-            // Entity would leave world bounds → don't move it
-            staying_entities.push_back(entity);
-            continue;
-        }
-
-        // Apply the new position
-        entity->set_position(new_pos);
-        // which chunk does this position belong to
-        Vector2i new_chunk = world->world_pos_to_chunk(new_pos);
-
-        if(new_chunk == coord) // is it still in this chunk?
-        {
-            staying_entities.push_back(entity);
-        }
-        else{
-// Crossed border → determine direction
-            Vector2i direction = new_chunk - coord;
-            
-            // Clamp direction to one of the 4 cardinal directions
-            if (direction.x != 0 && direction.y == 0) {
-                // East or West
-                if (direction.x > 0) to_transfer[1].push_back(entity); // East
-                else to_transfer[3].push_back(entity); // West
+        if (moved) {  // Removed && full_simulation — always apply movement if moved
+            // Bounds check (world edges)
+            if (new_pos.x < 0 || new_pos.x >= world_width ||
+                new_pos.y < 0 || new_pos.y >= world_height) {
+                // Entity would leave world bounds → don't move it
+                staying_entities.push_back(entity);
+                continue;
             }
-            else if (direction.y != 0 && direction.x == 0) {
-                // North or South
-                if (direction.y > 0) to_transfer[2].push_back(entity); // South
-                else to_transfer[0].push_back(entity); // North
+
+            // Apply the new position
+            entity->set_position(new_pos);
+            // which chunk does this position belong to
+            Vector2i new_chunk = world->world_pos_to_chunk(new_pos);
+
+            if(new_chunk == coord) // is it still in this chunk?
+            {
+                staying_entities.push_back(entity);
             }
-            else {
-                // Diagonal or multi-chunk jump - just pick primary direction
-                if (std::abs(direction.x) > std::abs(direction.y)) {
-                    if (direction.x > 0) to_transfer[1].push_back(entity);
-                    else to_transfer[3].push_back(entity);
-                } else {
-                    if (direction.y > 0) to_transfer[2].push_back(entity);
-                    else to_transfer[0].push_back(entity);
+            else{
+    // Crossed border → determine direction
+                Vector2i direction = new_chunk - coord;
+                
+                // Clamp direction to one of the 4 cardinal directions
+                if (direction.x != 0 && direction.y == 0) {
+                    // East or West
+                    if (direction.x > 0) to_transfer[1].push_back(entity); // East
+                    else to_transfer[3].push_back(entity); // West
+                }
+                else if (direction.y != 0 && direction.x == 0) {
+                    // North or South
+                    if (direction.y > 0) to_transfer[2].push_back(entity); // South
+                    else to_transfer[0].push_back(entity); // North
+                }
+                else {
+                    // Diagonal or multi-chunk jump - just pick primary direction
+                    if (std::abs(direction.x) > std::abs(direction.y)) {
+                        if (direction.x > 0) to_transfer[1].push_back(entity);
+                        else to_transfer[3].push_back(entity);
+                    } else {
+                        if (direction.y > 0) to_transfer[2].push_back(entity);
+                        else to_transfer[0].push_back(entity);
+                    }
                 }
             }
+
+        }
+        else {
+            // Didn't move → keep it
+            staying_entities.push_back(entity);
+        }
+    }
+        if (!to_transfer[0].empty() || !to_transfer[1].empty() || 
+            !to_transfer[2].empty() || !to_transfer[3].empty()) {
+            
+            UtilityFunctions::print("Chunk ", coord.x, ",", coord.y, " transferring:");
+            if (!to_transfer[0].empty()) UtilityFunctions::print("  North: ", to_transfer[0].size());
+            if (!to_transfer[1].empty()) UtilityFunctions::print("  East: ", to_transfer[1].size());
+            if (!to_transfer[2].empty()) UtilityFunctions::print("  South: ", to_transfer[2].size());
+            if (!to_transfer[3].empty()) UtilityFunctions::print("  West: ", to_transfer[3].size());
         }
 
-    }
-    else {
-        // Didn't move → keep it
-        staying_entities.push_back(entity);
-    }
-}
-    if (!to_transfer[0].empty() || !to_transfer[1].empty() || 
-        !to_transfer[2].empty() || !to_transfer[3].empty()) {
-        
-        UtilityFunctions::print("Chunk ", coord.x, ",", coord.y, " transferring:");
-        if (!to_transfer[0].empty()) UtilityFunctions::print("  North: ", to_transfer[0].size());
-        if (!to_transfer[1].empty()) UtilityFunctions::print("  East: ", to_transfer[1].size());
-        if (!to_transfer[2].empty()) UtilityFunctions::print("  South: ", to_transfer[2].size());
-        if (!to_transfer[3].empty()) UtilityFunctions::print("  West: ", to_transfer[3].size());
-    }
+    // Replace the old list with only the entities that are still in this chunk
+    entities = std::move(staying_entities);
 
-// Replace the old list with only the entities that are still in this chunk
-entities = std::move(staying_entities);
-
-// Perform the actual transfers
-if (!to_transfer[0].empty()) transfer_entities(to_transfer[0], Vector2i(0, -1));
-if (!to_transfer[1].empty()) transfer_entities(to_transfer[1], Vector2i(1, 0));
-if (!to_transfer[2].empty()) transfer_entities(to_transfer[2], Vector2i(0, 1));
-if (!to_transfer[3].empty()) transfer_entities(to_transfer[3], Vector2i(-1, 0));
+    // Perform the actual transfers
+    if (!to_transfer[0].empty()) transfer_entities(to_transfer[0], Vector2i(0, -1));
+    if (!to_transfer[1].empty()) transfer_entities(to_transfer[1], Vector2i(1, 0));
+    if (!to_transfer[2].empty()) transfer_entities(to_transfer[2], Vector2i(0, 1));
+    if (!to_transfer[3].empty()) transfer_entities(to_transfer[3], Vector2i(-1, 0));
 }
 void Chunk::transfer_entities(
     std::vector<std::shared_ptr<Entity>>& entities_vec, 

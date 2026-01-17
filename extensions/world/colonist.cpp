@@ -27,6 +27,7 @@ bool Colonist::simulate(EntitySimulationParam &params)
     );
 
     if (currentJobIndex >= jobList.size()) { currentJobIndex = -1; }
+
     // If no current job or current one is complete/nullptr
     if (currentJobIndex == -1 ||
             currentJobIndex < jobList.size() && jobList[currentJobIndex].complete)
@@ -39,14 +40,16 @@ bool Colonist::simulate(EntitySimulationParam &params)
                     return a.priority < b.priority;
                 });
             currentJobIndex = std::distance(jobList.begin(), it);
+
+            update_move_speed_from_job(jobList[currentJobIndex]);
         }
         else
         {
-            return false; // return false just temporarily so they dont wander
-            // Create new wander job
+            // Create new wander job (uncommented to allow wandering)
             EntityJob wander;
             wander.move_algo = "default";
-            wander.moveSpeedMultiplier = 1.0f;
+            wander.priority = 0;
+            wander.moveSpeedMultiplier = 0.2f; // move at 20% base speed
             thread_local static std::mt19937 gen(std::random_device{}());
             std::uniform_int_distribution<int> dist(0, 10);
             std::uniform_int_distribution<int> dir(0,1);
@@ -59,6 +62,8 @@ bool Colonist::simulate(EntitySimulationParam &params)
             wander.target_coord = {position.x + distance, position.y + distance};
             add_job(wander);
             currentJobIndex = jobList.size() - 1;
+
+            update_move_speed_from_job(wander);
         }
     }
 
