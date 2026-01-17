@@ -637,7 +637,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
 
 }
 
-void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos)
+void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, const int id)
 {
     Vector2i primary_chunk = world_tile_to_chunk(entityPos.x, entityPos.y);
     
@@ -670,7 +670,7 @@ void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos)
             int entity_tile_y = static_cast<int>(std::floor(entity_world_pos.y));
             
             // Check if this entity is at the target position
-            if (entity_tile_x == entityPos.x && entity_tile_y == entityPos.y) {
+            if (/*entity_tile_x == entityPos.x && entity_tile_y == entityPos.y &&*/ e->get_entity_id() == id) {
                 EntityJob wander;
                 wander.move_algo = "default";
                 wander.moveSpeedMultiplier = 5.0f;

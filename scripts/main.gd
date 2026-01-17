@@ -227,6 +227,6 @@ func _unhandled_input(event):
 			selectedEntity.entities_selected(ids, types, sprites, pos)
 
 
-func create_entity_job(pos : Vector2i, entityPos : Vector2i):
+func create_entity_job(pos : Vector2i, entityPos : Vector2i, id : int):
 	# For making an entity job -> Temporary
-	$World.create_temp_job(pos, entityPos)
+	$World.create_temp_job(pos, entityPos, id)

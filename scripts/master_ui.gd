@@ -111,6 +111,7 @@ func _on_close_panel(panel_id: int):
 		4:
 			$GameUI.visible = true
 			$EntityClickPopup.visible = false
+			GameSettings.paused = false
 	building_selected.emit(0, 0)
 	update_place_ghost.emit(null, Vector2.ZERO, Vector2.ZERO)
 

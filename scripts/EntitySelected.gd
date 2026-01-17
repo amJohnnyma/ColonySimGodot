@@ -6,6 +6,7 @@ signal create_job()
 @export var main: Node
 
 var selectedEntityPos : Vector2i
+var selectedEntityID : int
 
 func _ready() -> void:
 	$MarginContainer/Panel/EntityJobPanel/JoblistButtonMargin/Button.pressed.connect(_create_job_panel)
@@ -16,6 +17,7 @@ func entities_selected(ids : Array, types : Array, sprites : Array, epos : Array
 	# Hide what mustnt be seen
 	$MarginContainer/Panel/EntityJobPanel/JoblistButtonMargin/Button.visible = true
 	$MarginContainer/Panel/EntityJobPanel/JobCreatePanel.visible = false
+	GameSettings.paused = true
 	
 	# Populate the UI with the first entity for now
 	# NBNBNBNB Check the type to know which tabs to show
@@ -24,6 +26,7 @@ func entities_selected(ids : Array, types : Array, sprites : Array, epos : Array
 	var sprite = sprites[0]
 	var pos = epos[0]
 	selectedEntityPos = pos
+	selectedEntityID = id
 	
 	# Make a sprite the Icon
 	var full_tex = SpriteAtlas.get_texture(type)
@@ -57,5 +60,5 @@ func _create_job():
 
 	print(pos_x, pos_y)
 	
-	main.create_entity_job(Vector2i(pos_x, pos_y), selectedEntityPos)
+	main.create_entity_job(Vector2i(pos_x, pos_y), selectedEntityPos, selectedEntityID)
 	create_job.emit()

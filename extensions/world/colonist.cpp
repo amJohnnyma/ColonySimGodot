@@ -22,7 +22,7 @@ bool Colonist::simulate(EntitySimulationParam &params)
     // Clean up completed jobs
     jobList.erase(
         std::remove_if(jobList.begin(), jobList.end(),
-            [](const EntityJob& j) { return j.complete; }),
+            [](const EntityJob& j) { return j.complete || j.priority == 0; }),
         jobList.end()
     );
 
@@ -47,21 +47,11 @@ bool Colonist::simulate(EntitySimulationParam &params)
         {
             // Create new wander job (uncommented to allow wandering)
             EntityJob wander;
-            wander.move_algo = "default";
+            wander.move_algo = "random";
             wander.priority = 0;
             wander.moveSpeedMultiplier = 0.2f; // move at 20% base speed
-            thread_local static std::mt19937 gen(std::random_device{}());
-            std::uniform_int_distribution<int> dist(0, 10);
-            std::uniform_int_distribution<int> dir(0,1);
-            int fdir = dir(gen);
-            if(fdir == 0)
-                fdir = -1;
-
-            int distance = dist(gen);
-            distance *= fdir;
-            wander.target_coord = {position.x + distance, position.y + distance};
-            add_job(wander);
-            currentJobIndex = jobList.size() - 1;
+                                               //
+            jobList.push_back(wander);
 
             update_move_speed_from_job(wander);
         }
@@ -83,8 +73,6 @@ bool Colonist::simulate(EntitySimulationParam &params)
     if (current.complete)
     {
         reset_timer();
-        // currentJob pointer will be invalidated next frame after erase()
-        // That's fine — we'll pick a new one
     }
 
     return moved;
