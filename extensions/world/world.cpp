@@ -287,9 +287,9 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     PackedInt64Array entity_ids;
     PackedInt32Array types;
     PackedInt32Array entity_sprites;
-    PackedInt32Array entity_widths;  // Plural for consistency
+    PackedInt32Array entity_widths;  
     PackedInt32Array entity_heights;
-    PackedInt32Array x_pos; // this will be for retrieving data about specific entities later
+    PackedInt32Array x_pos; 
     PackedInt32Array y_pos;
 
     // Pre-allocate for performance
@@ -347,7 +347,6 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
         }
     }
 
-    // Trim arrays to actual count (optional, but cleaner)
     entity_ids.resize(count);
     types.resize(count);
     entity_sprites.resize(count);
@@ -359,7 +358,7 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     result["entity_ids"] = entity_ids;
     result["types"] = types;
     result["entity_sprites"] = entity_sprites;
-    result["entity_width"] = entity_widths;  // Kept singular to match your API
+    result["entity_width"] = entity_widths; 
     result["entity_height"] = entity_heights;
     result["x_pos"] = x_pos;
     result["y_pos"] = y_pos;
@@ -617,6 +616,9 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         // temporarily make a building this size
         auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(2,2), entity_type);
         pendingEntityPlacements.push_back({chunk,e});
+        // How will i fetch the data for the buildings?
+        // Storage space, size, available jobs, etc. 
+        // Maybe just a simple data structure that is populated from a JSON or something
     }
     else if(type == "item")
     {
@@ -637,6 +639,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
 
 }
 
+// I think jobs should be made through a factory. That way certain entities can only have certain jobs and the UI will be easier to maintain
 void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, const int id)
 {
     Vector2i primary_chunk = world_tile_to_chunk(entityPos.x, entityPos.y);
