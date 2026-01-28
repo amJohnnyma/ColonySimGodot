@@ -166,6 +166,8 @@ bool Colonist::default_movement(EntitySimulationParam &params)
 
 bool Colonist::random_movement(EntitySimulationParam &params)
 {
+
+    jobList[currentJobIndex].complete = true;
     const Vector2i dirs[4] = {
         Vector2i(0, -1), Vector2i(1, 0),
         Vector2i(0, 1), Vector2i(-1, 0)
@@ -189,7 +191,6 @@ bool Colonist::random_movement(EntitySimulationParam &params)
         }
     }
 
-    jobList[currentJobIndex].complete = true;
     
     // No valid moves - stay in place
     return false;
