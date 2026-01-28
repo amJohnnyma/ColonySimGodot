@@ -1,5 +1,7 @@
 extends Control
 
+@export var main : Node2D
+
 # Signals for button presses
 signal main_button_pressed(button_id: int, panel_id: int)
 # Signal for panel state changes
@@ -53,6 +55,8 @@ func _ready():
 
 
 func _on_main_button_pressed(button_id: int, panel_id : int):
+	GameSettings.paused = true
+	main.update_paused_icon()
 	match button_id:
 		1:
 			# Hide buttons
@@ -83,6 +87,8 @@ func _on_main_button_pressed(button_id: int, panel_id : int):
 			pass
 
 func _on_close_panel(panel_id: int):
+	GameSettings.paused = true
+	main.update_paused_icon()
 	match panel_id:
 		1:
 			# Hide buttons
@@ -111,7 +117,8 @@ func _on_close_panel(panel_id: int):
 		4:
 			$GameUI.visible = true
 			$EntityClickPopup.visible = false
-			GameSettings.paused = false
+
+			
 	building_selected.emit(0, 0)
 	update_place_ghost.emit(null, Vector2.ZERO, Vector2.ZERO)
 

@@ -35,6 +35,8 @@ func _ready() -> void:
 	
 	ui.building_selected.connect(_on_building_selected)
 	ui.update_place_ghost.connect(_update_place_ghost)
+	
+	update_paused_icon()
 
 
 '''
@@ -168,6 +170,8 @@ func _update_place_ghost(sprite : AtlasTexture, c_scale : Vector2, offset : Vect
 func _unhandled_input(event):
 	if event is InputEventKey and event.keycode == KEY_P and event.pressed:
 		GameSettings.paused = !GameSettings.paused
+		update_paused_icon()
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if selectedSprite[2]:
 			print("Placing sprite")
@@ -230,3 +234,10 @@ func _unhandled_input(event):
 func create_entity_job(pos : Vector2i, entityPos : Vector2i, id : int):
 	# For making an entity job -> Temporary
 	$World.create_temp_job(pos, entityPos, id)
+
+
+func update_paused_icon():
+	if(GameSettings.paused):
+		$UI/MasterControl/GameUI/PausePanel/Label.text = ">"
+	else:
+		$UI/MasterControl/GameUI/PausePanel/Label.text = "||"

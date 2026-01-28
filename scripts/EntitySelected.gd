@@ -19,6 +19,7 @@ func entities_selected(ids : Array, types : Array, sprites : Array, epos : Array
 	$MarginContainer/Panel/EntityJobPanel/JobCreatePanel.visible = false
 	GameSettings.paused = true
 	
+	
 	# Populate the UI with the first entity for now
 	# NBNBNBNB Check the type to know which tabs to show
 	var id = ids[0]

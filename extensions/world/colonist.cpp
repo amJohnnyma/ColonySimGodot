@@ -11,6 +11,7 @@ Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) 
     homeCoord = pos;
 
 }
+
 // Returns new position and true if crossed chunk border
 bool Colonist::simulate(EntitySimulationParam &params)
 {
@@ -61,6 +62,8 @@ bool Colonist::simulate(EntitySimulationParam &params)
     // Execute movement
     bool moved = false;
     EntityJob& current = jobList[currentJobIndex];        
+
+    update_move_speed_from_job(jobList[currentJobIndex]);
     if (current.move_algo == "default")
     {
         moved = default_movement(params);

@@ -673,7 +673,7 @@ void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, con
             if (/*entity_tile_x == entityPos.x && entity_tile_y == entityPos.y &&*/ e->get_entity_id() == id) {
                 EntityJob wander;
                 wander.move_algo = "default";
-                wander.moveSpeedMultiplier = 15.0f;
+                wander.moveSpeedMultiplier = 2.0f;
                 wander.priority = 100;
                 wander.target_coord = {jobPos.x, jobPos.y};
                 e->add_job(wander);
