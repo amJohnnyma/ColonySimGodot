@@ -7,6 +7,7 @@ signal create_job()
 
 var selectedEntityPos : Vector2i
 var selectedEntityID : int
+var selectedJobType : int
 
 func _ready() -> void:
 	$MarginContainer/Panel/EntityJobPanel/JoblistButtonMargin/Button.pressed.connect(_create_job_panel)
@@ -44,7 +45,23 @@ func entities_selected(ids : Array, types : Array, sprites : Array, epos : Array
 	tempLabelString += str(id) + "\n" + str(pos)
 	# Show the ID and pos in the box below
 	$MarginContainer/Panel/EntityJobPanel/JoblistMargin/Joblist/Label.text = tempLabelString
+	
+	var menu = $MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/MenuButton.get_popup()
+	menu.clear()
+	if type == 1:
+		menu.add_item("Sprint to pos", 1)
+		menu.add_item("Slow to pos", 2)
+	elif type == 2:
+		menu.add_item("Option C", 1)
+		menu.add_item("Option D", 2)
+	else:
+		pass
+	
+	menu.id_pressed.connect(_on_popup_id_pressed)
 
+func _on_popup_id_pressed(id: int):
+	print("Item with ID %d pressed" % id)
+	selectedJobType = id
 
 func _create_job_panel():
 	print("Create job")
@@ -61,5 +78,5 @@ func _create_job():
 
 	print(pos_x, pos_y)
 	
-	main.create_entity_job(Vector2i(pos_x, pos_y), selectedEntityPos, selectedEntityID)
+	main.create_entity_job(Vector2i(pos_x, pos_y), selectedEntityPos, selectedEntityID, selectedJobType)
 	create_job.emit()

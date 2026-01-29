@@ -2,6 +2,7 @@
 #include "chunk.h"
 #include "core/math.hpp"
 #include "entityDataReader.h"
+#include "entityJob.h"
 #include "variant/vector2i.hpp"
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <cmath>
@@ -32,7 +33,7 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_visible_entities", "chunk_coords", "cull_min", "cull_max", "max_entities"),&World::get_visible_entities);
     ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite"),&World::create_entity);
     ClassDB::bind_method(D_METHOD("get_entities_at_world_pos","coord"),&World::get_entities_at_world_pos);
-    ClassDB::bind_method(D_METHOD("create_temp_job","jobPos", "entityPos"),&World::create_temp_job);
+    ClassDB::bind_method(D_METHOD("create_temp_job","jobPos", "entityPos", "id", "jobType"),&World::create_temp_job);
 
 }
 
@@ -655,7 +656,8 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
 }
 
 // I think jobs should be made through a factory. That way certain entities can only have certain jobs and the UI will be easier to maintain
-void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, const int id)
+// But just a "template" system could work the same. UI could just have hard coded stuff anyways
+void World::create_temp_job(const Vector2i& jobPos, const Vector2i& entityPos, const int& id, const int& jobType)
 {
     Vector2i primary_chunk = world_tile_to_chunk(entityPos.x, entityPos.y);
     
@@ -683,21 +685,14 @@ void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, con
         for (const auto& e : chunk->entities) {
             if (!e) continue;
             
-            Vector2 entity_world_pos = e->get_position();
-            int entity_tile_x = static_cast<int>(std::floor(entity_world_pos.x));
-            int entity_tile_y = static_cast<int>(std::floor(entity_world_pos.y));
             
-            // Check if this entity is at the target position
-            if (/*entity_tile_x == entityPos.x && entity_tile_y == entityPos.y &&*/ e->get_entity_id() == id) {
-                EntityJob wander;
-                wander.move_algo = "default";
-                wander.moveSpeedMultiplier = 2.0f;
-                wander.priority = 100;
-                wander.target_coord = {jobPos.x, jobPos.y};
-                e->add_job(wander);
+            if (e->get_entity_id() == id) {
+                int e_type = e->get_type_id();
+                EntityJob job = create_job(e_type, jobType, jobPos);
+                e->add_job(job);
                 
                 UtilityFunctions::print("Created job to go from ", entityPos, " to ", jobPos, 
-                    " (found in chunk ", chunk_coord, ")");
+                    " (found in chunk ", chunk_coord, ") with job type ", jobType);
                 return;
             }
         }
@@ -709,21 +704,15 @@ void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, con
         for (const auto& [pending_chunk, e] : pendingEntityPlacements) {
             if (!e) continue;
             
-            Vector2 entity_world_pos = e->get_position();
-            int entity_tile_x = static_cast<int>(std::floor(entity_world_pos.x));
-            int entity_tile_y = static_cast<int>(std::floor(entity_world_pos.y));
-            
-            if (entity_tile_x == entityPos.x && entity_tile_y == entityPos.y) {
-                EntityJob wander;
-                wander.move_algo = "default";
-                wander.moveSpeedMultiplier = 1.5f;
-                wander.priority = 100;
-                wander.target_coord = {jobPos.x, jobPos.y};
-                e->add_job(wander);
+            if (e->get_entity_id() == id) {
+                int e_type = e->get_type_id();
+                EntityJob job = create_job(e_type, jobType, jobPos);
+                e->add_job(job);
                 
-                UtilityFunctions::print("Created job to go from ", entityPos, " to ", jobPos,
-                    " (found in pending)");
+                UtilityFunctions::print("Created job to go from ", entityPos, " to ", jobPos, 
+                    " (found in chunk ", pending_chunk->coord, ") with job type ", jobType);
                 return;
+            
             }
         }
     }
@@ -731,3 +720,29 @@ void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, con
     UtilityFunctions::push_warning("Failed to find entity at ", entityPos, 
         " (searched chunk ", primary_chunk, " and neighbors)");
 }
+
+EntityJob getEntityJobConfig(const int& entityType, const int& jobType)
+{   
+    EntityJob config;
+    
+    if (entityType == 1 && jobType == 1) { // colonist speedy move to point
+        config.move_algo = "default";
+        config.moveSpeedMultiplier = 5.0f;
+        config.priority = 100;
+    } else if (entityType == 1 && jobType == 2) { //colonist slow move to point
+        config.move_algo = "default";
+        config.moveSpeedMultiplier = 1.0f;
+        config.priority = 100;
+    }
+    
+    return config;
+}
+EntityJob World::create_job(const int& entityType, const int& jobType, const Vector2i& jobPos)
+{
+
+    EntityJob job = getEntityJobConfig(entityType, jobType);
+    job.target_coord = {jobPos.x,jobPos.y};
+
+    return job;
+}
+

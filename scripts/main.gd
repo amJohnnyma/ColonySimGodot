@@ -127,16 +127,23 @@ func _ready() -> void:
 	# === Place colonists ===
 	var colonist_count := 0
 	var pos = Vector2i(0,0)
+	var jobTypeCount = 0
 	while colonist_count < NUM_COLONISTS:
 		
 		var sprite_idx := colonist_count
 		$World.create_entity("colonist", pos, 1, sprite_idx)
 		var target = pos
 		target.y += 100
-		$World.create_temp_job(target, pos, sprite_idx)
+		var jobType = 1
+		if jobTypeCount % 2 == 0:
+			jobType = 1
+		else:
+			jobType = 2
+		$World.create_temp_job(target, pos, sprite_idx, jobType)
 		pos.x += 1
 
 		colonist_count += 1
+		jobTypeCount += 1
 	
 	print("Colonists placed: ", colonist_count)
 	
@@ -228,9 +235,9 @@ func _unhandled_input(event):
 			selectedEntity.entities_selected(ids, types, sprites, pos)
 
 
-func create_entity_job(pos : Vector2i, entityPos : Vector2i, id : int):
+func create_entity_job(pos : Vector2i, entityPos : Vector2i, id : int, jobType : int):
 	# For making an entity job -> Temporary
-	$World.create_temp_job(pos, entityPos, id)
+	$World.create_temp_job(pos, entityPos, id, jobType)
 
 
 func update_paused_icon():

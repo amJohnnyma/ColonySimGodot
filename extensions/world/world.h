@@ -122,5 +122,6 @@ class World : public  Node2D{
         // The building system
         void create_entity(const String &type, const Vector2i &coord,const int &entity_type, const int &entity_sprite);
 
-        void create_temp_job(const Vector2i jobPos, const Vector2i entityPos, const int id);
+        void create_temp_job(const Vector2i& jobPos, const Vector2i& entityPos, const int& id, const int& jobType);
+        EntityJob create_job(const int& entityType, const int& jobType, const Vector2i& jobPos);
 };
