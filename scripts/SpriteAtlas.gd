@@ -7,9 +7,9 @@ extends Node
 @export var sheet_entity_sizes: Dictionary = {}
 
 func _ready():
-	load_sheet(1, "res://EntityData/sprite_sheet_1_colonist.json")
-	load_sheet(2, "res://EntityData/sprite_sheet_2_building.json")
-	load_sheet(3, "res://EntityData/sprite_sheet_3_item.json")
+	load_sheet(1, "res://EntityData/sprite_sheet_1.json")
+	load_sheet(2, "res://EntityData/sprite_sheet_2.json")
+	load_sheet(3, "res://EntityData/sprite_sheet_3.json")
 
 
 func load_sheet(sheet_id: int, path: String):

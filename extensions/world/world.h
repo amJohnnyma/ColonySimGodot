@@ -10,12 +10,14 @@
 #include <unordered_set>
 #include <memory>
 #include <cmath>
+#include <vector>
 #include "chunk.h"
 #include "entity.h"
 #include "entityJob.h"
 #include "godot_cpp/variant/dictionary.hpp"
 #include "templates/vector.hpp"
 #include "threadpool.h"
+#include "entityDataReader.h"
 
 using namespace godot;
 
@@ -57,6 +59,7 @@ class World : public  Node2D{
         int world_chunks_y = 0;
         uint64_t current_entity_id = 0;
         std::vector<EntityJob> availableJobs;
+        EntityDataReader entityDataReader; 
 
     public:
         std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
@@ -117,7 +120,7 @@ class World : public  Node2D{
         int get_next_entity_id() {current_entity_id++; return (current_entity_id-1);};
 
         // The building system
-        void create_entity(const String &type, const Vector2i &coord,const int &entity_type, const int &entity_sprite, const Vector2i& size);
+        void create_entity(const String &type, const Vector2i &coord,const int &entity_type, const int &entity_sprite);
 
         void create_temp_job(const Vector2i jobPos, const Vector2i entityPos, const int id);
 };

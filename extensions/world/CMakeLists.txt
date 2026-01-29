@@ -23,6 +23,7 @@ set(SOURCES
     colonist.cpp
     building.cpp
     item.cpp
+    entityDataReader.cpp
     world.cpp
     chunk.cpp
     perlin_noise.cpp

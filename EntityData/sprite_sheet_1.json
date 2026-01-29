@@ -17,7 +17,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 1.5,
     "entity_type": 1,
     "entity_sprite": 1
   },
@@ -28,7 +28,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 1.25,
     "entity_type": 1,
     "entity_sprite": 2
   },
@@ -39,7 +39,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 1.75,
     "entity_type": 1,
     "entity_sprite": 3
   },
@@ -50,7 +50,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 2.0,
     "entity_type": 1,
     "entity_sprite": 4
   },
@@ -61,7 +61,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 0.75,
     "entity_type": 1,
     "entity_sprite": 5
   },
@@ -72,7 +72,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 0.5,
     "entity_type": 1,
     "entity_sprite": 6
   },
@@ -83,7 +83,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 2.25,
     "entity_type": 1,
     "entity_sprite": 7
   },
@@ -94,7 +94,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 2.5,
     "entity_type": 1,
     "entity_sprite": 8
   },
@@ -105,7 +105,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 2.75,
     "entity_type": 1,
     "entity_sprite": 9
   },
@@ -116,7 +116,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 1.8,
     "entity_type": 1,
     "entity_sprite": 10
   },
@@ -127,7 +127,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 3.0,
     "entity_type": 1,
     "entity_sprite": 11
   },
@@ -138,7 +138,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 3.25,
     "entity_type": 1,
     "entity_sprite": 12
   },
@@ -149,7 +149,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 3.5,
     "entity_type": 1,
     "entity_sprite": 13
   },
@@ -160,7 +160,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 1.0,
+    "base_move_speed": 3.75,
     "entity_type": 1,
     "entity_sprite": 14
   }

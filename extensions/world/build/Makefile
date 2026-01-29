@@ -225,6 +225,30 @@ entity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entity.cpp.s
 .PHONY : entity.cpp.s
 
+entityDataReader.o: entityDataReader.cpp.o
+.PHONY : entityDataReader.o
+
+# target to build an object file
+entityDataReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entityDataReader.cpp.o
+.PHONY : entityDataReader.cpp.o
+
+entityDataReader.i: entityDataReader.cpp.i
+.PHONY : entityDataReader.i
+
+# target to preprocess a source file
+entityDataReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entityDataReader.cpp.i
+.PHONY : entityDataReader.cpp.i
+
+entityDataReader.s: entityDataReader.cpp.s
+.PHONY : entityDataReader.s
+
+# target to generate assembly for a file
+entityDataReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entityDataReader.cpp.s
+.PHONY : entityDataReader.cpp.s
+
 item.o: item.cpp.o
 .PHONY : item.o
 
@@ -342,6 +366,9 @@ help:
 	@echo "... entity.o"
 	@echo "... entity.i"
 	@echo "... entity.s"
+	@echo "... entityDataReader.o"
+	@echo "... entityDataReader.i"
+	@echo "... entityDataReader.s"
 	@echo "... item.o"
 	@echo "... item.i"
 	@echo "... item.s"

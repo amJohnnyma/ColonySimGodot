@@ -1,6 +1,7 @@
 #include "world.h"
 #include "chunk.h"
 #include "core/math.hpp"
+#include "entityDataReader.h"
 #include "variant/vector2i.hpp"
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <cmath>
@@ -29,7 +30,7 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_chunk_entity_capacity"), &World::get_chunk_entity_capacity);
     ClassDB::bind_method(D_METHOD("get_visible_chunks", "cam_pos", "world_min", "world_max", "max_render_distance"),&World::get_visible_chunks);
     ClassDB::bind_method(D_METHOD("get_visible_entities", "chunk_coords", "cull_min", "cull_max", "max_entities"),&World::get_visible_entities);
-    ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite", "size"),&World::create_entity);
+    ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite"),&World::create_entity);
     ClassDB::bind_method(D_METHOD("get_entities_at_world_pos","coord"),&World::get_entities_at_world_pos);
     ClassDB::bind_method(D_METHOD("create_temp_job","jobPos", "entityPos"),&World::create_temp_job);
 
@@ -46,6 +47,11 @@ void World::init(int world_width_tiles, int world_height_tiles, int chunk_size_t
 
     // No pre-generation: chunks load on-demand for massive worlds
     init_thread_pool(4);
+
+    //Load JSON files for entity data
+    // Preload the things we are most likely to use
+    entityDataReader.preload_sheet(1);
+    entityDataReader.preload_sheet(2);
 }
 
 // Convert world-space position (Vector3) to chunk coordinates.
@@ -591,7 +597,7 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
 }
 
 
-void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite, const Vector2i &size)
+void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite)
 {
     Vector2i chunk_coord = world_tile_to_chunk(tile_coord.x, tile_coord.y);
    // UtilityFunctions::print("-> Chunk: ", chunk_coord);
@@ -605,16 +611,23 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         return;
     }
 
+    EntityData data = entityDataReader.get_entity_data(entity_type, entity_sprite);
+    if(data.def) return;
+
+    Vector2i size = Vector2i(data.size_x, data.size_y);
+
     if(type == "colonist")
     {
 
         auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite, size);
+        e->set_move_speed(data.base_move_speed);
         pendingEntityPlacements.push_back({chunk, e});
     }
     else if(type == "building")
     {
         // temporarily make a building this size
         auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, size, entity_type);
+        e->set_move_speed(data.base_move_speed);
         pendingEntityPlacements.push_back({chunk,e});
         // How will i fetch the data for the buildings?
         // Storage space, size, available jobs, etc. 
@@ -624,6 +637,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     {
         // temporarily make a building this size
         auto e = std::make_shared<Item>(tile_coord, get_next_entity_id(), entity_sprite, size);
+        e->set_move_speed(data.base_move_speed);
         pendingEntityPlacements.push_back({chunk,e});
     }
     else 
@@ -702,7 +716,7 @@ void World::create_temp_job(const Vector2i jobPos, const Vector2i entityPos, con
             if (entity_tile_x == entityPos.x && entity_tile_y == entityPos.y) {
                 EntityJob wander;
                 wander.move_algo = "default";
-                wander.moveSpeedMultiplier = 1.0f;
+                wander.moveSpeedMultiplier = 1.5f;
                 wander.priority = 100;
                 wander.target_coord = {jobPos.x, jobPos.y};
                 e->add_job(wander);

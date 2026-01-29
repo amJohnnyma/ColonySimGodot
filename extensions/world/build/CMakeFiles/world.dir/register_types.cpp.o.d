@@ -276,7 +276,10 @@ CMakeFiles/world.dir/register_types.cpp.o: \
  /usr/include/c++/13/bits/shared_ptr_atomic.h \
  /usr/include/c++/13/backward/auto_ptr.h \
  /usr/include/c++/13/pstl/glue_memory_defs.h \
- /usr/include/c++/13/pstl/execution_defs.h \
+ /usr/include/c++/13/pstl/execution_defs.h /usr/include/c++/13/vector \
+ /usr/include/c++/13/bits/stl_vector.h \
+ /usr/include/c++/13/bits/stl_bvector.h \
+ /usr/include/c++/13/bits/vector.tcc \
  /home/johnny/Godot/colony-sim-2/extensions/world/chunk.h \
  /usr/include/c++/13/future /usr/include/c++/13/condition_variable \
  /usr/include/c++/13/bits/cxxabi_forced.h \
@@ -300,10 +303,7 @@ CMakeFiles/world.dir/register_types.cpp.o: \
  /usr/include/c++/13/bits/basic_string.tcc \
  /usr/include/c++/13/bits/atomic_futex.h \
  /usr/include/c++/13/bits/std_function.h \
- /usr/include/c++/13/bits/std_thread.h /usr/include/c++/13/vector \
- /usr/include/c++/13/bits/stl_vector.h \
- /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc \
+ /usr/include/c++/13/bits/std_thread.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/entity.h \
  /usr/include/c++/13/random /usr/include/c++/13/bits/random.h \
  /usr/include/c++/13/bits/uniform_int_dist.h \
@@ -339,4 +339,33 @@ CMakeFiles/world.dir/register_types.cpp.o: \
  /usr/include/c++/13/bits/stl_deque.h /usr/include/c++/13/bits/deque.tcc \
  /usr/include/c++/13/bits/stl_queue.h /usr/include/c++/13/thread \
  /usr/include/c++/13/bits/this_thread_sleep.h \
- /usr/include/c++/13/functional
+ /usr/include/c++/13/functional \
+ /home/johnny/Godot/colony-sim-2/extensions/world/entityDataReader.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/json.hpp \
+ /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
+ /usr/include/c++/13/forward_list /usr/include/c++/13/bits/forward_list.h \
+ /usr/include/c++/13/bits/forward_list.tcc /usr/include/c++/13/map \
+ /usr/include/c++/13/bits/stl_map.h \
+ /usr/include/c++/13/bits/stl_multimap.h /usr/include/c++/13/valarray \
+ /usr/include/c++/13/bits/valarray_array.h \
+ /usr/include/c++/13/bits/valarray_array.tcc \
+ /usr/include/c++/13/bits/valarray_before.h \
+ /usr/include/c++/13/bits/slice_array.h \
+ /usr/include/c++/13/bits/valarray_after.h \
+ /usr/include/c++/13/bits/gslice.h \
+ /usr/include/c++/13/bits/gslice_array.h \
+ /usr/include/c++/13/bits/mask_array.h \
+ /usr/include/c++/13/bits/indirect_array.h /usr/include/c++/13/version \
+ /usr/include/c++/13/cassert /usr/include/assert.h \
+ /usr/include/c++/13/filesystem /usr/include/c++/13/bits/fs_fwd.h \
+ /usr/include/c++/13/bits/fs_path.h /usr/include/c++/13/locale \
+ /usr/include/c++/13/bits/locale_facets_nonio.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
+ /usr/include/libintl.h /usr/include/c++/13/bits/codecvt.h \
+ /usr/include/c++/13/bits/locale_facets_nonio.tcc \
+ /usr/include/c++/13/bits/locale_conv.h /usr/include/c++/13/iomanip \
+ /usr/include/c++/13/bits/quoted_string.h /usr/include/c++/13/sstream \
+ /usr/include/c++/13/bits/sstream.tcc /usr/include/c++/13/codecvt \
+ /usr/include/c++/13/bits/fs_dir.h /usr/include/c++/13/bits/fs_ops.h \
+ /usr/include/c++/13/optional /usr/include/c++/13/any

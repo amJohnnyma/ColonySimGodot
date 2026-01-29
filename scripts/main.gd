@@ -39,18 +39,17 @@ func _ready() -> void:
 	update_paused_icon()
 
 
-'''
 	# ===================================================================
 	# TEMPORARY: Large-scale procedural generation for testing sprites
 	# ===================================================================
 	# Comment out or delete this entire block when no longer needed.
-	
+	const NUM_COLONISTS : int = 15
+	'''
 	const NUM_SPRITES_COLONIST : int = 15
 	const NUM_SPRITES_BUILDING : int = 135
 	const NUM_SPRITES_ITEMS : int = 27 * 26
 	
 	const NUM_BUILDINGS : int = 1
-	const NUM_COLONISTS : int = 4
 	const ITEMS_PER_BUILDING_MIN : int = 1
 	const ITEMS_PER_BUILDING_MAX : int = 2
 	
@@ -124,21 +123,19 @@ func _ready() -> void:
 				placed = true
 	
 	print("Items made: ", item_count_total)
-	
+	'''
 	# === Place colonists ===
-	tries = 0
 	var colonist_count := 0
-	while colonist_count < NUM_COLONISTS and tries < MAX_TRIES:
-		tries += 1
-		var pos := random_pos(rng)
+	var pos = Vector2i(0,0)
+	while colonist_count < NUM_COLONISTS:
 		
-		if occupied.has(pos):
-			continue
-		
-		var sprite_idx := rng.randi_range(0, NUM_SPRITES_COLONIST - 1)
+		var sprite_idx := colonist_count
 		$World.create_entity("colonist", pos, 1, sprite_idx)
-		
-		occupied[pos] = true
+		var target = pos
+		target.y += 100
+		$World.create_temp_job(target, pos, sprite_idx)
+		pos.x += 1
+
 		colonist_count += 1
 	
 	print("Colonists placed: ", colonist_count)
@@ -146,7 +143,7 @@ func _ready() -> void:
 	# ===================================================================
 	# END OF TEMPORARY GENERATION
 	# ===================================================================
-'''
+
 func _on_building_selected(sheet_id: int, variant_id: int) -> void:
 	# unselect it now
 	if sheet_id == selectedSprite[0] and variant_id == selectedSprite[1]:
@@ -192,7 +189,7 @@ func _unhandled_input(event):
 				type = "building"
 			elif selectedSprite[0] == 3:
 				type = "item"
-			$World.create_entity(type, new_tile, selectedSprite[0], selectedSprite[1], SpriteAtlas.get_entity_size(selectedSprite[0], selectedSprite[1]))
+			$World.create_entity(type, new_tile, selectedSprite[0], selectedSprite[1])
 		else:
 			var camera := get_viewport().get_camera_2d()
 			if camera == null:
