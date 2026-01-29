@@ -1,0 +1,167 @@
+{
+  "0": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 0
+  },
+  "1": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 1
+  },
+  "2": {
+    "x": 128,
+    "y": 0,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 2
+  },
+  "3": {
+    "x": 192,
+    "y": 0,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 3
+  },
+  "4": {
+    "x": 256,
+    "y": 0,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 4
+  },
+  "5": {
+    "x": 0,
+    "y": 64,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 5
+  },
+  "6": {
+    "x": 64,
+    "y": 64,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 6
+  },
+  "7": {
+    "x": 128,
+    "y": 64,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 7
+  },
+  "8": {
+    "x": 192,
+    "y": 64,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 8
+  },
+  "9": {
+    "x": 256,
+    "y": 64,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 9
+  },
+  "10": {
+    "x": 0,
+    "y": 128,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 10
+  },
+  "11": {
+    "x": 64,
+    "y": 128,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 11
+  },
+  "12": {
+    "x": 128,
+    "y": 128,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 12
+  },
+  "13": {
+    "x": 192,
+    "y": 128,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 13
+  },
+  "14": {
+    "x": 256,
+    "y": 128,
+    "w": 64,
+    "h": 64,
+    "size_x": 1,
+    "size_y": 1,
+    "base_move_speed": 1.0,
+    "entity_type": 1,
+    "entity_sprite": 14
+  }
+}

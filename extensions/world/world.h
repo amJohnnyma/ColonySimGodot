@@ -117,7 +117,7 @@ class World : public  Node2D{
         int get_next_entity_id() {current_entity_id++; return (current_entity_id-1);};
 
         // The building system
-        void create_entity(const String &type, const Vector2i &coord,const int &entity_type, const int &entity_sprite);
+        void create_entity(const String &type, const Vector2i &coord,const int &entity_type, const int &entity_sprite, const Vector2i& size);
 
         void create_temp_job(const Vector2i jobPos, const Vector2i entityPos, const int id);
 };

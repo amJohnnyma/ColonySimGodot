@@ -29,7 +29,7 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_chunk_entity_capacity"), &World::get_chunk_entity_capacity);
     ClassDB::bind_method(D_METHOD("get_visible_chunks", "cam_pos", "world_min", "world_max", "max_render_distance"),&World::get_visible_chunks);
     ClassDB::bind_method(D_METHOD("get_visible_entities", "chunk_coords", "cull_min", "cull_max", "max_entities"),&World::get_visible_entities);
-    ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite"),&World::create_entity);
+    ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite", "size"),&World::create_entity);
     ClassDB::bind_method(D_METHOD("get_entities_at_world_pos","coord"),&World::get_entities_at_world_pos);
     ClassDB::bind_method(D_METHOD("create_temp_job","jobPos", "entityPos"),&World::create_temp_job);
 
@@ -591,7 +591,7 @@ void World::update(const Vector2 &origin, int render_distance_chunks, float delt
 }
 
 
-void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite)
+void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite, const Vector2i &size)
 {
     Vector2i chunk_coord = world_tile_to_chunk(tile_coord.x, tile_coord.y);
    // UtilityFunctions::print("-> Chunk: ", chunk_coord);
@@ -608,13 +608,13 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     if(type == "colonist")
     {
 
-        auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(1,1));
+        auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite, size);
         pendingEntityPlacements.push_back({chunk, e});
     }
     else if(type == "building")
     {
         // temporarily make a building this size
-        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(2,2), entity_type);
+        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, size, entity_type);
         pendingEntityPlacements.push_back({chunk,e});
         // How will i fetch the data for the buildings?
         // Storage space, size, available jobs, etc. 
@@ -623,7 +623,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     else if(type == "item")
     {
         // temporarily make a building this size
-        auto e = std::make_shared<Item>(tile_coord, get_next_entity_id(), entity_sprite, Vector2i(1,1));
+        auto e = std::make_shared<Item>(tile_coord, get_next_entity_id(), entity_sprite, size);
         pendingEntityPlacements.push_back({chunk,e});
     }
     else 
@@ -634,6 +634,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
    //     pendingEntityPlacements.push_back({chunk,e});
     
     }
+    UtilityFunctions::print("Created ", type, " at (", tile_coord.x , ", ", tile_coord.y, ") with size (", size.x, ", ", size.y, ")");
 
 
 

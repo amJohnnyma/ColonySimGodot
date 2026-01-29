@@ -192,7 +192,7 @@ func _unhandled_input(event):
 				type = "building"
 			elif selectedSprite[0] == 3:
 				type = "item"
-			$World.create_entity(type, new_tile, selectedSprite[0], selectedSprite[1])
+			$World.create_entity(type, new_tile, selectedSprite[0], selectedSprite[1], SpriteAtlas.get_entity_size(selectedSprite[0], selectedSprite[1]))
 		else:
 			var camera := get_viewport().get_camera_2d()
 			if camera == null:
