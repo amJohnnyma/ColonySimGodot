@@ -491,9 +491,7 @@ void World::update(const Vector2 &origin,
                    float delta,
                    bool paused)
 {
-    if (paused) return;
-
-    if (!thread_pool) init_thread_pool();
+    
 
     // 1. Flush pending placements first (important!)
     {
@@ -506,6 +504,9 @@ void World::update(const Vector2 &origin,
             pendingEntityPlacements.clear();
         }
     }
+    if (paused) return;
+
+    if (!thread_pool) init_thread_pool();
 
     Vector2i origin_chunk_coord = world_pos_to_chunk(origin);
     int render_R = max_render_distance_chunks;
