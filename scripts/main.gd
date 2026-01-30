@@ -31,7 +31,7 @@ func _ready() -> void:
 	
 	var half_width = $World.get_world_width_tiles() / 2.0
 	var half_height = $World.get_world_height_tiles() / 2.0
-	cam.target_position = Vector2(half_width, half_height)
+	#cam.target_position = Vector2(half_width, half_height)
 	
 	ui.building_selected.connect(_on_building_selected)
 	ui.update_place_ghost.connect(_update_place_ghost)

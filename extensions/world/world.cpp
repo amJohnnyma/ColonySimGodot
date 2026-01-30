@@ -513,9 +513,7 @@ void World::update(const Vector2 &origin,
 
     sim_cache.clear();
 
-    // ──────────────────────────────────────────────
-    // PHASE 1: Decide which chunks we want this frame
-    // ──────────────────────────────────────────────
+    //1: Decide which chunks we want this frame
     {
         std::lock_guard lk(chunks_mutex);
 
@@ -563,9 +561,7 @@ void World::update(const Vector2 &origin,
         }
     }
 
-    // ──────────────────────────────────────────────
-    // PHASE 2: Simulate (parallel where possible)
-    // ──────────────────────────────────────────────
+    // 2: Simulate (parallel where possible)
     if (!sim_cache.full_sim.empty()) {
         std::vector<std::future<void>> fs;
         fs.reserve(sim_cache.full_sim.size());
@@ -606,9 +602,7 @@ void World::update(const Vector2 &origin,
         }
     }
 
-    // ──────────────────────────────────────────────
-    // PHASE 3: Unload anything we no longer need
-    // ──────────────────────────────────────────────
+    // 3: Unload anything we no longer need
     {
         std::lock_guard lk(chunks_mutex);
         std::vector<Vector2i> to_unload;
@@ -622,10 +616,8 @@ void World::update(const Vector2 &origin,
         }
     }
 
-    // ──────────────────────────────────────────────
-    // PHASE 4: Gradually generate requested chunks
-    // ──────────────────────────────────────────────
-    process_chunk_loading();  // your 2-per-frame limit — good
+    //4: Gradually generate requested chunks
+    process_chunk_loading();  
 
     // Debug print (keep for now)
     UtilityFunctions::print("Update end | loaded=", chunks.size(),
