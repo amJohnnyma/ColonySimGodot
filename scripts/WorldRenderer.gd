@@ -39,21 +39,26 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+
 	if not world or not chunk_renderer_scene:
+		print("No world or chunk_renderer_scene")
 		return
 
 	var cam := get_viewport().get_camera_2d() as Camera2D
 	if not cam:
+		print("No cam")
 		return
 
 	var viewport_rect: Rect2 = get_viewport_rect()
 	cam_pos = cam.global_position
 	var cam_zoom: Vector2 = cam.zoom
 
+	
 	# === 1. Calculate base screen bounds (zoom-affected) ===
 	var viewport_half: Vector2 = viewport_rect.size * 0.5
 	var screen_top_left: Vector2 = cam_pos - viewport_half / cam_zoom
 	var screen_bottom_right: Vector2 = cam_pos + viewport_half / cam_zoom
+
 
 	# === 2. Add a MINIMUM world-space buffer that ignores zoom ===
 	# This ensures you always render at least X tiles/chunks around the camera
@@ -74,6 +79,7 @@ func _process(delta: float) -> void:
 	world_min -= Vector2(buffer_world, buffer_world)
 	world_max += Vector2(buffer_world, buffer_world)
 
+	
 	# === 2. Get visible chunks ===
 	var visible_chunks: Array[Vector2i] = world.get_visible_chunks(
 		cam_pos,
@@ -82,6 +88,7 @@ func _process(delta: float) -> void:
 		max_render_distance_chunks
 	)
 
+	
 	# === 3. Manage chunk renderers ===
 	var needed_chunks: Dictionary = {}
 	for c in visible_chunks:
@@ -96,6 +103,7 @@ func _process(delta: float) -> void:
 		if not needed_chunks.has(c):
 			chunks[c].queue_free()
 			chunks.erase(c)
+
 
 	# === 4. Get visible entities from C++ ===
 	var visible_data: Dictionary = world.get_visible_entities(
@@ -159,6 +167,7 @@ func _process(delta: float) -> void:
 		var chunk: Vector2i = (world_pos / cs).floor()
 		visible_per_chunk[chunk] = visible_per_chunk.get(chunk, 0) + 1
 
+
 	for chunk_coord in visible_chunks:
 		var renderer: ChunkRenderer = chunks[chunk_coord]
 		var visible_here: int = visible_per_chunk.get(chunk_coord, 0)
@@ -168,7 +177,7 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	world.update(cam_pos, simulation_distance, delta, GameSettings.paused)
+	world.update(cam_pos,max_render_distance_chunks, simulation_distance, delta, GameSettings.paused)
 
 
 func _unhandled_input(event):

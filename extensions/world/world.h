@@ -16,6 +16,7 @@
 #include "entityJob.h"
 #include "godot_cpp/variant/dictionary.hpp"
 #include "templates/vector.hpp"
+#include <queue>
 #include "threadpool.h"
 #include "entityDataReader.h"
 
@@ -60,6 +61,8 @@ class World : public  Node2D{
         uint64_t current_entity_id = 0;
         std::vector<EntityJob> availableJobs;
         EntityDataReader entityDataReader; 
+        std::queue<Vector2i> load_queue;
+        std::unordered_set<Vector2i, Vector2iHash> queued_chunks;
 
     public:
         std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
@@ -69,13 +72,15 @@ class World : public  Node2D{
 
     protected:
         static void _bind_methods();
-
     public:
         void init(int world_width_tiles, int world_height_tiles, int chunk_size_tiles);
-        void update(const Vector2 &origin, int render_distance_chunks, float delta, bool paused);
+        void update(const Vector2 &origin, int max_render_distance_chunks, int simulation_distance, float delta, bool paused);
         
         int get_tile(int world_x, int world_y) const;
         void set_tile(int world_x, int world_y, int value);
+
+        void request_chunk(Vector2i c);
+        void process_chunk_loading();
         
         int get_chunk_size() const;
         int get_chunk_width() const;
@@ -124,4 +129,6 @@ class World : public  Node2D{
 
         void create_temp_job(const Vector2i& jobPos, const Vector2i& entityPos, const int& id, const int& jobType);
         EntityJob create_job(const int& entityType, const int& jobType, const Vector2i& jobPos);
+
+
 };

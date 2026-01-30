@@ -173,6 +173,7 @@ func _update_place_ghost(sprite : AtlasTexture, c_scale : Vector2, offset : Vect
 
 func _unhandled_input(event):
 	if event is InputEventKey and event.keycode == KEY_P and event.pressed:
+		print("Pause toggled")
 		GameSettings.paused = !GameSettings.paused
 		update_paused_icon()
 
@@ -243,5 +244,7 @@ func create_entity_job(pos : Vector2i, entityPos : Vector2i, id : int, jobType :
 func update_paused_icon():
 	if(GameSettings.paused):
 		$UI/MasterControl/GameUI/PausePanel/Label.text = ">"
+		print("Paused set to || is >")
 	else:
 		$UI/MasterControl/GameUI/PausePanel/Label.text = "||"
+		print("Paused set to > is ||")
