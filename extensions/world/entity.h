@@ -18,6 +18,15 @@ struct EntitySimulationParam
     std::vector<int> availableDirs;
 
 };
+struct ProxyEntity {
+    uint64_t entity_id = 0;
+    Vector2i position;
+    double last_full_sim_time = 0.0;      // World time when last converted to proxy
+    std::string current_job_type;         // "wander", "haul", "build", etc.
+    Vector2i job_target;                  
+    float priority = 0.0f;
+    float move_speed = 0.f;
+};
 
 class Entity 
 {
