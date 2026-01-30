@@ -18,6 +18,7 @@ public:
     
     // Biome functions
     BiomeType get_biome_from_params(double temp, double moisture);
+    BiomeType get_biome_type(int world_x, int world_y); 
     Color get_biome_color(BiomeType biome, float elevation);
     
 private:

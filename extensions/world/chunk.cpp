@@ -31,7 +31,8 @@ void Chunk::generate(int wx, int wy) {
             int world_x = x + coord.x * width;
             int world_y = y + coord.y * height;
             
-            tiles[y * width + x] = (x + y + coord.x + coord.y) % 3;
+
+            tiles[y * width + x] = (int)terrain.get_biome_type(world_x, world_y);
             tileColors[y * width + x] = terrain.generate_tile_color(world_x, world_y);
         }
     }

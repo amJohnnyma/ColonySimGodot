@@ -96,6 +96,14 @@ float TerrainGenerator::get_sand_mask(float elevation, float river_mask) {
     return 0.0f;
 }
 
+BiomeType TerrainGenerator::get_biome_type(int world_x, int world_y)
+{
+
+    double temp = noise.noise(world_x * 0.003, world_y * 0.003) * 2.0 - 1.0;
+    double moisture = noise.noise(world_x * 0.003 + 1000, world_y * 0.003 + 1000) * 2.0 - 1.0;
+
+    return get_biome_from_params(temp, moisture);
+} 
 BiomeType TerrainGenerator::get_biome_from_params(double temp, double moisture) {
     if (temp < -0.3) {
         return BiomeType::TUNDRA;
