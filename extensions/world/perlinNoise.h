@@ -15,22 +15,52 @@ enum class BiomeType {
     TUNDRA,
     COUNT
 };
-
+// Enhanced biome data with elevation-based color variations
 struct BiomeData {
-    float color[4];
-    float temp_entity_spawn_rate;
-    // texture
-    // moisture
-    // humidity
-     
+    float base_color[4];
+    float low_color[4];      // For low elevations
+    float mid_color[4];      // For mid elevations  
+    float high_color[4];     // For high elevations
+    float tree_density;
 };
 
 static const BiomeData BIOME_TABLE[(int)BiomeType::COUNT] = {
-    { {0.4f, 0.8f, 0.4f, 1.0f}, 0.3f }, //forest
-    { {0.9f, 0.85f, 0.4f, 1.0f}, 0.1f }, // mountain
-    { {0.0f, 0.2f, 0.8f, 1.0f}, 0.0f }, // ocean
-    { {0.85f, 0.8f, 1.0f, 1.0f}, 0.1f } // tundra
+    // FOREST: lush greens with variation
+    { 
+        {0.3f, 0.6f, 0.3f, 1.0f},   // base
+        {0.2f, 0.5f, 0.2f, 1.0f},   // low (dark forest floor)
+        {0.4f, 0.7f, 0.3f, 1.0f},   // mid (bright canopy)
+        {0.3f, 0.55f, 0.25f, 1.0f}, // high (darker hills)
+        0.3f 
+    },
+    // MOUNTAIN: browns and grays with snow caps
+    { 
+        {0.6f, 0.55f, 0.4f, 1.0f},  // base
+        {0.5f, 0.45f, 0.3f, 1.0f},  // low (brown foothills)
+        {0.6f, 0.6f, 0.55f, 1.0f},  // mid (rocky gray)
+        {0.9f, 0.9f, 0.95f, 1.0f},  // high (snow caps)
+        0.1f 
+    },
+    // OCEAN: deep blue to shallow turquoise
+    { 
+        {0.1f, 0.3f, 0.6f, 1.0f},   // base
+        {0.05f, 0.2f, 0.5f, 1.0f},  // low (deep ocean)
+        {0.2f, 0.4f, 0.7f, 1.0f},   // mid (medium depth)
+        {0.3f, 0.7f, 0.8f, 1.0f},   // high (shallow/beach)
+        0.0f 
+    },
+    // TUNDRA: icy blues and whites
+    { 
+        {0.8f, 0.85f, 0.95f, 1.0f}, // base
+        {0.7f, 0.75f, 0.85f, 1.0f}, // low (exposed ground)
+        {0.85f, 0.9f, 0.98f, 1.0f}, // mid (snow)
+        {0.95f, 0.95f, 1.0f, 1.0f}, // high (pure ice)
+        0.1f 
+    }
 };
+// River colors
+const float RIVER_COLOR[4] = {0.2f, 0.5f, 0.8f, 1.0f};  // Blue water
+const float SAND_COLOR[4] = {0.9f, 0.85f, 0.6f, 1.0f};  // Sandy beaches
 
 class PerlinNoise
 {

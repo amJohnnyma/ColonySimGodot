@@ -17,6 +17,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/world.dir/perlin_noise.cpp.o.d"
   "CMakeFiles/world.dir/register_types.cpp.o"
   "CMakeFiles/world.dir/register_types.cpp.o.d"
+  "CMakeFiles/world.dir/terrainGenerator.cpp.o"
+  "CMakeFiles/world.dir/terrainGenerator.cpp.o.d"
   "CMakeFiles/world.dir/world.cpp.o"
   "CMakeFiles/world.dir/world.cpp.o.d"
 )

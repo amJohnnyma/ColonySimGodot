@@ -89,27 +89,27 @@ float PerlinNoise::amplitude(float nx, float ny, int fac, double amplitude)
     return amplitude * noise(fac * nx, fac * ny);
 }
 
-BiomeType PerlinNoise::get_biome(int wx, int wy)
-{
-    // just have it random for now
-    std::mt19937 rng(std::random_device{}());
-    std::uniform_int_distribution<int> dist(0,3);
-
-    int random = dist(rng);
-
-    switch(random){
-        case 0:
-            return BiomeType::FOREST;
-        case 1:
-            return BiomeType::MOUNTAIN;
-        case 2:
-            return BiomeType::OCEAN;
-        case 3:
-            return BiomeType::TUNDRA;
-        default:
-            return BiomeType::FOREST;
-    }
-
+BiomeType PerlinNoise::get_biome(int wx, int wy) {
+    // Convert from [0,1] to [-1,1]
+    double temp = noise(wx * 0.003, wy * 0.003) * 2.0 - 1.0;
+    double moisture = noise(wx * 0.003 + 1000, wy * 0.003 + 1000) * 2.0 - 1.0;
     
-
+    // Now the original thresholds work
+    if (temp < -0.3) {
+        return BiomeType::TUNDRA;
+    } else if (temp > 0.3) {
+        if (moisture < -0.2) {
+            return BiomeType::MOUNTAIN;
+        } else {
+            return BiomeType::FOREST;
+        }
+    } else {
+        if (moisture < -0.3) {
+            return BiomeType::MOUNTAIN;
+        } else if (moisture > 0.3) {
+            return BiomeType::OCEAN;
+        } else {
+            return BiomeType::FOREST;
+        }
+    }
 }

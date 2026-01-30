@@ -321,6 +321,30 @@ register_types.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/register_types.cpp.s
 .PHONY : register_types.cpp.s
 
+terrainGenerator.o: terrainGenerator.cpp.o
+.PHONY : terrainGenerator.o
+
+# target to build an object file
+terrainGenerator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/terrainGenerator.cpp.o
+.PHONY : terrainGenerator.cpp.o
+
+terrainGenerator.i: terrainGenerator.cpp.i
+.PHONY : terrainGenerator.i
+
+# target to preprocess a source file
+terrainGenerator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/terrainGenerator.cpp.i
+.PHONY : terrainGenerator.cpp.i
+
+terrainGenerator.s: terrainGenerator.cpp.s
+.PHONY : terrainGenerator.s
+
+# target to generate assembly for a file
+terrainGenerator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/terrainGenerator.cpp.s
+.PHONY : terrainGenerator.cpp.s
+
 world.o: world.cpp.o
 .PHONY : world.o
 
@@ -378,6 +402,9 @@ help:
 	@echo "... register_types.o"
 	@echo "... register_types.i"
 	@echo "... register_types.s"
+	@echo "... terrainGenerator.o"
+	@echo "... terrainGenerator.i"
+	@echo "... terrainGenerator.s"
 	@echo "... world.o"
 	@echo "... world.i"
 	@echo "... world.s"

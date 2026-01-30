@@ -4,7 +4,7 @@
 #include "variant/color.hpp"
 #include "world.h"        
 #include "entity.h"
-#include "perlinNoise.h"
+#include "terrainGenerator.h"
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <algorithm>
 #include <memory>
@@ -22,39 +22,21 @@ Chunk::Chunk(int w, int h, Vector2i c, World* parent_world)
 Chunk::Chunk(int w, int h, Vector2i c) : Chunk(w, h, c, nullptr) {}
 
 void Chunk::generate(int wx, int wy) {
-    PerlinNoise noise(12345);
-    BiomeType b = noise.get_biome(wx, wy);
-    const BiomeData bd = BIOME_TABLE[(int)b];
-
+    TerrainGenerator terrain(12345);
     entities.clear();
-    entities.reserve(width * height / 50); // there wont be max entities in a chunk to start
+    entities.reserve(width * height / 50);
+    
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
+            int world_x = x + coord.x * width;
+            int world_y = y + coord.y * height;
+            
             tiles[y * width + x] = (x + y + coord.x + coord.y) % 3;
-
-            double n = noise.noise(
-                double(x + coord.x * width) * 0.05,
-                double(y + coord.y * height) * 0.05
-            );
-            float v = float((n + 1.0) * 0.5);
-            tileColors[y * width + x] = Color(v * bd.color[0], v * bd.color[1], v * bd.color[2], bd.color[3]);
-
-/*
-            if (n < bd.temp_entity_spawn_rate) {
-                Vector2 world_pos(
-                    coord.x * width + x + 0.5f,
-                    coord.y * height + y + 0.5f
-                );
-                auto e = std::make_shared<Colonist>(world_pos, world->get_next_entity_id(), 1);
-                entities.push_back(e);
-            }
-  */
+            tileColors[y * width + x] = terrain.generate_tile_color(world_x, world_y);
         }
     }
-    UtilityFunctions::print("Chunk size: ",width, " x ", height);
-
+    UtilityFunctions::print("Chunk size: ", width, " x ", height);
 }
-
 Vector2i entityWorldToLocalCoord(Vector2i worldCoord, World* world)
 {
     int cs = world->get_chunk_size();
