@@ -14,7 +14,7 @@ using namespace godot;
 void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("init", "world_width_tiles", "world_height_tiles", "chunk_size_tiles"),
             &World::init);
-    ClassDB::bind_method(D_METHOD("update", "origin", "max_render_distance_chunks", "simulation_distance", "delta", "paused"),
+    ClassDB::bind_method(D_METHOD("update", "origin", "max_render_distance_chunks", "delta", "paused"),
             &World::update);
     ClassDB::bind_method(D_METHOD("get_tile", "world_x", "world_y"), &World::get_tile);
     ClassDB::bind_method(D_METHOD("set_tile", "world_x", "world_y", "value"), &World::set_tile);
@@ -140,16 +140,18 @@ std::shared_ptr<Chunk> World::load_chunk(const Vector2i &coord) {
 // world.cpp
 void World::unload_chunk(const Vector2i &coord) {
     std::lock_guard<std::mutex> lock(chunks_mutex);
-
     auto it = chunks.find(coord);
     if (it == chunks.end()) return;
+
+    // Entities should already be cleared before calling this
+    // Add assertion to verify
+    if (!it->second->entities.empty()) {
+        UtilityFunctions::print("WARNING: Unloading chunk with entities still present!");
+    }
 
     // Move to backup instead of destroying
     unloaded_chunk_backup[coord] = std::move(it->second);
     chunks.erase(it);
-
-    //  UtilityFunctions::print("Backed up chunk ", coord, " (entities: ", 
-    //     unloaded_chunk_backup[coord]->entities.size(), ")");
 }
 
 int World::get_chunk_entity_count(const Vector2i &coord) const {
@@ -487,13 +489,18 @@ void World::process_chunk_loading() {
 
 void World::update(const Vector2 &origin,
                    int max_render_distance_chunks,
-                   int simulation_distance,
                    float delta,
                    bool paused)
 {
+    if (!thread_pool) init_thread_pool();
     
-
-    // 1. Flush pending placements first (important!)
+    // Always update world_time, even when paused (for consistent timestamps)
+    // Or don't increment if you want proxies frozen while paused
+    if (!paused) {
+        world_time += delta;
+    }
+    
+    // 1. Flush pending placements (ALWAYS, even when paused)
     {
         std::lock_guard lk(pending_mutex);
         if (!pendingEntityPlacements.empty()) {
@@ -504,94 +511,139 @@ void World::update(const Vector2 &origin,
             pendingEntityPlacements.clear();
         }
     }
-    if (paused) return;
-
-    if (!thread_pool) init_thread_pool();
-
+    
     Vector2i origin_chunk_coord = world_pos_to_chunk(origin);
     int render_R = max_render_distance_chunks;
-    int sim_R = simulation_distance;
-
+    int visible_R = render_R + 1;
+    
     sim_cache.clear();
-
-    //1: Decide which chunks we want this frame
+    std::set<Vector2i> visible_chunks;
+    
+    // 2. Identify visible chunks and load/generate as needed (ALWAYS)
     {
         std::lock_guard lk(chunks_mutex);
-
-        // A. Always fully load + full-sim everything in render radius
-        for (int dy = -render_R; dy <= render_R; ++dy) {
-            for (int dx = -render_R; dx <= render_R; ++dx) {
+        
+        for (int dy = -visible_R; dy <= visible_R; ++dy) {
+            for (int dx = -visible_R; dx <= visible_R; ++dx) {
                 Vector2i c = origin_chunk_coord + Vector2i(dx, dy);
                 if (!is_valid_chunk(c)) continue;
-
-                sim_cache.needed.insert(c);
-
+                
+                visible_chunks.insert(c);
+                
                 auto it = chunks.find(c);
-                std::shared_ptr<Chunk> ch;
                 if (it == chunks.end()) {
-                    request_chunk(c);           // will be generated soon
+                    request_chunk(c);
                     continue;
                 }
-                ch = it->second;
-
+                
+                auto& ch = it->second;
                 if (!ch->entities.empty()) {
                     sim_cache.full_sim.push_back(ch);
                 }
             }
         }
-
-        // B. Light-sim ONLY already loaded chunks in simulation ring
-        //    (never generate new distant chunks automatically)
-        for (int dy = -sim_R; dy <= sim_R; ++dy) {
-            for (int dx = -sim_R; dx <= sim_R; ++dx) {
-                if (std::max(std::abs(dx), std::abs(dy)) <= render_R) continue; // already handled
-
-                Vector2i c = origin_chunk_coord + Vector2i(dx, dy);
-                if (!is_valid_chunk(c)) continue;
-
-                sim_cache.needed.insert(c);   // prevent unloading
-
-                auto it = chunks.find(c);
-                if (it == chunks.end()) continue; // do NOT generate distant chunks
-
-                auto& ch = it->second;
-                if (!ch->entities.empty()) {
-                    sim_cache.light_sim.push_back(ch);
+    }
+    
+    // 3. Convert entities leaving visible range to proxies (ALWAYS)
+    {
+        std::vector<Vector2i> chunks_to_proxify;
+        std::vector<ProxyEntity> proxies_to_add;
+        
+        {
+            std::lock_guard lk(chunks_mutex);
+            for (const auto& [chunk_pos, chunk] : chunks) {
+                if (visible_chunks.find(chunk_pos) == visible_chunks.end()) {
+                    chunks_to_proxify.push_back(chunk_pos);
                 }
             }
         }
+        
+        {
+            std::lock_guard lk(chunks_mutex);
+            for (const auto& chunk_pos : chunks_to_proxify) {
+                auto chunk_it = chunks.find(chunk_pos);
+                if (chunk_it == chunks.end()) continue;
+                
+                auto& chunk = chunk_it->second;
+                if (!chunk) continue;
+                
+                for (auto& entity : chunk->entities) {
+                    if (!entity) continue;
+                    
+                    ProxyEntity proxy = proxy_manager.entity_to_proxy(entity, world_time);
+                    proxies_to_add.push_back(proxy);
+                }
+                
+                chunk->entities.clear();
+            }
+        }
+        
+        for (const auto& proxy : proxies_to_add) {
+            proxy_entities[proxy.entity_id] = proxy;
+        }
+        
+        for (const auto& chunk_pos : chunks_to_proxify) {
+            unload_chunk(chunk_pos);
+        }
     }
-
-    // 2: Simulate (parallel where possible)
+    
+    // 4. Convert proxies back to entities entering visible range (ALWAYS)
+    {
+        std::vector<uint64_t> proxies_to_activate;
+        
+        for (const auto& [entity_id, proxy] : proxy_entities) {
+            Vector2i extrapolated_pos = proxy_manager.extrapolate_position(proxy, world_time);
+            Vector2i entity_chunk = world_pos_to_chunk(extrapolated_pos);
+            
+            if (visible_chunks.find(entity_chunk) != visible_chunks.end()) {
+                proxies_to_activate.push_back(entity_id);
+            }
+        }
+        
+        std::lock_guard lk(chunks_mutex);
+        for (const auto& entity_id : proxies_to_activate) {
+            auto proxy_it = proxy_entities.find(entity_id);
+            if (proxy_it == proxy_entities.end()) continue;
+            
+            auto& proxy = proxy_it->second;
+            auto entity = proxy_manager.proxy_to_entity(proxy, world_time);
+            
+            Vector2i entity_chunk = world_pos_to_chunk(entity->get_position());
+            
+            auto chunk_it = chunks.find(entity_chunk);
+            if (chunk_it != chunks.end()) {
+                chunk_it->second->entities.push_back(entity);
+                proxy_entities.erase(proxy_it);
+            } else {
+                request_chunk(entity_chunk);
+            }
+        }
+    }
+    
+    // EARLY RETURN if paused - don't simulate or update proxies
+    if (paused) {
+        process_chunk_loading();
+        return;
+    }
+    
+    // 5. Update proxies (only when NOT paused)
+    update_proxies(world_time);
+    
+    // 6. Simulate visible chunks (only when NOT paused)
     if (!sim_cache.full_sim.empty()) {
         std::vector<std::future<void>> fs;
         fs.reserve(sim_cache.full_sim.size());
+        
         for (auto& ch : sim_cache.full_sim) {
             fs.push_back(thread_pool->enqueue([ch, delta] {
-                ch->simulate(delta, true);
+                ch->simulate(delta);
             }));
         }
+        
         for (auto& f : fs) f.get();
     }
-
-    if (!sim_cache.light_sim.empty()) {
-        if (sim_cache.light_sim.size() >= 8) {
-            std::vector<std::future<void>> fs;
-            fs.reserve(sim_cache.light_sim.size());
-            for (auto& ch : sim_cache.light_sim) {
-                fs.push_back(thread_pool->enqueue([ch, delta] {
-                    ch->simulate(delta, false);
-                }));
-            }
-            for (auto& f : fs) f.get();
-        } else {
-            for (auto& ch : sim_cache.light_sim) {
-                ch->simulate(delta, false);
-            }
-        }
-    }
-
-    // Flush any new pending placements created during simulation
+    
+    // 7. Flush new pending placements (only when NOT paused)
     {
         std::lock_guard lk(pending_mutex);
         if (!pendingEntityPlacements.empty()) {
@@ -602,30 +654,77 @@ void World::update(const Vector2 &origin,
             pendingEntityPlacements.clear();
         }
     }
-
-    // 3: Unload anything we no longer need
-    {
-        std::lock_guard lk(chunks_mutex);
-        std::vector<Vector2i> to_unload;
-        for (const auto& [pos, _] : chunks) {
-            if (sim_cache.needed.find(pos) == sim_cache.needed.end()) {
-                to_unload.push_back(pos);
-            }
-        }
-        for (auto c : to_unload) {
-            unload_chunk(c);
-        }
-    }
-
-    //4: Gradually generate requested chunks
-    process_chunk_loading();  
-
-    // Debug print (keep for now)
+    
+    // 8. Process chunk loading (ALWAYS)
+    process_chunk_loading();
+    
     UtilityFunctions::print("Update end | loaded=", chunks.size(),
                             " | full_sim=", sim_cache.full_sim.size(),
-                            " | light_sim=", sim_cache.light_sim.size(),
-                            " | queue size=", load_queue.size());
+                            " | proxies=", proxy_entities.size());
 }
+
+void World::update_proxies(double current_time) {
+    for (auto& [entity_id, proxy] : proxy_entities) {
+        // Skip if no valid job
+        if (proxy.job_list.empty() || 
+            proxy.current_job_index < 0 || 
+            proxy.current_job_index >= proxy.job_list.size()) {
+            continue;
+        }
+        
+        EntityJob& current_job = proxy.job_list[proxy.current_job_index];
+        
+        // Skip wandering or invalid targets
+        if (/*current_job.move_algo == "random" ||*/ current_job.target_coord.x == -1) {
+            continue;
+        }
+        
+        // Calculate new position
+        Vector2i new_pos = proxy_manager.extrapolate_position(proxy, current_time);
+        
+        // Update proxy position and timestamp
+        proxy.position = new_pos;
+        proxy.last_full_sim_time = current_time;
+        
+        // Check if job is complete
+        if (new_pos == current_job.target_coord) {
+            current_job.complete = true;
+            
+            // Find next highest priority job
+            std::vector<EntityJob> active_jobs;
+            for (const auto& job : proxy.job_list) {
+                if (!job.complete) {
+                    active_jobs.push_back(job);
+                }
+            }
+            
+            if (!active_jobs.empty()) {
+                auto it = std::max_element(active_jobs.begin(), active_jobs.end(),
+                    [](const EntityJob& a, const EntityJob& b) {
+                        return a.priority < b.priority;
+                    });
+                
+                // Find this job in the original list
+                for (size_t i = 0; i < proxy.job_list.size(); ++i) {
+                    if (&proxy.job_list[i] == &(*it)) {
+                        proxy.current_job_index = i;
+                        break;
+                    }
+                }
+            } else {
+                // No jobs left, create wander job
+                EntityJob wander;
+                wander.move_algo = "random";
+                wander.priority = 0;
+                wander.moveSpeedMultiplier = 0.2f;
+                wander.complete = false;
+                proxy.job_list.push_back(wander);
+                proxy.current_job_index = proxy.job_list.size() - 1;
+            }
+        }
+    }
+}
+
 void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite)
 {
     Vector2i chunk_coord = world_tile_to_chunk(tile_coord.x, tile_coord.y);
@@ -649,14 +748,14 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     {
 
         auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite, size);
-        e->set_move_speed(data.base_move_speed);
+        e->set_base_move_speed(data.base_move_speed);
         pendingEntityPlacements.push_back({chunk, e});
     }
     else if(type == "building")
     {
         // temporarily make a building this size
         auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, size, entity_type);
-        e->set_move_speed(data.base_move_speed);
+        e->set_base_move_speed(data.base_move_speed);
         pendingEntityPlacements.push_back({chunk,e});
         // How will i fetch the data for the buildings?
         // Storage space, size, available jobs, etc. 
@@ -666,7 +765,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     {
         // temporarily make a building this size
         auto e = std::make_shared<Item>(tile_coord, get_next_entity_id(), entity_sprite, size);
-        e->set_move_speed(data.base_move_speed);
+        e->set_base_move_speed(data.base_move_speed);
         pendingEntityPlacements.push_back({chunk,e});
     }
     else 
@@ -677,7 +776,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         //     pendingEntityPlacements.push_back({chunk,e});
 
     }
-    UtilityFunctions::print("Created ", type, " at (", tile_coord.x , ", ", tile_coord.y, ") with size (", size.x, ", ", size.y, ")");
+    UtilityFunctions::print("Created ", type, " at (", tile_coord.x , ", ", tile_coord.y, ") with size (", size.x, ", ", size.y, ") and speed (", data.base_move_speed, ")");
 
 
 

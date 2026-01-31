@@ -232,7 +232,7 @@ std::vector<std::tuple<Vector2i, int>> getNeighbouringChunks(Vector2i entityWorl
 
     return ret;
 }
-void Chunk::simulate(float delta, bool full_simulation) {
+void Chunk::simulate(float delta) {
     if (entities.empty()) return;
 
     constexpr int MAX_STACK_TRANSFERS = 64;

@@ -1,4 +1,16 @@
 I want to move away from actually simulating far entities and just doing proxy layers and timestamps. Currently my light simulation doesnt change anything but it should. I also dont like how i load/unload chunks especially for the simulated chunks i just want to get rid of that entirely.
+TLDR: Only full simulate visible + 1 chunks. Use a timestamp and proxy system otherwise.
+
+struct ProxyEntity {
+    uint64_t entity_id = 0;
+    Vector2i position;
+    double last_full_sim_time = 0.0;      // World time when last converted to proxy
+    std::string current_job_type;         // "wander", "haul", "build", etc.
+    Vector2i job_target = Vector2i(-1,-1); // this is invalid as default                  
+    float priority = 0.0f;
+    float move_speed = 0.f;
+};
+
  
 void World::update(const Vector2 &origin,
                    int max_render_distance_chunks,

@@ -19,6 +19,7 @@
 #include <queue>
 #include "threadpool.h"
 #include "entityDataReader.h"
+#include "ProxyManager.h"
 
 using namespace godot;
 
@@ -63,6 +64,9 @@ class World : public  Node2D{
         EntityDataReader entityDataReader; 
         std::queue<Vector2i> load_queue;
         std::unordered_set<Vector2i, Vector2iHash> queued_chunks;
+        std::unordered_map<int, ProxyEntity> proxy_entities; // entities outside visible range
+        double world_time = 0.0;
+        ProxyManager proxy_manager;
 
     public:
         std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
@@ -74,7 +78,9 @@ class World : public  Node2D{
         static void _bind_methods();
     public:
         void init(int world_width_tiles, int world_height_tiles, int chunk_size_tiles);
-        void update(const Vector2 &origin, int max_render_distance_chunks, int simulation_distance, float delta, bool paused);
+        void update(const Vector2 &origin, int max_render_distance_chunks, float delta, bool paused);
+
+        void update_proxies(double current_time);
         
         int get_tile(int world_x, int world_y) const;
         void set_tile(int world_x, int world_y, int value);

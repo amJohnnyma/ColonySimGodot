@@ -177,7 +177,7 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	world.update(cam_pos,max_render_distance_chunks, simulation_distance, delta, GameSettings.paused)
+	world.update(cam_pos,max_render_distance_chunks, delta, GameSettings.paused)
 
 
 func _unhandled_input(event):

@@ -1,3 +1,4 @@
+#pragma once
 #include "entity.h"
 #include "variant/vector2i.hpp"
 #include <cstdint>
@@ -14,4 +15,6 @@ class Colonist : public Entity
         int get_type_id() const override { return entity_type; }
         bool default_movement(EntitySimulationParam &params);
         bool random_movement(EntitySimulationParam &params);
+        Vector2i get_home_coord() {return homeCoord;}
+        void set_home_coord(Vector2i coord) {homeCoord = coord;}
 };

@@ -315,6 +315,7 @@ CMakeFiles/world.dir/building.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/
   /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
 
 CMakeFiles/world.dir/chunk.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/ProxyManager.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/building.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/chunk.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/colonist.h \
@@ -2368,6 +2369,7 @@ CMakeFiles/world.dir/perlin_noise.cpp.o: /home/johnny/Godot/colony-sim-2/extensi
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
 
 CMakeFiles/world.dir/register_types.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/register_types.cpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/ProxyManager.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/building.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/chunk.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/colonist.h \
@@ -3060,6 +3062,7 @@ CMakeFiles/world.dir/terrainGenerator.cpp.o: /home/johnny/Godot/colony-sim-2/ext
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
 
 CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/ProxyManager.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/building.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/chunk.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/colonist.h \
@@ -3678,6 +3681,8 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /home/johnny/Godot/colony-sim-2/extensions/world/colonist.h:
 
 /home/johnny/Godot/colony-sim-2/extensions/world/chunk.h:
+
+/home/johnny/Godot/colony-sim-2/extensions/world/ProxyManager.h:
 
 /home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp:
 

@@ -18,15 +18,7 @@ struct EntitySimulationParam
     std::vector<int> availableDirs;
 
 };
-struct ProxyEntity {
-    uint64_t entity_id = 0;
-    Vector2i position;
-    double last_full_sim_time = 0.0;      // World time when last converted to proxy
-    std::string current_job_type;         // "wander", "haul", "build", etc.
-    Vector2i job_target;                  
-    float priority = 0.0f;
-    float move_speed = 0.f;
-};
+
 
 class Entity 
 {
@@ -60,12 +52,32 @@ class Entity
         int get_entity_width() const { return size.x; }
         int get_entity_height() const { return size.y; }
         void set_move_speed(float speed) {move_speed = speed;}
+        float get_move_speed() { return move_speed;}
+        float get_base_move_speed() {return base_move_speed;}
+        void set_base_move_speed(float speed) {base_move_speed = speed;}
+        int get_current_job_index() {return currentJobIndex;}
+        bool has_active_job() { return currentJobIndex != -1 && currentJobIndex < jobList.size();}
 
         void update_move_speed_from_job(const EntityJob& job);
 
         void add_job(EntityJob job);
 
         bool is_position_available(Vector2i pos, EntitySimulationParam &params);
+        std::vector<EntityJob> get_job_list() const { return jobList; }
+        void set_job_list(const std::vector<EntityJob>& jobs) { jobList = jobs; }
+        
+        int get_current_job_index() const { return currentJobIndex; }
+        void set_current_job_index(int index) { currentJobIndex = index; }
+        
+        
+        bool has_active_job() const { 
+            return currentJobIndex >= 0 && currentJobIndex < jobList.size(); 
+        }
+        
+        EntityJob get_current_job() const {
+            if (has_active_job()) return jobList[currentJobIndex];
+            return EntityJob(); // Return empty job if none active
+        }
 
 
 };

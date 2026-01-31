@@ -28,10 +28,11 @@ func _ready() -> void:
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	
 	$World.init(GameSettings.max_world_tiles, GameSettings.max_world_tiles, GameSettings.chunk_size)
-	
-	var half_width = $World.get_world_width_tiles() / 2.0
-	var half_height = $World.get_world_height_tiles() / 2.0
-	#cam.target_position = Vector2(half_width, half_height)
+	var world_width = $World.get_world_width_tiles()
+	var world_height = $World.get_world_height_tiles()
+	var half_width = world_width / 2.0
+	var half_height = world_height / 2.0
+	cam.target_position = Vector2(half_width, half_height)
 	
 	ui.building_selected.connect(_on_building_selected)
 	ui.update_place_ghost.connect(_update_place_ghost)
@@ -124,28 +125,45 @@ func _ready() -> void:
 	
 	print("Items made: ", item_count_total)
 	'''
-	# === Place colonists ===
+# === Place colonists ===
 	var colonist_count := 0
-	var pos = Vector2i(0,0)
 	var jobTypeCount = 0
-	while colonist_count < NUM_COLONISTS:
-		
-		var sprite_idx := colonist_count
-		$World.create_entity("colonist", pos, 1, sprite_idx)
-		var target = pos
-		target.y += 100
-		var jobType = 1
-		if jobTypeCount % 2 == 0:
-			jobType = 1
-		else:
-			jobType = 2
-		$World.create_temp_job(target, pos, sprite_idx, jobType)
-		pos.x += 1
 
-		colonist_count += 1
-		jobTypeCount += 1
-	
-	print("Colonists placed: ", colonist_count)
+	# Calculate positions for each corner
+	var top_left = Vector2i(0, 0)
+	var top_right = Vector2i(world_width - 15, 0)
+	var bottom_left = Vector2i(0, world_height - 15)
+	var bottom_right = Vector2i(world_width - 15, world_height - 15)
+
+	# Target in the center
+	var target = Vector2i(half_width, half_height)
+
+	var corners = [
+		{"pos": top_left, "offset": Vector2i(1, 0)},
+		{"pos": top_right, "offset": Vector2i(-1, 0)},
+		{"pos": bottom_left, "offset": Vector2i(1, 0)},
+		{"pos": bottom_right, "offset": Vector2i(-1, 0)}
+	]
+
+	for corner in corners:
+		var pos = corner["pos"]
+		var offset = corner["offset"]
+
+		for i in range(NUM_COLONISTS):
+			var sprite_idx := i
+			$World.create_entity("colonist", pos, 1, sprite_idx)
+
+			# Make target slightly different for each colonist to spread them out
+			var colonist_target = target + Vector2i(sprite_idx % 10, (sprite_idx / 10) % 10)
+
+			var jobType = 1 if jobTypeCount % 2 == 0 else 2
+			$World.create_temp_job(colonist_target, pos, colonist_count, jobType)
+
+			pos += offset
+			colonist_count += 1
+			jobTypeCount += 1
+
+	print("Colonists placed: ", colonist_count, " (", NUM_COLONISTS, " per corner)")
 	
 	# ===================================================================
 	# END OF TEMPORARY GENERATION
