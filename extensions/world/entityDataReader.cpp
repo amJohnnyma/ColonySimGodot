@@ -51,7 +51,7 @@ void EntityDataReader::evict_if_needed() {
         lru_list.pop_back();
         cache.erase(lru_key);
         cache_lru_map.erase(lru_key);
-        godot::UtilityFunctions::print("Evicted ", lru_key.x, " ", lru_key.y);
+       // godot::UtilityFunctions::print("Evicted ", lru_key.x, " ", lru_key.y);
     }
 }
 
@@ -96,9 +96,9 @@ EntityData EntityDataReader::get_entity_data(int sheet_id, int sprite_id) {
     lru_list.push_front(key);
     cache_lru_map[key] = lru_list.begin();
     
-    godot::UtilityFunctions::print( "Loaded sprite " , sprite_id , " from sheet " , sheet_id , ":\n"
-          , "  size: (" , data.size_x , ", " , data.size_y , ")\n"
-          , "  speed: " , data.base_move_speed);
+    //godot::UtilityFunctions::print( "Loaded sprite " , sprite_id , " from sheet " , sheet_id , ":\n"
+      //    , "  size: (" , data.size_x , ", " , data.size_y , ")\n"
+        //  , "  speed: " , data.base_move_speed);
     
     return data;
 }

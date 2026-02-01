@@ -31,7 +31,7 @@ static const BiomeData BIOME_TABLE[(int)BiomeType::COUNT] = {
         {0.2f, 0.5f, 0.2f, 1.0f},   // low (dark forest floor)
         {0.4f, 0.7f, 0.3f, 1.0f},   // mid (bright canopy)
         {0.3f, 0.55f, 0.25f, 1.0f}, // high (darker hills)
-        0.3f 
+        0.01f 
     },
     // MOUNTAIN: browns and grays with snow caps
     { 
@@ -39,7 +39,7 @@ static const BiomeData BIOME_TABLE[(int)BiomeType::COUNT] = {
         {0.5f, 0.45f, 0.3f, 1.0f},  // low (brown foothills)
         {0.6f, 0.6f, 0.55f, 1.0f},  // mid (rocky gray)
         {0.9f, 0.9f, 0.95f, 1.0f},  // high (snow caps)
-        0.1f 
+        0.001f 
     },
     // OCEAN: deep blue to shallow turquoise
     { 
@@ -55,7 +55,7 @@ static const BiomeData BIOME_TABLE[(int)BiomeType::COUNT] = {
         {0.7f, 0.75f, 0.85f, 1.0f}, // low (exposed ground)
         {0.85f, 0.9f, 0.98f, 1.0f}, // mid (snow)
         {0.95f, 0.95f, 1.0f, 1.0f}, // high (pure ice)
-        0.1f 
+        0.001f 
     }
 };
 // River colors

@@ -1,6 +1,8 @@
 #include "terrainGenerator.h"
+#include "perlinNoise.h"
 #include <algorithm>
 #include <cmath>
+#include <tuple>
 
 TerrainGenerator::TerrainGenerator(unsigned int seed) : noise(seed) {}
 
@@ -198,4 +200,51 @@ Color TerrainGenerator::lerp_color(const float* color1, const float* color2, flo
         color1[2] * (1.0f - t) + color2[2] * t,
         1.0f
     );
+}
+
+std::vector<std::tuple<godot::String, Vector2i, int, int>> TerrainGenerator::get_chunk_entities(int chunk_size, const Vector2i& coord)
+{
+    std::vector<std::tuple<godot::String, Vector2i, int, int>> chunk_entities;
+    chunk_entities.reserve(chunk_size * chunk_size / 20); // optional: rough guess
+
+    // ── Better RNG setup ───────────────────────────────────────
+    // Option A: Simple – one global RNG (if you don't generate chunks in parallel)
+    // static std::mt19937 gen(12345);           // fixed seed → reproducible
+    // or: static std::mt19937 gen(std::random_device{}()); // non-reproducible
+
+    // Option B: Recommended for threaded world gen – per-instance seed
+    // Pass seed from World / TerrainGenerator constructor
+    // std::mt19937 gen(seed ^ (coord.x * 928371 + coord.y * 689287)); // simple hash
+
+    // For now – let's use a decent per-chunk seeded generator (reproducible)
+    uint32_t seed = 12345u 
+                  ^ static_cast<uint32_t>(coord.x) * 0x9e3779b9u 
+                  ^ static_cast<uint32_t>(coord.y) * 0x9e3779b9u * 2u;
+    std::mt19937 gen(seed);
+
+    std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+
+    for (int y = 0; y < chunk_size; ++y) {
+        for (int x = 0; x < chunk_size; ++x) {
+            int world_x = x + coord.x * chunk_size;
+            int world_y = y + coord.y * chunk_size;
+
+            BiomeType biome = get_biome_type(world_x, world_y);
+            const BiomeData& bd = BIOME_TABLE[static_cast<int>(biome)];
+
+            float val = dist(gen);
+
+            if (val <= bd.tree_density) {
+                // tree – sheet 2, variant 8
+                chunk_entities.emplace_back(
+                    String("building"),           // ← is "building" correct for a tree? maybe "tree"?
+                    Vector2i(world_x, world_y),
+                    2,                            // entity_type
+                    8                             // sprite variant
+                );
+            }
+        }
+    }
+
+    return chunk_entities;
 }

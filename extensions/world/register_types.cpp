@@ -10,11 +10,23 @@ void initialize_world_module(ModuleInitializationLevel p_level) {
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
         return;
     }
+
+    // Prevent duplicate registration even if init is called multiple times
+    static bool already_registered = false;
+    if (already_registered) {
+        UtilityFunctions::print_verbose("World already registered - skipping");
+        return;
+    }
+
     UtilityFunctions::print("Registering World class...");
-	if (ClassDB::class_exists("World")) {
-	    return; // or just don't register again
-	}
-    GDREGISTER_CLASS(World);  // This is the correct, modern way
+
+    if (!ClassDB::class_exists("World")) {
+        GDREGISTER_CLASS(World);
+    } else {
+        UtilityFunctions::print_verbose("World class already exists in ClassDB");
+    }
+
+    already_registered = true;
 }
 
 void uninitialize_world_module(ModuleInitializationLevel p_level) {
