@@ -255,6 +255,11 @@ void Chunk::simulate(float delta) {
     for (const auto& entity : entities) {
         if (!entity) continue;
 
+        if(!entity->is_must_simulate()){
+            staying_entities.push_back(entity);
+            continue; 
+        }
+
             /////////// testing how fast fullsim moves
             if(world->is_tracking_entity_movement_per_second())
             {

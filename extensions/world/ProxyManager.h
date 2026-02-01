@@ -23,6 +23,7 @@ struct ProxyEntity {
     Vector2i entity_size = Vector2i(1, 1);
     Vector2i home_coord = Vector2i(0, 0);
     float base_move_speed = 1.0f;
+    bool must_simulate = true;
 
     //for debug
     float last_avg_update_time = 0.0f;
@@ -53,6 +54,7 @@ class ProxyManager {
                 proxy.entity_size = colonist->get_entity_size();
                 proxy.home_coord = colonist->get_home_coord();
                 proxy.base_move_speed = colonist->get_base_move_speed();
+                proxy.must_simulate = colonist->is_must_simulate();
 
                 // Copy the entire job list
                 proxy.job_list = colonist->get_job_list();
@@ -86,9 +88,10 @@ class ProxyManager {
             return proxy;
         }
         Vector2i extrapolate_position(const ProxyEntity& proxy, double current_time) {
+
+            if(!proxy.must_simulate) return proxy.position;
+
             double elapsed = current_time - proxy.last_full_sim_time;
-
-
 
             // Check if we have a valid job
             if (proxy.job_list.empty() || 
@@ -173,6 +176,7 @@ class ProxyManager {
 
             // Restore home coordinate
             entity->set_home_coord(proxy.home_coord);
+            entity->set_must_simulate(proxy.must_simulate);
 
             // Restore the entire job list
             if (!proxy.job_list.empty()) {

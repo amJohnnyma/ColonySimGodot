@@ -689,6 +689,7 @@ void World::update_proxies(double current_time)
 {
     for (auto& [entity_id, proxy] : proxy_entities)
     {
+        if(!proxy.must_simulate) continue;
 
             /////////// testing how fast proxy moves
             if(track_entity_movement_per_second)
@@ -825,6 +826,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
 
         auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite, size);
         e->set_base_move_speed(data.base_move_speed);
+        e->set_must_simulate(data.must_simulate);
         pendingEntityPlacements.push_back({chunk, e});
     }
     else if(type == "building")
@@ -832,6 +834,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         // temporarily make a building this size
         auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, size, entity_type);
         e->set_base_move_speed(data.base_move_speed);
+        e->set_must_simulate(data.must_simulate);
         pendingEntityPlacements.push_back({chunk,e});
         // How will i fetch the data for the buildings?
         // Storage space, size, available jobs, etc. 
@@ -842,6 +845,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         // temporarily make a building this size
         auto e = std::make_shared<Item>(tile_coord, get_next_entity_id(), entity_sprite, size);
         e->set_base_move_speed(data.base_move_speed);
+        e->set_must_simulate(data.must_simulate);
         pendingEntityPlacements.push_back({chunk,e});
     }
     else 

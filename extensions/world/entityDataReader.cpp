@@ -87,6 +87,7 @@ EntityData EntityDataReader::get_entity_data(int sheet_id, int sprite_id) {
     data.base_move_speed = sprite.value("base_move_speed", 1.0f);
     data.entity_type = sprite.value("entity_type", 0);
     data.entity_sprite = sprite.value("entity_sprite", 0);
+    data.must_simulate = sprite.value("must_simulate", false);
 
     data.def = false;
     

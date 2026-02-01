@@ -13,6 +13,7 @@ struct EntityData {
     float base_move_speed = 1.0f;
     int entity_type = 0;
     int entity_sprite = 0;
+    bool must_simulate = false;
 };
 
 // Hash function for Vector2i to use in unordered_map

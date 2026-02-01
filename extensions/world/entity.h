@@ -41,6 +41,7 @@ class Entity
         int tiles_moved = 0;
         float last_avg_update_time = 0.0f;
         Vector2i start_pos_test = Vector2i(-1,-1);
+        bool must_simulate = true;
 
     public:
         virtual ~Entity() = default;
@@ -64,6 +65,8 @@ class Entity
         void set_base_move_speed(float speed) {base_move_speed = speed;}
         int get_current_job_index() {return currentJobIndex;}
         bool has_active_job() { return currentJobIndex != -1 && currentJobIndex < jobList.size();}
+        bool is_must_simulate() {return must_simulate;}
+        void set_must_simulate(bool flag) {must_simulate = flag;}
 
         void update_move_speed_from_job(const EntityJob& job);
 

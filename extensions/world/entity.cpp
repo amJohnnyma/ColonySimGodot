@@ -36,8 +36,8 @@ bool Entity::is_position_available(Vector2i pos, EntitySimulationParam &params)
  //
     if (params.availableDirs.empty())
     {
-        UtilityFunctions::print("No availableDirs data, assuming position is available");
-        return true;
+        //UtilityFunctions::print("No availableDirs data, assuming position is not available");
+        return false;
     }
     
     Vector2i move_delta = pos - position;
