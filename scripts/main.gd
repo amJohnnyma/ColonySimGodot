@@ -124,7 +124,7 @@ func _ready() -> void:
 				placed = true
 	
 	print("Items made: ", item_count_total)
-	'''
+	
 # === Place colonists ===
 	var colonist_count := 0
 	var jobTypeCount = 0
@@ -164,7 +164,43 @@ func _ready() -> void:
 			jobTypeCount += 1
 
 	print("Colonists placed: ", colonist_count, " (", NUM_COLONISTS, " per corner)")
-	
+	'''
+	# === Place colonists in all corner cells ===
+	var colonist_count := 0
+	var jobTypeCount := 0
+	const CORNER_SIZE := 15
+
+	# Corners (top-left, top-right, bottom-left, bottom-right)
+	var corners = [
+		Vector2i(0, 0),
+		Vector2i(world_width - CORNER_SIZE, 0),
+		Vector2i(0, world_height - CORNER_SIZE),
+		Vector2i(world_width - CORNER_SIZE, world_height - CORNER_SIZE)
+	]
+
+	# Center target
+	var target := Vector2i(half_width, half_height)
+
+	for corner in corners:
+		for y in range(CORNER_SIZE):
+			for x in range(CORNER_SIZE):
+				var pos : Vector2i = corner + Vector2i(x, y)
+
+				var sprite_idx := colonist_count % NUM_COLONISTS
+				$World.create_entity("colonist", pos, 1, sprite_idx)
+
+				# Spread targets slightly
+				var colonist_target := target + Vector2i(
+					sprite_idx % 10,
+					(sprite_idx / 10) % 10
+				)
+
+				var jobType := 1 if jobTypeCount % 2 == 0 else 2
+				$World.create_temp_job(colonist_target, pos, colonist_count, jobType)
+
+				colonist_count += 1
+				jobTypeCount += 1
+
 	# ===================================================================
 	# END OF TEMPORARY GENERATION
 	# ===================================================================

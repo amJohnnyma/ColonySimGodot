@@ -852,7 +852,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         //     pendingEntityPlacements.push_back({chunk,e});
 
     }
-    UtilityFunctions::print("Created ", type, " at (", tile_coord.x , ", ", tile_coord.y, ") with size (", size.x, ", ", size.y, ") and speed (", data.base_move_speed, ")");
+  //  UtilityFunctions::print("Created ", type, " at (", tile_coord.x , ", ", tile_coord.y, ") with size (", size.x, ", ", size.y, ") and speed (", data.base_move_speed, ")");
 
 
 

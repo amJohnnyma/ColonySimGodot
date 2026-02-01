@@ -2816,22 +2816,79 @@ CMakeFiles/world.dir/register_types.cpp.o: /home/johnny/Godot/colony-sim-2/exten
 
 CMakeFiles/world.dir/terrainGenerator.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/terrainGenerator.cpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gdextension/gdextension_interface.h \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/global_constants.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/builtin_types.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/builtin_vararg_methods.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/callable.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/dictionary.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/node_path.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_byte_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_color_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_float32_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_float64_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_int32_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_int64_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_string_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_vector2_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_vector3_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_vector4_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/rid.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/signal.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/string.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/string_name.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/utility_functions.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/variant_size.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/defs.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/error_macros.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/math.compat.inc \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/math.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/math_defs.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/memory.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/object_id.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/godot.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/cowdata.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/safe_refcount.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/search_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/sort_array.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/vector.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/aabb.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/array_helpers.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/basis.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/callable_custom.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/char_range.inc.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/char_string.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/char_utils.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/color.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/plane.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/projection.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/quaternion.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/rect2.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/rect2i.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/transform2d.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/transform3d.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/variant.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector2.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector2i.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector3.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector3i.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/perlinNoise.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/terrainGenerator.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
   /usr/include/c++/13/algorithm \
+  /usr/include/c++/13/array \
+  /usr/include/c++/13/atomic \
   /usr/include/c++/13/backward/binders.h \
   /usr/include/c++/13/bit \
   /usr/include/c++/13/bits/algorithmfwd.h \
   /usr/include/c++/13/bits/alloc_traits.h \
   /usr/include/c++/13/bits/allocator.h \
+  /usr/include/c++/13/bits/atomic_base.h \
+  /usr/include/c++/13/bits/atomic_lockfree_defines.h \
   /usr/include/c++/13/bits/basic_ios.h \
   /usr/include/c++/13/bits/basic_ios.tcc \
   /usr/include/c++/13/bits/basic_string.h \
@@ -2899,12 +2956,15 @@ CMakeFiles/world.dir/terrainGenerator.cpp.o: /home/johnny/Godot/colony-sim-2/ext
   /usr/include/c++/13/bits/vector.tcc \
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
+  /usr/include/c++/13/climits \
   /usr/include/c++/13/clocale \
   /usr/include/c++/13/cmath \
+  /usr/include/c++/13/compare \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdint \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
+  /usr/include/c++/13/cstring \
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/cwctype \
   /usr/include/c++/13/debug/assertions.h \
@@ -2956,7 +3016,9 @@ CMakeFiles/world.dir/terrainGenerator.cpp.o: /home/johnny/Godot/colony-sim-2/ext
   /usr/include/errno.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
+  /usr/include/limits.h \
   /usr/include/linux/errno.h \
+  /usr/include/linux/limits.h \
   /usr/include/locale.h \
   /usr/include/math.h \
   /usr/include/pthread.h \
@@ -2965,6 +3027,8 @@ CMakeFiles/world.dir/terrainGenerator.cpp.o: /home/johnny/Godot/colony-sim-2/ext
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/time.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
@@ -2983,12 +3047,15 @@ CMakeFiles/world.dir/terrainGenerator.cpp.o: /home/johnny/Godot/colony-sim-2/ext
   /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/math-vector.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
@@ -3034,11 +3101,13 @@ CMakeFiles/world.dir/terrainGenerator.cpp.o: /home/johnny/Godot/colony-sim-2/ext
   /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
@@ -3057,9 +3126,11 @@ CMakeFiles/world.dir/terrainGenerator.cpp.o: /home/johnny/Godot/colony-sim-2/ext
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
 
 CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/world.cpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/ProxyManager.h \
