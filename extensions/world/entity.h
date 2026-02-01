@@ -35,6 +35,13 @@ class Entity
         Vector2i size = Vector2i(1,1);
         float move_speed = 0.f;
         float base_move_speed = 1.0f;
+        //temporary for debug
+        float tiles_per_second_test = 0.0f;
+        int seconds_elapsed_test = 0;
+        int tiles_moved = 0;
+        float last_avg_update_time = 0.0f;
+        Vector2i start_pos_test = Vector2i(-1,-1);
+
     public:
         virtual ~Entity() = default;
 
@@ -77,6 +84,52 @@ class Entity
         EntityJob get_current_job() const {
             if (has_active_job()) return jobList[currentJobIndex];
             return EntityJob(); // Return empty job if none active
+        }
+        
+
+        ///////////temp
+        float get_tiles_per_second_test() const {
+            return tiles_per_second_test;
+        }
+
+        void set_tiles_per_second_test(float value) {
+            tiles_per_second_test = value;
+        }
+
+        // --- seconds_elapsed_test ---
+        int get_seconds_elapsed_test() const {
+            return seconds_elapsed_test;
+        }
+
+        void set_seconds_elapsed_test(int value) {
+            seconds_elapsed_test = value;
+        }
+
+        // --- tiles_moved ---
+        int get_tiles_moved() const {
+            return tiles_moved;
+        }
+
+        void set_tiles_moved(int value) {
+            tiles_moved = value;
+        }
+
+        // --- last_avg_update_time ---
+        float get_last_avg_update_time() const {
+            return last_avg_update_time;
+        }
+
+        void set_last_avg_update_time(float value) {
+            last_avg_update_time = value;
+        }
+
+        // --- start_pos_test ---
+        Vector2i get_start_pos_test() const {
+            return start_pos_test;
+        }
+
+        void set_start_pos_test(const Vector2i &value) {
+            start_pos_test = value;
         }
 
 

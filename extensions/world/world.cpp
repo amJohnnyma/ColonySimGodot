@@ -34,8 +34,12 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("create_entity","type", "tile_coord", "entity_type", "entity_sprite"),&World::create_entity);
     ClassDB::bind_method(D_METHOD("get_entities_at_world_pos","coord"),&World::get_entities_at_world_pos);
     ClassDB::bind_method(D_METHOD("create_temp_job","jobPos", "entityPos", "id", "jobType"),&World::create_temp_job);
+    ClassDB::bind_method(D_METHOD("set_track_entity_movement_per_second","flag"),&World::set_track_entity_movement_per_second);
+    ClassDB::bind_method(D_METHOD("toggle_track_entity_movement_per_second"),&World::toggle_track_entity_movement_per_second);
+    ClassDB::bind_method(D_METHOD("is_tracking_entity_movement_per_second"),&World::is_tracking_entity_movement_per_second);
 
 }
+
 
 void World::init(int world_width_tiles, int world_height_tiles, int chunk_size_tiles) {
     if (chunk_size_tiles <= 0) chunk_size_tiles = 16;
@@ -498,7 +502,7 @@ void World::update(const Vector2 &origin,
     // Or don't increment if you want proxies frozen while paused
     if (!paused) {
         world_time += delta;
-        UtilityFunctions::print("World time ", world_time);
+       // UtilityFunctions::print("World time ", world_time);
     }
     
     // 1. Flush pending placements (ALWAYS, even when paused)
@@ -626,6 +630,7 @@ void World::update(const Vector2 &origin,
         process_chunk_loading();
         return;
     }
+    total_time_running += delta;
     
     // 5. Update proxies (only when NOT paused)
     update_proxies(world_time);
@@ -659,14 +664,56 @@ void World::update(const Vector2 &origin,
     // 8. Process chunk loading (ALWAYS)
     process_chunk_loading();
     
-    UtilityFunctions::print("Update end | loaded=", chunks.size(),
-                            " | full_sim=", sim_cache.full_sim.size(),
-                            " | proxies=", proxy_entities.size());
+   // UtilityFunctions::print("Update end | loaded=", chunks.size(),
+     //                       " | full_sim=", sim_cache.full_sim.size(),
+       //                     " | proxies=", proxy_entities.size());
+
+    if(tiles_moved_total_proxy > 0 && track_entity_movement_per_second)
+    {
+        avg_proxy_tiles_moved_temp = ((float)tiles_moved_total_proxy / total_time_running) / proxy_entities.size(); 
+        UtilityFunctions::print("Average proxy move speed: ", avg_proxy_tiles_moved_temp);
+    }
+
+    if(tiles_moved_total_fullsim > 0 && track_entity_movement_per_second)
+    {
+        int full_sim_entities = 0;
+        for(auto& c : sim_cache.full_sim)
+        {
+            full_sim_entities += c->entities.size();
+        }
+        avg_fullsim_tiles_moved_temp = ((float)tiles_moved_total_fullsim / total_time_running) / full_sim_entities; 
+        UtilityFunctions::print("Average fullsim move speed: ", avg_fullsim_tiles_moved_temp);
+    }
 }
 void World::update_proxies(double current_time)
 {
     for (auto& [entity_id, proxy] : proxy_entities)
     {
+
+            /////////// testing how fast proxy moves
+            if(track_entity_movement_per_second)
+            {
+                float elapsed = current_time - proxy.last_avg_update_time;
+                if(proxy.start_pos_test.x == -1)
+                {
+                    // set the start pos
+                    proxy.start_pos_test = proxy.position;
+
+                }
+
+                if(elapsed >= 1)
+                {
+                        int tiles_moved = std::abs(proxy.start_pos_test.x - proxy.position.x) +std::abs(proxy.start_pos_test.y - proxy.position.y) ;
+
+                        //set time and position again
+                        proxy.start_pos_test = proxy.position;
+                        proxy.last_avg_update_time = current_time;
+
+                        tiles_moved_total_proxy += tiles_moved;
+
+                }
+            }
+            /////////////
         // Skip if it's not yet time to update this proxy
         if (current_time < proxy.next_proxy_update_time)
             continue;
@@ -751,6 +798,7 @@ void World::update_proxies(double current_time)
         float jitter   = proxy_manager.random_float(-0.08f, 0.08f);
         proxy.next_proxy_update_time = current_time + interval + jitter;
     }
+
 }
 
 void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite)

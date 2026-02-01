@@ -194,6 +194,9 @@ func _unhandled_input(event):
 		print("Pause toggled")
 		GameSettings.paused = !GameSettings.paused
 		update_paused_icon()
+	
+	if event is InputEventKey and event.keycode == KEY_F7 and event.pressed:
+		$World.toggle_track_entity_movement_per_second()
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if selectedSprite[2]:

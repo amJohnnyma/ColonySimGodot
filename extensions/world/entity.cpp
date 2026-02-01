@@ -10,7 +10,7 @@ Entity::Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) : po
 
 void Entity::reset_timer() {
     thread_local static std::mt19937 gen(std::random_device{}());
-    std::uniform_real_distribution<float> dist(0.9f, 1.1f);
+    std::uniform_real_distribution<float> dist(0.45f, 0.55f);
     move_timer = move_speed * dist(gen);
 }
 

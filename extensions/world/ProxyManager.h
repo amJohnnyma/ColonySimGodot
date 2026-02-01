@@ -23,6 +23,10 @@ struct ProxyEntity {
     Vector2i entity_size = Vector2i(1, 1);
     Vector2i home_coord = Vector2i(0, 0);
     float base_move_speed = 1.0f;
+
+    //for debug
+    float last_avg_update_time = 0.0f;
+    Vector2i start_pos_test = Vector2i(-1,-1);
 };
 
 class ProxyManager {
@@ -37,6 +41,7 @@ class ProxyManager {
         ProxyEntity entity_to_proxy(const std::shared_ptr<Entity>& entity, double world_time) {
             ProxyEntity proxy;
             if (!entity) return proxy;
+
 
             proxy.entity_id = entity->get_entity_id();
             proxy.position = entity->get_position();
@@ -82,6 +87,7 @@ class ProxyManager {
         }
         Vector2i extrapolate_position(const ProxyEntity& proxy, double current_time) {
             double elapsed = current_time - proxy.last_full_sim_time;
+
 
 
             // Check if we have a valid job
@@ -148,7 +154,7 @@ class ProxyManager {
             }
 
 
-            UtilityFunctions::print("Proxy extrapolate entity: ", proxy.entity_id, "\tpos ", proxy.position, " to ", new_pos, " with move speed=", move_speed);
+          //  UtilityFunctions::print("Proxy extrapolate entity: ", proxy.entity_id, "\tpos ", proxy.position, " to ", new_pos, " with move speed=", move_speed);
 
             return new_pos;
         }

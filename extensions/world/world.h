@@ -68,6 +68,16 @@ class World : public  Node2D{
         double world_time = 0.0;
         ProxyManager proxy_manager;
 
+        // for testing
+        bool track_entity_movement_per_second = false;
+        float avg_proxy_tiles_moved_temp = 0.0f;
+        float total_time_running = 0.0f;
+        int tiles_moved_total_proxy = 0;
+        // avg = total moved / total time running
+        float avg_fullsim_tiles_moved_temp = 0.0f;
+        int tiles_moved_total_fullsim = 0;
+
+
     public:
         std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
         std::mutex chunks_mutex;  // Protects chunks map
@@ -79,6 +89,14 @@ class World : public  Node2D{
     public:
         void init(int world_width_tiles, int world_height_tiles, int chunk_size_tiles);
         void update(const Vector2 &origin, int max_render_distance_chunks, float delta, bool paused);
+        float get_world_time() {return world_time;}
+
+        int get_tiles_moved_total_fullsim() {return tiles_moved_total_fullsim;}
+        void increment_tiles_moved_total_fullsim(int tiles) {tiles_moved_total_fullsim += tiles;} 
+
+        void set_track_entity_movement_per_second(bool flag) {track_entity_movement_per_second = flag;}
+        bool is_tracking_entity_movement_per_second() {return track_entity_movement_per_second;}
+        void toggle_track_entity_movement_per_second() {track_entity_movement_per_second = !track_entity_movement_per_second;}
 
         void update_proxies(double current_time);
         

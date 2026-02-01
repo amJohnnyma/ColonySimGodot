@@ -251,8 +251,35 @@ void Chunk::simulate(float delta) {
     std::vector<std::shared_ptr<Entity>> staying_entities;
     staying_entities.reserve(entities.size());
 
+    float current_time = world->get_world_time();
     for (const auto& entity : entities) {
         if (!entity) continue;
+
+            /////////// testing how fast fullsim moves
+            if(world->is_tracking_entity_movement_per_second())
+            {
+                float elapsed = current_time - entity->get_last_avg_update_time();
+                if(entity->get_start_pos_test().x == -1)
+                {
+                    // set the start pos
+                    entity->set_start_pos_test(entity->get_position());
+
+                }
+
+                if(elapsed >= 1)
+                {
+                        int tiles_moved = std::abs(entity->get_start_pos_test().x - entity->get_position().x) +std::abs(entity->get_start_pos_test().y - entity->get_position().y) ;
+
+                        //set time and position again
+                        entity->set_start_pos_test(entity->get_position());
+                        entity->set_last_avg_update_time(current_time);
+
+                        world->increment_tiles_moved_total_fullsim(tiles_moved);
+
+
+                }
+            }
+            /////////////
 
         Vector2i new_pos;
         Vector2i entity_world_pos = entity->get_position();
