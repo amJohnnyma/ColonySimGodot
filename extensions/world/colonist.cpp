@@ -1,6 +1,7 @@
 #include "colonist.h"
 #include "entity.h"
 #include "entityJob.h"
+#include "godot_cpp/variant/utility_functions.hpp"
 #include "variant/vector2i.hpp"
 #include <cstdint>
 #include <random>
@@ -16,6 +17,7 @@ Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) 
 bool Colonist::simulate(EntitySimulationParam &params)
 {
     if (!active) return false;
+
 
     move_timer -= params.delta;
     if (move_timer > 0.0f) return false;

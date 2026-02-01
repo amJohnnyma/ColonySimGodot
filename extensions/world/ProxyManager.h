@@ -3,6 +3,7 @@
 #include "entity.h"
 #include "colonist.h"
 #include "entityJob.h"
+#include "godot_cpp/variant/utility_functions.hpp"
 #include <memory>
 #include <vector>
 #include <algorithm>
@@ -11,6 +12,7 @@ struct ProxyEntity {
     uint64_t entity_id = 0;
     Vector2i position;
     double last_full_sim_time = 0.0;
+    double next_proxy_update_time = 0.0;
 
     // Full job list
     std::vector<EntityJob> job_list;
@@ -25,6 +27,13 @@ struct ProxyEntity {
 
 class ProxyManager {
     public:
+        float random_float(float min, float max) {
+            static std::random_device rd;
+            static std::mt19937 gen(rd());
+            std::uniform_real_distribution<float> dis(min, max);
+            return dis(gen);
+        }
+
         ProxyEntity entity_to_proxy(const std::shared_ptr<Entity>& entity, double world_time) {
             ProxyEntity proxy;
             if (!entity) return proxy;
@@ -32,6 +41,7 @@ class ProxyManager {
             proxy.entity_id = entity->get_entity_id();
             proxy.position = entity->get_position();
             proxy.last_full_sim_time = world_time;
+          //  UtilityFunctions::print("Created proxy with last sim time ", world_time);
 
             if (auto colonist = std::dynamic_pointer_cast<Colonist>(entity)) {
                 proxy.entity_sprite = colonist->get_entity_sprite();
@@ -66,11 +76,13 @@ class ProxyManager {
                     proxy.current_job_index = index; 
                 }
             }
+            proxy.next_proxy_update_time = world_time + random_float(0.0f, 0.6f);
 
             return proxy;
         }
         Vector2i extrapolate_position(const ProxyEntity& proxy, double current_time) {
             double elapsed = current_time - proxy.last_full_sim_time;
+
 
             // Check if we have a valid job
             if (proxy.job_list.empty() || 
@@ -134,6 +146,9 @@ class ProxyManager {
                 new_pos.y += (delta.y > 0 ? larger_axis_moves : -larger_axis_moves);
                 new_pos.x += (delta.x > 0 ? smaller_axis_moves : -smaller_axis_moves);
             }
+
+
+            UtilityFunctions::print("Proxy extrapolate entity: ", proxy.entity_id, "\tpos ", proxy.position, " to ", new_pos, " with move speed=", move_speed);
 
             return new_pos;
         }

@@ -6,7 +6,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 500.0,
+    "base_move_speed": 5.0,
     "entity_type": 1,
     "entity_sprite": 0
   },
@@ -17,7 +17,7 @@
     "h": 64,
     "size_x": 1,
     "size_y": 1,
-    "base_move_speed": 500.0,
+    "base_move_speed": 5.0,
     "entity_type": 1,
     "entity_sprite": 1
   },

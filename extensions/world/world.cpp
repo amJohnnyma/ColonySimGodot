@@ -498,6 +498,7 @@ void World::update(const Vector2 &origin,
     // Or don't increment if you want proxies frozen while paused
     if (!paused) {
         world_time += delta;
+        UtilityFunctions::print("World time ", world_time);
     }
     
     // 1. Flush pending placements (ALWAYS, even when paused)
@@ -662,66 +663,93 @@ void World::update(const Vector2 &origin,
                             " | full_sim=", sim_cache.full_sim.size(),
                             " | proxies=", proxy_entities.size());
 }
+void World::update_proxies(double current_time)
+{
+    for (auto& [entity_id, proxy] : proxy_entities)
+    {
+        // Skip if it's not yet time to update this proxy
+        if (current_time < proxy.next_proxy_update_time)
+            continue;
 
-void World::update_proxies(double current_time) {
-    for (auto& [entity_id, proxy] : proxy_entities) {
         // Skip if no valid job
-        if (proxy.job_list.empty() || 
-            proxy.current_job_index < 0 || 
-            proxy.current_job_index >= proxy.job_list.size()) {
+        if (proxy.job_list.empty() ||
+            proxy.current_job_index < 0 ||
+            proxy.current_job_index >= proxy.job_list.size())
+        {
+            // Still schedule next update even if skipped
+            proxy.next_proxy_update_time = current_time + 0.45f;
             continue;
         }
-        
+
         EntityJob& current_job = proxy.job_list[proxy.current_job_index];
-        
+
         // Skip wandering or invalid targets
-        if (/*current_job.move_algo == "random" ||*/ current_job.target_coord.x == -1) {
+        if (current_job.move_algo == "random" || current_job.target_coord.x == -1)
+        {
+            proxy.next_proxy_update_time = current_time + 0.45f;
             continue;
         }
-        
+
         // Calculate new position
         Vector2i new_pos = proxy_manager.extrapolate_position(proxy, current_time);
-        
-        // Update proxy position and timestamp
-        proxy.position = new_pos;
-        proxy.last_full_sim_time = current_time;
-        
-        // Check if job is complete
-        if (new_pos == current_job.target_coord) {
-            current_job.complete = true;
-            
-            // Find next highest priority job
-            std::vector<EntityJob> active_jobs;
-            for (const auto& job : proxy.job_list) {
-                if (!job.complete) {
-                    active_jobs.push_back(job);
+
+        if (new_pos.x != proxy.position.x || new_pos.y != proxy.position.y)
+        {
+            // Update proxy position and timestamp
+            proxy.position = new_pos;
+            proxy.last_full_sim_time = current_time;
+
+
+            // Check if job is complete
+            if (new_pos == current_job.target_coord)
+            {
+                current_job.complete = true;
+
+                // Find next highest priority job
+                std::vector<EntityJob> active_jobs;
+                for (const auto& job : proxy.job_list)
+                {
+                    if (!job.complete)
+                        active_jobs.push_back(job);
                 }
-            }
-            
-            if (!active_jobs.empty()) {
-                auto it = std::max_element(active_jobs.begin(), active_jobs.end(),
-                    [](const EntityJob& a, const EntityJob& b) {
-                        return a.priority < b.priority;
-                    });
-                
-                // Find this job in the original list
-                for (size_t i = 0; i < proxy.job_list.size(); ++i) {
-                    if (&proxy.job_list[i] == &(*it)) {
-                        proxy.current_job_index = i;
-                        break;
+
+                if (!active_jobs.empty())
+                {
+                    auto it = std::max_element(active_jobs.begin(), active_jobs.end(),
+                        [](const EntityJob& a, const EntityJob& b) {
+                            return a.priority < b.priority;
+                        });
+
+                    // Find this job in the original list
+                    for (size_t i = 0; i < proxy.job_list.size(); ++i)
+                    {
+                        if (&proxy.job_list[i] == &(*it))   // pointer comparison
+                        {
+                            proxy.current_job_index = i;
+                            break;
+                        }
                     }
                 }
-            } else {
-                // No jobs left, create wander job
-                EntityJob wander;
-                wander.move_algo = "random";
-                wander.priority = 0;
-                wander.moveSpeedMultiplier = 0.2f;
-                wander.complete = false;
-                proxy.job_list.push_back(wander);
-                proxy.current_job_index = proxy.job_list.size() - 1;
+                else
+                {
+                    // No jobs left → create wander job
+                    EntityJob wander;
+                    wander.move_algo = "random";
+                    wander.priority = 0;
+                    wander.moveSpeedMultiplier = 0.2f;
+                    wander.complete = false;
+                    proxy.job_list.push_back(wander);
+                    proxy.current_job_index = proxy.job_list.size() - 1;
+                }
             }
+        
         }
+
+
+        // Schedule the next update (with small random jitter)
+        float interval = 0.45f;                 // base interval (~every 0.45 seconds)
+        float jitter   = proxy_manager.random_float(-0.08f, 0.08f);
+        proxy.next_proxy_update_time = current_time + interval + jitter;
     }
 }
 

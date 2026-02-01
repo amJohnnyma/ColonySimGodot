@@ -27,7 +27,7 @@ void Entity::add_job(EntityJob job)
 void Entity::update_move_speed_from_job(const EntityJob& job)
 {
     // multiply by the multiplier (0.2 = slower, 2.0 = faster)
-    move_speed = base_move_speed / job.moveSpeedMultiplier;
+    move_speed = base_move_speed * job.moveSpeedMultiplier;
 }
 
 // Helper method to check if a position is available (add to colonist.h)
