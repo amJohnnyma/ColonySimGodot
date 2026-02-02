@@ -1,15 +1,20 @@
 #include "world.h"
-#include "chunk.h"
-#include "core/math.hpp"
-#include "entityDataReader.h"
-#include "entityJob.h"
-#include "variant/vector2i.hpp"
+
 #include <godot_cpp/variant/utility_functions.hpp>
+
+#include <algorithm>
 #include <cmath>
 #include <unordered_set>
 
-using namespace godot;
+#include "building.h"
+#include "chunk.h"
+#include "colonist.h"
+#include "entityDataReader.h"
+#include "entityJob.h"
+#include "item.h"
+#include "terrainGenerator.h"
 
+using namespace godot;
 
 void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("init", "world_width_tiles", "world_height_tiles", "chunk_size_tiles"),
@@ -945,4 +950,3 @@ EntityJob World::create_job(const int& entityType, const int& jobType, const Vec
 
     return job;
 }
-

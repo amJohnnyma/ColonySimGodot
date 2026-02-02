@@ -1,30 +1,20 @@
 #include "perlinNoise.h"
+
 #include <random>
 
-PerlinNoise::PerlinNoise(unsigned int seed)
-{
-    p.resize(256); //permutation table init
-    std::iota(p.begin(),p.end(),0); // fill 0...255
+PerlinNoise::PerlinNoise(unsigned int seed) {
+    p.resize(256);
+    std::iota(p.begin(), p.end(), 0);
 
     std::default_random_engine engine(seed);
-    std::shuffle(p.begin(),p.end(),engine);
+    std::shuffle(p.begin(), p.end(), engine);
 
-    //duplicate perm vector
-    p.insert(p.end(), p.begin(),p.end());
+    p.insert(p.end(), p.begin(), p.end());
 }
 
-PerlinNoise::~PerlinNoise()
-{
-}
+PerlinNoise::~PerlinNoise() {}
 
-//recursive function to apply elevation smoothing?
-/*
-
-
-
-*/
-float PerlinNoise::noise(float nx, float ny)
-{
+float PerlinNoise::noise(float nx, float ny) {
     int xi = static_cast<int>(std::floor(nx)) & 255;
     int yi = static_cast<int>(std::floor(ny)) & 255;
 
@@ -34,48 +24,36 @@ float PerlinNoise::noise(float nx, float ny)
     float u = fade(xf);
     float v = fade(yf);
 
-    // Hash coordinates of the 4 square corners
     int aa = p[p[xi] + yi];
     int ab = p[p[xi] + yi + 1];
     int ba = p[p[xi + 1] + yi];
     int bb = p[p[xi + 1] + yi + 1];
 
-    // Gradient and dot product at each corner
-    float x1 = lerp(grad(aa, xf,     yf),     // Bottom-left
-                    grad(ba, xf - 1, yf), u); // Bottom-right
-    float x2 = lerp(grad(ab, xf,     yf - 1), // Top-left
-                    grad(bb, xf - 1, yf - 1), u); // Top-right
+    float x1 = lerp(grad(aa, xf, yf),
+                    grad(ba, xf - 1, yf), u);
+    float x2 = lerp(grad(ab, xf, yf - 1),
+                    grad(bb, xf - 1, yf - 1), u);
 
-    return (lerp(x1, x2, v) + 1.0f) / 2.0f; // Normalize to [0,1]
+    return (lerp(x1, x2, v) + 1.0f) / 2.0f;
 }
 
-float PerlinNoise::val(float x, float y)
-{    
+float PerlinNoise::val(float x, float y) {
     float e = elevation(x, y, 8);
-   // std::cout << "elevation: " << e << ", pow base before clamp" << std::endl;
 
     if (e < 0.0f) e = 0.0f;
 
-   // std::cout << "elevation after clamp: " << e << std::endl;
-    //std::cout << "exponent: " << conf::perlinFlatness << std::endl;
-
     float val = static_cast<float>(std::pow(e, 5));
-
-    //std::cout << "pow result: " << val << std::endl;
 
     return val;
 }
 
-
-float PerlinNoise::elevation(float nx, float ny, int layers)
-{
+float PerlinNoise::elevation(float nx, float ny, int layers) {
     float e = 0.0f;
     float maxAmpl = 0.0f;
 
-    for (int i = 0; i < layers; i++)
-    {
-        int fac = 1 << i;                // frequency factor: 1, 2, 4, 8, ...
-        double ampl = pow(0.5, i);       // amplitude: 1, 0.5, 0.25, ...
+    for (int i = 0; i < layers; i++) {
+        int fac = 1 << i;
+        double ampl = pow(0.5, i);
 
         e += amplitude(nx, ny, fac, ampl);
         maxAmpl += ampl;
@@ -84,17 +62,14 @@ float PerlinNoise::elevation(float nx, float ny, int layers)
     return e / maxAmpl;
 }
 
-float PerlinNoise::amplitude(float nx, float ny, int fac, double amplitude)
-{
+float PerlinNoise::amplitude(float nx, float ny, int fac, double amplitude) {
     return amplitude * noise(fac * nx, fac * ny);
 }
 
 BiomeType PerlinNoise::get_biome(int wx, int wy) {
-    // Convert from [0,1] to [-1,1]
     double temp = noise(wx * 0.003, wy * 0.003) * 2.0 - 1.0;
     double moisture = noise(wx * 0.003 + 1000, wy * 0.003 + 1000) * 2.0 - 1.0;
-    
-    // Now the original thresholds work
+
     if (temp < -0.3) {
         return BiomeType::TUNDRA;
     } else if (temp > 0.3) {

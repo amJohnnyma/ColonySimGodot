@@ -1,10 +1,13 @@
 #include "entity.h"
-#include "entityJob.h"
-#include <algorithm>
-#include <cstdint>
-#include <cmath>
 
-Entity::Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) : position(pos), entity_id(id), entity_sprite(entity_sprite), size(size) {
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+
+#include "entityJob.h"
+
+Entity::Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size)
+    : position(pos), entity_id(id), entity_sprite(entity_sprite), size(size) {
     reset_timer();
 }
 
@@ -14,49 +17,41 @@ void Entity::reset_timer(float a) {
     move_timer = move_speed * dist(gen) / a;
 }
 
-// this should be an override -> move speed for items and buildings ???? Should defnitely be removed from Entity base
-void Entity::add_job(EntityJob job)
-{
+void Entity::add_job(EntityJob job) {
     job.isValid = true;
     job.complete = false;
     job.move_algo = "default";
 
-
     jobList.push_back(job);
 }
-void Entity::update_move_speed_from_job(const EntityJob& job)
-{
-    // multiply by the multiplier (0.2 = slower, 2.0 = faster)
+
+void Entity::update_move_speed_from_job(const EntityJob &job) {
     move_speed = base_move_speed * job.moveSpeedMultiplier;
 }
 
-// Helper method to check if a position is available (add to colonist.h)
-bool Entity::is_position_available(Vector2i pos, EntitySimulationParam &params)
-{// If no collision data provided, assume available
- //
-    if (params.availableDirs.empty())
-    {
-        //UtilityFunctions::print("No availableDirs data, assuming position is not available");
+bool Entity::is_position_available(Vector2i pos, EntitySimulationParam &params) {
+    if (params.availableDirs.empty()) {
         return false;
     }
-    
+
     Vector2i move_delta = pos - position;
     int dir = -1;
-    
-    // Map movement to direction index
-    if (move_delta == Vector2i(0, -1)) dir = 0; // North
-    else if (move_delta == Vector2i(1, 0)) dir = 1; // East
-    else if (move_delta == Vector2i(0, 1)) dir = 2; // South
-    else if (move_delta == Vector2i(-1, 0)) dir = 3; // West
+
+    if (move_delta == Vector2i(0, -1))
+        dir = 0;
+    else if (move_delta == Vector2i(1, 0))
+        dir = 1;
+    else if (move_delta == Vector2i(0, 1))
+        dir = 2;
+    else if (move_delta == Vector2i(-1, 0))
+        dir = 3;
     else {
         UtilityFunctions::print("WARNING: Invalid move_delta: ", move_delta.x, ",", move_delta.y);
-        return false; // Invalid movement
+        return false;
     }
-    
-    bool is_available = std::find(params.availableDirs.begin(), 
+
+    bool is_available = std::find(params.availableDirs.begin(),
                                    params.availableDirs.end(), dir) != params.availableDirs.end();
-    
-    //UtilityFunctions::print("Checking dir ", dir, " -> ", (is_available ? "available" : "blocked"));
-    
+
     return is_available;
 }

@@ -241,27 +241,20 @@ CMakeFiles/world.dir/register_types.cpp.o: \
  /usr/include/c++/13/bits/stl_multiset.h \
  /usr/include/c++/13/bits/erase_if.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/world.h \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/ref_counted.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/classes/ref.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/node2d.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/canvas_item.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/node.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/classes/ref.hpp \
+ /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/ref_counted.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/text_server.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/texture2d.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/texture.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/resource.hpp \
- /usr/include/c++/13/unordered_map \
- /usr/include/c++/13/bits/unordered_map.h \
- /usr/include/c++/13/bits/hashtable.h \
- /usr/include/c++/13/bits/hashtable_policy.h \
- /usr/include/c++/13/bits/functional_hash.h \
- /usr/include/c++/13/bits/enable_special_members.h \
- /usr/include/c++/13/unordered_set \
- /usr/include/c++/13/bits/unordered_set.h /usr/include/c++/13/memory \
- /usr/include/c++/13/bits/stl_tempbuf.h \
+ /usr/include/c++/13/memory /usr/include/c++/13/bits/stl_tempbuf.h \
  /usr/include/c++/13/bits/stl_uninitialized.h \
  /usr/include/c++/13/bits/stl_raw_storage_iter.h \
  /usr/include/c++/13/bits/align.h /usr/include/c++/13/bits/unique_ptr.h \
+ /usr/include/c++/13/bits/functional_hash.h \
  /usr/include/c++/13/bits/shared_ptr.h /usr/include/c++/13/iosfwd \
  /usr/include/c++/13/bits/stringfwd.h /usr/include/c++/13/bits/postypes.h \
  /usr/include/c++/13/cwchar /usr/include/wchar.h \
@@ -276,75 +269,65 @@ CMakeFiles/world.dir/register_types.cpp.o: \
  /usr/include/c++/13/bits/shared_ptr_atomic.h \
  /usr/include/c++/13/backward/auto_ptr.h \
  /usr/include/c++/13/pstl/glue_memory_defs.h \
- /usr/include/c++/13/pstl/execution_defs.h \
- /usr/include/c++/13/shared_mutex /usr/include/c++/13/vector \
+ /usr/include/c++/13/pstl/execution_defs.h /usr/include/c++/13/queue \
+ /usr/include/c++/13/deque /usr/include/c++/13/bits/stl_deque.h \
+ /usr/include/c++/13/bits/deque.tcc /usr/include/c++/13/vector \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc \
- /home/johnny/Godot/colony-sim-2/extensions/world/chunk.h \
- /usr/include/c++/13/future /usr/include/c++/13/condition_variable \
- /usr/include/c++/13/bits/cxxabi_forced.h \
- /usr/include/c++/13/system_error /usr/include/c++/13/stdexcept \
- /usr/include/c++/13/string /usr/include/c++/13/bits/char_traits.h \
+ /usr/include/c++/13/bits/vector.tcc /usr/include/c++/13/bits/stl_heap.h \
+ /usr/include/c++/13/bits/stl_queue.h /usr/include/c++/13/shared_mutex \
+ /usr/include/c++/13/unordered_map \
+ /usr/include/c++/13/bits/unordered_map.h \
+ /usr/include/c++/13/bits/hashtable.h \
+ /usr/include/c++/13/bits/hashtable_policy.h \
+ /usr/include/c++/13/bits/enable_special_members.h \
+ /usr/include/c++/13/unordered_set \
+ /usr/include/c++/13/bits/unordered_set.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/ProxyManager.h \
+ /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
+ /usr/include/c++/13/bits/algorithmfwd.h \
+ /usr/include/c++/13/bits/uniform_int_dist.h /usr/include/c++/13/cstdlib \
+ /usr/include/c++/13/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/13/random /usr/include/c++/13/string \
+ /usr/include/c++/13/bits/char_traits.h \
  /usr/include/c++/13/bits/localefwd.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h \
  /usr/include/c++/13/clocale /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/c++/13/cctype \
  /usr/include/ctype.h /usr/include/c++/13/bits/ostream_insert.h \
+ /usr/include/c++/13/bits/cxxabi_forced.h \
  /usr/include/c++/13/bits/basic_string.h /usr/include/c++/13/string_view \
  /usr/include/c++/13/bits/string_view.tcc \
- /usr/include/c++/13/ext/string_conversions.h /usr/include/c++/13/cstdlib \
- /usr/include/c++/13/cstdio /usr/include/stdio.h \
- /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+ /usr/include/c++/13/ext/string_conversions.h /usr/include/c++/13/cstdio \
+ /usr/include/stdio.h /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/c++/13/bits/charconv.h \
  /usr/include/c++/13/bits/basic_string.tcc \
- /usr/include/c++/13/bits/atomic_futex.h \
- /usr/include/c++/13/bits/std_function.h \
- /usr/include/c++/13/bits/std_thread.h \
- /home/johnny/Godot/colony-sim-2/extensions/world/entity.h \
- /usr/include/c++/13/random /usr/include/c++/13/bits/random.h \
- /usr/include/c++/13/bits/uniform_int_dist.h \
+ /usr/include/c++/13/bits/random.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
  /usr/include/c++/13/bits/random.tcc /usr/include/c++/13/numeric \
  /usr/include/c++/13/bits/stl_numeric.h \
  /usr/include/c++/13/pstl/glue_numeric_defs.h \
- /home/johnny/Godot/colony-sim-2/extensions/world/entityJob.h \
- /usr/include/c++/13/iostream /usr/include/c++/13/ostream \
- /usr/include/c++/13/ios /usr/include/c++/13/bits/ios_base.h \
- /usr/include/c++/13/bits/locale_classes.h \
- /usr/include/c++/13/bits/locale_classes.tcc \
- /usr/include/c++/13/streambuf /usr/include/c++/13/bits/streambuf.tcc \
- /usr/include/c++/13/bits/basic_ios.h \
- /usr/include/c++/13/bits/locale_facets.h /usr/include/c++/13/cwctype \
- /usr/include/wctype.h /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
- /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h \
- /usr/include/c++/13/bits/streambuf_iterator.h \
- /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h \
- /usr/include/c++/13/bits/locale_facets.tcc \
- /usr/include/c++/13/bits/basic_ios.tcc \
- /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
- /usr/include/c++/13/bits/istream.tcc \
- /home/johnny/Godot/colony-sim-2/extensions/world/colonist.h \
- /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
- /usr/include/c++/13/bits/algorithmfwd.h \
- /usr/include/c++/13/bits/stl_heap.h \
- /usr/include/c++/13/pstl/glue_algorithm_defs.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/building.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/entity.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/entityJob.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/colonist.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
- /usr/include/c++/13/queue /usr/include/c++/13/deque \
- /usr/include/c++/13/bits/stl_deque.h /usr/include/c++/13/bits/deque.tcc \
- /usr/include/c++/13/bits/stl_queue.h \
- /home/johnny/Godot/colony-sim-2/extensions/world/threadpool.h \
- /usr/include/c++/13/thread /usr/include/c++/13/bits/this_thread_sleep.h \
- /usr/include/c++/13/functional \
+ /home/johnny/Godot/colony-sim-2/extensions/world/chunk.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/entityDataReader.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/json.hpp \
+ /usr/include/c++/13/functional /usr/include/c++/13/bits/std_function.h \
  /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
- /usr/include/c++/13/forward_list /usr/include/c++/13/bits/forward_list.h \
+ /usr/include/c++/13/bits/streambuf_iterator.h \
+ /usr/include/c++/13/streambuf /usr/include/c++/13/bits/ios_base.h \
+ /usr/include/c++/13/bits/locale_classes.h \
+ /usr/include/c++/13/bits/locale_classes.tcc \
+ /usr/include/c++/13/system_error /usr/include/c++/13/stdexcept \
+ /usr/include/c++/13/bits/streambuf.tcc /usr/include/c++/13/forward_list \
+ /usr/include/c++/13/bits/forward_list.h \
  /usr/include/c++/13/bits/forward_list.tcc /usr/include/c++/13/map \
  /usr/include/c++/13/bits/stl_map.h \
  /usr/include/c++/13/bits/stl_multimap.h /usr/include/c++/13/valarray \
@@ -360,6 +343,11 @@ CMakeFiles/world.dir/register_types.cpp.o: \
  /usr/include/c++/13/cassert /usr/include/assert.h \
  /usr/include/c++/13/filesystem /usr/include/c++/13/bits/fs_fwd.h \
  /usr/include/c++/13/bits/fs_path.h /usr/include/c++/13/locale \
+ /usr/include/c++/13/bits/locale_facets.h /usr/include/c++/13/cwctype \
+ /usr/include/wctype.h /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h \
+ /usr/include/c++/13/bits/locale_facets.tcc \
  /usr/include/c++/13/bits/locale_facets_nonio.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
@@ -367,7 +355,16 @@ CMakeFiles/world.dir/register_types.cpp.o: \
  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
  /usr/include/c++/13/bits/locale_conv.h /usr/include/c++/13/iomanip \
  /usr/include/c++/13/bits/quoted_string.h /usr/include/c++/13/sstream \
+ /usr/include/c++/13/istream /usr/include/c++/13/ios \
+ /usr/include/c++/13/bits/basic_ios.h \
+ /usr/include/c++/13/bits/basic_ios.tcc /usr/include/c++/13/ostream \
+ /usr/include/c++/13/bits/ostream.tcc \
+ /usr/include/c++/13/bits/istream.tcc \
  /usr/include/c++/13/bits/sstream.tcc /usr/include/c++/13/codecvt \
  /usr/include/c++/13/bits/fs_dir.h /usr/include/c++/13/bits/fs_ops.h \
  /usr/include/c++/13/optional /usr/include/c++/13/any \
- /home/johnny/Godot/colony-sim-2/extensions/world/ProxyManager.h
+ /home/johnny/Godot/colony-sim-2/extensions/world/threadpool.h \
+ /usr/include/c++/13/condition_variable /usr/include/c++/13/future \
+ /usr/include/c++/13/bits/atomic_futex.h \
+ /usr/include/c++/13/bits/std_thread.h /usr/include/c++/13/thread \
+ /usr/include/c++/13/bits/this_thread_sleep.h

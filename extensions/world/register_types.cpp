@@ -11,7 +11,6 @@ void initialize_world_module(ModuleInitializationLevel p_level) {
         return;
     }
 
-    // Prevent duplicate registration even if init is called multiple times
     static bool already_registered = false;
     if (already_registered) {
         UtilityFunctions::print_verbose("World already registered - skipping");
@@ -36,7 +35,6 @@ void uninitialize_world_module(ModuleInitializationLevel p_level) {
 }
 
 extern "C" {
-// Initialization.
 GDExtensionBool GDE_EXPORT gdextension_initialize(
     GDExtensionInterfaceGetProcAddress p_get_proc_address,
     const GDExtensionClassLibraryPtr p_library,

@@ -1,12 +1,13 @@
 #pragma once
-#include <vector>
-#include <queue>
-#include <thread>
-#include <mutex>
+
+#include <atomic>
 #include <condition_variable>
 #include <functional>
 #include <future>
-#include <atomic>
+#include <mutex>
+#include <queue>
+#include <thread>
+#include <vector>
 
 class ThreadPool {
 private:
@@ -25,16 +26,16 @@ public:
                     std::function<void()> task;
                     {
                         std::unique_lock<std::mutex> lock(queue_mutex);
-                        condition.wait(lock, [this] { 
-                            return stop.load() || !tasks.empty(); 
+                        condition.wait(lock, [this] {
+                            return stop.load() || !tasks.empty();
                         });
-                        
+
                         if (stop.load() && tasks.empty()) return;
-                        
+
                         task = std::move(tasks.front());
                         tasks.pop();
                     }
-                    
+
                     active_tasks++;
                     task();
                     active_tasks--;
@@ -43,14 +44,13 @@ public:
         }
     }
 
-    template<class F>
-    auto enqueue(F&& f) -> std::future<decltype(f())> {
+    template <class F>
+    auto enqueue(F &&f) -> std::future<decltype(f())> {
         using return_type = decltype(f());
         auto task = std::make_shared<std::packaged_task<return_type()>>(
-            std::forward<F>(f)
-        );
+            std::forward<F>(f));
         std::future<return_type> res = task->get_future();
-        
+
         {
             std::unique_lock<std::mutex> lock(queue_mutex);
             if (stop.load()) {
@@ -58,7 +58,7 @@ public:
             }
             tasks.emplace([task]() { (*task)(); });
         }
-        
+
         condition.notify_one();
         return res;
     }
@@ -72,7 +72,7 @@ public:
     ~ThreadPool() {
         stop.store(true);
         condition.notify_all();
-        for (std::thread& worker : workers) {
+        for (std::thread &worker : workers) {
             if (worker.joinable()) {
                 worker.join();
             }
