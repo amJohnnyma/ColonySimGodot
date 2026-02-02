@@ -374,66 +374,99 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     result["count"] = count;
     return result;
 }
-
 Dictionary World::get_visible_entities(
         const TypedArray<Vector2i>& chunk_coords,
         const Vector2& cull_min,
         const Vector2& cull_max,
         int max_entities)
 {
+    // Step 1: Collect all visible entities first
+    struct EntityData {
+        Vector2 pos;
+        int64_t id;
+        int32_t type;
+        int32_t sprite;
+        int32_t width;
+        int32_t height;
+        float dist_sq;  // for sorting
+    };
+    
+    std::vector<EntityData> visible_entities;
+    visible_entities.reserve(max_entities * 2);  // pre-allocate generously
+    
+    // Calculate camera position (center of cull area)
+    Vector2 cam_pos = (cull_min + cull_max) * 0.5f;
+    
+    // Collect all entities within cull bounds
+    for (int i = 0; i < chunk_coords.size(); ++i) {
+        Vector2i coord = chunk_coords[i];
+        auto it = chunks.find(coord);
+        if (it == chunks.end()) continue;
+        
+        const auto& chunk_entities = it->second->entities;
+        for (const auto& entity_ptr : chunk_entities) {
+            if (!entity_ptr || !entity_ptr->is_active()) continue;
+            
+            Vector2 pos = entity_ptr->get_position();
+            
+            // Entity-level culling
+            if (pos.x < cull_min.x || pos.x > cull_max.x ||
+                pos.y < cull_min.y || pos.y > cull_max.y) {
+                continue;
+            }
+            
+            // Calculate distance squared to camera (no sqrt needed for comparison)
+            float dx = pos.x - cam_pos.x;
+            float dy = pos.y - cam_pos.y;
+            float dist_sq = dx * dx + dy * dy;
+            
+            EntityData data;
+            data.pos = pos;
+            data.id = static_cast<int64_t>(entity_ptr->get_entity_id());
+            data.type = entity_ptr->get_type_id();
+            data.sprite = entity_ptr->get_entity_sprite();
+            data.width = entity_ptr->get_entity_width();
+            data.height = entity_ptr->get_entity_height();
+            data.dist_sq = dist_sq;
+            
+            visible_entities.push_back(data);
+        }
+    }
+    
+    // Step 2: Sort by distance to camera
+    std::sort(visible_entities.begin(), visible_entities.end(),
+        [](const EntityData& a, const EntityData& b) {
+            return a.dist_sq < b.dist_sq;
+        });
+    
+    // Step 3: Take only the closest max_entities
+    int count = std::min(max_entities, static_cast<int>(visible_entities.size()));
+    
     PackedVector2Array positions;
     PackedInt64Array entity_ids;
     PackedInt32Array types;
     PackedInt32Array entity_sprites;
     PackedInt32Array entity_width;
     PackedInt32Array entity_height;
-
-    // Pre-allocate for performance
-    positions.resize(max_entities);
-    entity_ids.resize(max_entities);
-    types.resize(max_entities);
-    entity_sprites.resize(max_entities);
-    entity_width.resize(max_entities);
-    entity_height.resize(max_entities);
-
-    int count = 0;
-
-    for (int i = 0; i < chunk_coords.size() && count < max_entities; ++i) {
-        Vector2i coord = chunk_coords[i];
-        auto it = chunks.find(coord);
-        if (it == chunks.end()) continue;
-
-        const auto& chunk_entities = it->second->entities;
-        for (const auto& entity_ptr : chunk_entities) {
-            if (count >= max_entities) break;
-            if (!entity_ptr || !entity_ptr->is_active()) continue;
-
-            Vector2 pos = entity_ptr->get_position();  // Assuming get_position() returns Vector2 now
-
-            // Entity-level culling
-            if (pos.x < cull_min.x || pos.x > cull_max.x ||
-                    pos.y < cull_min.y || pos.y > cull_max.y) {
-                continue;
-            }
-
-            positions.set(count, pos);
-            entity_ids.set(count, static_cast<int64_t>(entity_ptr->get_entity_id()));
-            types.set(count, entity_ptr->get_type_id());
-            entity_sprites.set(count, entity_ptr->get_entity_sprite());
-            entity_width.set(count, entity_ptr->get_entity_width());
-            entity_height.set(count, entity_ptr->get_entity_height());
-
-            count++;
-        }
-    }
-
-    // Trim arrays to actual used size (important for GDScript)
+    
     positions.resize(count);
     entity_ids.resize(count);
     types.resize(count);
     entity_sprites.resize(count);
-
-    // Build and return the dictionary
+    entity_width.resize(count);
+    entity_height.resize(count);
+    
+    // Step 4: Fill arrays with closest entities
+    for (int i = 0; i < count; ++i) {
+        const auto& e = visible_entities[i];
+        positions.set(i, e.pos);
+        entity_ids.set(i, e.id);
+        types.set(i, e.type);
+        entity_sprites.set(i, e.sprite);
+        entity_width.set(i, e.width);
+        entity_height.set(i, e.height);
+    }
+    
     Dictionary result;
     result["positions"]  = positions;
     result["entity_ids"] = entity_ids;
@@ -442,9 +475,10 @@ Dictionary World::get_visible_entities(
     result["entity_width"] = entity_width;
     result["entity_height"] = entity_height;
     result["count"]      = count;
-
+    
     return result;
 }
+
 void World::init_thread_pool(size_t thread_count) {
     if (thread_count == 0) {
         thread_count = std::max(2u, std::thread::hardware_concurrency() - 1);

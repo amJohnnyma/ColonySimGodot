@@ -49,7 +49,7 @@ class Entity
         virtual bool simulate(EntitySimulationParam &params) = 0; 
 
     public: // Common
-        void reset_timer(); 
+        void reset_timer(float a = 1); 
         Vector2i get_position() { return position; }
         void set_position(Vector2i pos) { position = pos; }
         bool is_active() { return active; }

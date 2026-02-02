@@ -162,6 +162,8 @@ bool Colonist::default_movement(EntitySimulationParam &params)
             return true;
         }
     }
+    // stay in place but pause for a moment
+    reset_timer(2.f);
 
     return false; 
 }

@@ -8,10 +8,10 @@ Entity::Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size) : po
     reset_timer();
 }
 
-void Entity::reset_timer() {
+void Entity::reset_timer(float a) {
     thread_local static std::mt19937 gen(std::random_device{}());
     std::uniform_real_distribution<float> dist(0.45f, 0.55f);
-    move_timer = move_speed * dist(gen);
+    move_timer = move_speed * dist(gen) / a;
 }
 
 // this should be an override -> move speed for items and buildings ???? Should defnitely be removed from Entity base
