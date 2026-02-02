@@ -94,25 +94,14 @@ bool World::is_valid_chunk(const Vector2i &coord) const {
         coord.y >= 0 && coord.y < world_chunks_y;
 }
 
-
-
-
-std::shared_ptr<Chunk> World::get_chunk(const Vector2i &coord) {
-    // UtilityFunctions::print("Getting chunk");
-    if (!is_valid_chunk(coord))
-    {
-        //  UtilityFunctions::print("Not valid chunk");
-        return nullptr;
-    }
-    auto it = chunks.find(coord);
-    if (it != chunks.end()) return it->second;
-
-    //  UtilityFunctions::print("Returning nullptr");
-    return nullptr;
+std::shared_ptr<Chunk> World::get_chunk(const Vector2i &c) {
+    std::shared_lock<std::shared_mutex> lock(chunks_mutex);
+    auto it = chunks.find(c);
+    return (it != chunks.end()) ? it->second : nullptr;
 }
 
 std::shared_ptr<Chunk> World::load_chunk(const Vector2i &coord) {
-    std::lock_guard<std::mutex> lock(chunks_mutex);
+    std::shared_lock<std::shared_mutex> lock(chunks_mutex);
 
     // 1. Already loaded → return it
     auto it = chunks.find(coord);
@@ -143,7 +132,7 @@ std::shared_ptr<Chunk> World::load_chunk(const Vector2i &coord) {
 
 // world.cpp
 void World::unload_chunk(const Vector2i &coord) {
-    std::lock_guard<std::mutex> lock(chunks_mutex);
+    std::shared_lock<std::shared_mutex> lock(chunks_mutex);
     auto it = chunks.find(coord);
     if (it == chunks.end()) return;
 
@@ -341,12 +330,12 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
         }
     }
     {
-        std::lock_guard<std::mutex> lock(pending_mutex);
+        std::shared_lock<std::shared_mutex> lock(chunks_mutex);
         for (const auto& [pending_chunk, entity_ptr] : pendingEntityPlacements) {
             if (!entity_ptr) continue;
 
             // Check if this pending entity is for our target chunk
-            if (pending_chunk->coord != chunk_coord) continue;
+            if (pending_chunk != chunk_coord) continue;
 
             Vector2 entity_pos = entity_ptr->get_position();
 
@@ -477,7 +466,7 @@ void World::request_chunk(Vector2i c) {
 void World::process_chunk_loading() {
     constexpr int MAX_PER_FRAME = 2;
 
-    std::lock_guard lock(chunks_mutex);
+    std::shared_lock<std::shared_mutex> lock(chunks_mutex);
 
     int count = 0;
     while (!load_queue.empty() && count++ < MAX_PER_FRAME) {
@@ -490,183 +479,127 @@ void World::process_chunk_loading() {
         chunks[c] = chunk;
     }
 }
-
 void World::update(const Vector2 &origin,
                    int max_render_distance_chunks,
                    float delta,
                    bool paused)
 {
     if (!thread_pool) init_thread_pool();
-    
-    // Always update world_time, even when paused (for consistent timestamps)
-    // Or don't increment if you want proxies frozen while paused
-    if (!paused) {
-        world_time += delta;
-       // UtilityFunctions::print("World time ", world_time);
-    }
-    
-    // 1. Flush pending placements (ALWAYS, even when paused)
-    {
-        std::lock_guard lk(pending_mutex);
-        if (!pendingEntityPlacements.empty()) {
-            std::lock_guard lk2(chunks_mutex);
-            for (auto& [target_chunk, e] : pendingEntityPlacements) {
-                target_chunk->entities.push_back(e);
-            }
-            pendingEntityPlacements.clear();
-        }
-    }
-    
+
+    if (!paused) world_time += delta;
+
+    // 1. Flush pending (always)
+    flush_pending_placements();   // ← new helper (see below)
+
     Vector2i origin_chunk_coord = world_pos_to_chunk(origin);
-    int render_R = max_render_distance_chunks;
-    int visible_R = render_R + 1;
-    
-    sim_cache.clear();
+    int visible_R = max_render_distance_chunks + 1;
+
     std::set<Vector2i> visible_chunks;
-    
-    // 2. Identify visible chunks and load/generate as needed (ALWAYS)
+    sim_cache.full_sim.clear();
+
+    // 2. Build visible set + load missing chunks
     {
-        std::lock_guard lk(chunks_mutex);
-        
+        std::shared_lock<std::shared_mutex> lk(chunks_mutex);  // shared = many readers ok
         for (int dy = -visible_R; dy <= visible_R; ++dy) {
             for (int dx = -visible_R; dx <= visible_R; ++dx) {
                 Vector2i c = origin_chunk_coord + Vector2i(dx, dy);
                 if (!is_valid_chunk(c)) continue;
-                
+
                 visible_chunks.insert(c);
-                
+
                 auto it = chunks.find(c);
                 if (it == chunks.end()) {
-                    request_chunk(c);
+                    request_chunk(c);               // may take unique lock internally
                     continue;
                 }
-                
-                auto& ch = it->second;
-                if (!ch->entities.empty()) {
-                    sim_cache.full_sim.push_back(ch);
+                if (!it->second->entities.empty()) {
+                    sim_cache.full_sim.push_back(it->second);
                 }
             }
         }
     }
-    
-    // 3. Convert entities leaving visible range to proxies (ALWAYS)
-    {
-        std::vector<Vector2i> chunks_to_proxify;
+
+    // 3. Proxify only chunks that just left visibility (huge saving!)
+    std::set<Vector2i> exited_chunks;
+    std::set_difference(last_visible_chunks.begin(), last_visible_chunks.end(),
+                         visible_chunks.begin(),   visible_chunks.end(),
+                         std::inserter(exited_chunks, exited_chunks.begin()));
+
+    if (!exited_chunks.empty()) {
         std::vector<ProxyEntity> proxies_to_add;
-        
+
         {
-            std::lock_guard lk(chunks_mutex);
-            for (const auto& [chunk_pos, chunk] : chunks) {
-                if (visible_chunks.find(chunk_pos) == visible_chunks.end()) {
-                    chunks_to_proxify.push_back(chunk_pos);
-                }
-            }
-        }
-        
-        {
-            std::lock_guard lk(chunks_mutex);
-            for (const auto& chunk_pos : chunks_to_proxify) {
-                auto chunk_it = chunks.find(chunk_pos);
-                if (chunk_it == chunks.end()) continue;
-                
-                auto& chunk = chunk_it->second;
-                if (!chunk) continue;
-                
+            std::unique_lock<std::shared_mutex> lk(chunks_mutex);  // one lock for all
+            for (auto& chunk_pos : exited_chunks) {
+                auto it = chunks.find(chunk_pos);
+                if (it == chunks.end() || !it->second) continue;
+
+                auto& chunk = it->second;
                 for (auto& entity : chunk->entities) {
-                    if (!entity) continue;
-                    
-                    ProxyEntity proxy = proxy_manager.entity_to_proxy(entity, world_time);
-                    proxies_to_add.push_back(proxy);
+                    if (entity) proxies_to_add.push_back(proxy_manager.entity_to_proxy(entity, world_time));
                 }
-                
                 chunk->entities.clear();
             }
         }
-        
-        for (const auto& proxy : proxies_to_add) {
-            proxy_entities[proxy.entity_id] = proxy;
-        }
-        
-        for (const auto& chunk_pos : chunks_to_proxify) {
-            unload_chunk(chunk_pos);
-        }
+
+        for (auto& p : proxies_to_add) proxy_entities[p.entity_id] = p;
+
+        for (auto& pos : exited_chunks) unload_chunk(pos);
     }
-    
-    // 4. Convert proxies back to entities entering visible range (ALWAYS)
+
+    // 4. Activate proxies that entered visibility
     {
-        std::vector<uint64_t> proxies_to_activate;
-        
-        for (const auto& [entity_id, proxy] : proxy_entities) {
-            Vector2i extrapolated_pos = proxy_manager.extrapolate_position(proxy, world_time);
-            Vector2i entity_chunk = world_pos_to_chunk(extrapolated_pos);
-            
-            if (visible_chunks.find(entity_chunk) != visible_chunks.end()) {
-                proxies_to_activate.push_back(entity_id);
+        std::vector<uint64_t> to_activate;
+        for (const auto& [id, proxy] : proxy_entities) {
+            Vector2i pos = proxy_manager.extrapolate_position(proxy, world_time);
+            if (visible_chunks.count(world_pos_to_chunk(pos))) {
+                to_activate.push_back(id);
             }
         }
-        
-        std::lock_guard lk(chunks_mutex);
-        for (const auto& entity_id : proxies_to_activate) {
-            auto proxy_it = proxy_entities.find(entity_id);
-            if (proxy_it == proxy_entities.end()) continue;
-            
-            auto& proxy = proxy_it->second;
-            auto entity = proxy_manager.proxy_to_entity(proxy, world_time);
-            
-            Vector2i entity_chunk = world_pos_to_chunk(entity->get_position());
-            
-            auto chunk_it = chunks.find(entity_chunk);
+
+        std::unique_lock<std::shared_mutex> lk(chunks_mutex);  // one lock
+        for (uint64_t id : to_activate) {
+            auto it = proxy_entities.find(id);
+            if (it == proxy_entities.end()) continue;
+
+            auto entity = proxy_manager.proxy_to_entity(it->second, world_time);
+            Vector2i chunk_coord = world_pos_to_chunk(entity->get_position());
+
+            auto chunk_it = chunks.find(chunk_coord);
             if (chunk_it != chunks.end()) {
                 chunk_it->second->entities.push_back(entity);
-                proxy_entities.erase(proxy_it);
+                proxy_entities.erase(it);
             } else {
-                request_chunk(entity_chunk);
+                request_chunk(chunk_coord);
             }
         }
     }
-    
-    // EARLY RETURN if paused - don't simulate or update proxies
+
     if (paused) {
         process_chunk_loading();
+        last_visible_chunks = std::move(visible_chunks);
         return;
     }
-    total_time_running += delta;
-    
-    // 5. Update proxies (only when NOT paused)
+
+    // 5. Update proxies
     update_proxies(world_time);
-    
-    // 6. Simulate visible chunks (only when NOT paused)
+
+    // 6. Simulate (threaded — now almost zero contention)
     if (!sim_cache.full_sim.empty()) {
         std::vector<std::future<void>> fs;
-        fs.reserve(sim_cache.full_sim.size());
-        
         for (auto& ch : sim_cache.full_sim) {
-            fs.push_back(thread_pool->enqueue([ch, delta] {
-                ch->simulate(delta);
-            }));
+            fs.push_back(thread_pool->enqueue([ch, delta] { ch->simulate(delta); }));
         }
-        
         for (auto& f : fs) f.get();
     }
-    
-    // 7. Flush new pending placements (only when NOT paused)
-    {
-        std::lock_guard lk(pending_mutex);
-        if (!pendingEntityPlacements.empty()) {
-            std::lock_guard lk2(chunks_mutex);
-            for (auto& [tgt, e] : pendingEntityPlacements) {
-                tgt->entities.push_back(e);
-            }
-            pendingEntityPlacements.clear();
-        }
-    }
-    
-    // 8. Process chunk loading (ALWAYS)
+
+    // 7. Flush pending again (includes all transfers from simulate threads)
+    flush_pending_placements();
+
     process_chunk_loading();
-    
-   // UtilityFunctions::print("Update end | loaded=", chunks.size(),
-     //                       " | full_sim=", sim_cache.full_sim.size(),
-       //                     " | proxies=", proxy_entities.size());
+
+    // Remember for next frame
+    last_visible_chunks = std::move(visible_chunks);
 
     if(tiles_moved_total_proxy > 0 && track_entity_movement_per_second)
     {
@@ -683,6 +616,32 @@ void World::update(const Vector2 &origin,
         }
         avg_fullsim_tiles_moved_temp = ((float)tiles_moved_total_fullsim / total_time_running) / full_sim_entities; 
         UtilityFunctions::print("Average fullsim move speed: ", avg_fullsim_tiles_moved_temp);
+    }
+}
+void World::flush_pending_placements() {
+    std::vector<std::pair<Vector2i, std::shared_ptr<Entity>>> current;
+    {
+        std::lock_guard<std::mutex> lk(pending_mutex);
+        current = std::move(pendingEntityPlacements);
+    }
+
+    std::vector<std::pair<Vector2i, std::shared_ptr<Entity>>> requeue;
+    {
+        std::unique_lock<std::shared_mutex> lk(chunks_mutex);
+        for (auto& p : current) {
+            auto it = chunks.find(p.first);
+            if (it != chunks.end()) {
+                it->second->entities.push_back(p.second);
+            } else {
+                request_chunk(p.first);
+                requeue.push_back(p);
+            }
+        }
+    }
+
+    if (!requeue.empty()) {
+        std::lock_guard<std::mutex> lk(pending_mutex);
+        for (auto& r : requeue) pendingEntityPlacements.push_back(r);
     }
 }
 void World::update_proxies(double current_time)
@@ -827,7 +786,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         auto e = std::make_shared<Colonist>(tile_coord, get_next_entity_id(), entity_sprite, size);
         e->set_base_move_speed(data.base_move_speed);
         e->set_must_simulate(data.must_simulate);
-        pendingEntityPlacements.push_back({chunk, e});
+        pendingEntityPlacements.push_back({chunk->coord, e});
     }
     else if(type == "building")
     {
@@ -835,7 +794,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, size);
         e->set_base_move_speed(data.base_move_speed);
         e->set_must_simulate(data.must_simulate);
-        pendingEntityPlacements.push_back({chunk,e});
+        pendingEntityPlacements.push_back({chunk->coord,e});
         // How will i fetch the data for the buildings?
         // Storage space, size, available jobs, etc. 
         // Maybe just a simple data structure that is populated from a JSON or something
@@ -846,7 +805,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         auto e = std::make_shared<Item>(tile_coord, get_next_entity_id(), entity_sprite, size);
         e->set_base_move_speed(data.base_move_speed);
         e->set_must_simulate(data.must_simulate);
-        pendingEntityPlacements.push_back({chunk,e});
+        pendingEntityPlacements.push_back({chunk->coord,e});
     }
     else 
     {
@@ -882,7 +841,7 @@ void World::create_temp_job(const Vector2i& jobPos, const Vector2i& entityPos, c
     }
 
     // Lock to safely read chunks
-    std::lock_guard<std::mutex> lock(chunks_mutex);
+    std::shared_lock<std::shared_mutex> lock(chunks_mutex);
 
     // Search all relevant chunks for the entity
     for (const auto& chunk_coord : chunks_to_check) {

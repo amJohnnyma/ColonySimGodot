@@ -1,4 +1,3 @@
-# WorldRenderer.gd — ULTRA-OPTIMIZED (Multiple Spritesheets) - 2025 version
 extends Node2D
 
 @export var world: World
@@ -22,6 +21,13 @@ var cs: float
 # Slowdown system
 var slowdown_factor: float = 1.0
 var fps_history: Array[float] = []
+var simulation_task_id: int = -1          # -1 = no task running
+var last_sim_delta_accum: float = 0.0     # accumulate real delta when sim is busy
+@onready var debug_label: Label = get_tree().root.get_node("Main_Game/UI/MasterControl/GameUI/DebugPanel/Label")
+var sim_ticks_this_second: int = 0
+var last_second_time: float = 0.0
+var displayed_fps: float = 0.0
+var displayed_sim_rate: float = 0.0
 
 # Per-sprite cache to avoid redundant atlas lookups
 var sprite_last_sheet: PackedInt32Array
@@ -60,6 +66,12 @@ func _ready() -> void:
 		# Initialize cache
 		sprite_last_sheet[i] = -1
 		sprite_last_variant[i] = -1
+		
+		
+	if not debug_label:
+		push_warning("DebugLabel not found! FPS counter disabled.")
+	else:
+		debug_label.text = "FPS: -- | Sim: -- Hz"
 
 
 func _process(delta: float) -> void:
@@ -215,12 +227,73 @@ func _get_slowed_delta(delta: float) -> float:
 
 func _physics_process(delta: float) -> void:
 	_update_slowdown()
-	var sim_delta := _get_slowed_delta(delta)
-	world.update(cam_pos, max_render_distance_chunks, sim_delta, GameSettings.paused)
 
+	# Accumulate time (fixed timestep style, but non-blocking)
+	last_sim_delta_accum += _get_slowed_delta(delta)
+
+	# Only start a new sim step if:
+	# - no sim is currently running
+	# - we have enough accumulated time for at least one tick
+	if simulation_task_id == -1 and last_sim_delta_accum >= GameSettings.sim_rate_target:
+		# Cap the delta we send (prevents huge simulation jumps after long stalls)
+		var sim_delta_to_send = min(last_sim_delta_accum, GameSettings.max_sim_delta_per_tick)
+
+		# Launch background task
+		simulation_task_id = WorkerThreadPool.add_task(
+			func():
+				world.update(cam_pos, max_render_distance_chunks, sim_delta_to_send, GameSettings.paused),
+			true  # high_priority = true → gets picked up faster
+		)
+
+		# Consume the time we just scheduled
+		last_sim_delta_accum -= sim_delta_to_send
+
+	# Optional: if sim is taking too long and accum grows large, you can skip frames or clamp
+	if last_sim_delta_accum > 0.5:  # e.g. >0.5s backlog → drop excess to avoid spiral
+		last_sim_delta_accum = 0.5
+
+	# Optional: check if previous task finished (non-blocking poll)
+	if simulation_task_id != -1:
+		if WorkerThreadPool.is_task_completed(simulation_task_id):
+			WorkerThreadPool.wait_for_task_completion(simulation_task_id)  # cleans up
+			simulation_task_id = -1
+
+	# If you want to know when a sim tick finished (e.g. for debug/UI):
+	# if simulation_task_id == -1 and previous was running → emit signal "sim_tick_completed"
+	# Update FPS & sim rate display
+	var current_time = Time.get_ticks_msec() / 1000.0
+
+	# FPS (smoothed a bit for readability)
+	displayed_fps = lerp(displayed_fps, Engine.get_frames_per_second(), 0.1)
+
+	# Simulation tick rate (how many world.update calls per second)
+	if current_time - last_second_time >= 1.0:
+		displayed_sim_rate = sim_ticks_this_second
+		sim_ticks_this_second = 0
+		last_second_time = current_time
+
+	# Only increment when a simulation tick actually ran
+	# (put this right after you launch or complete a WorkerThreadPool task)
+	# Example — in the if block where you add_task:
+	if simulation_task_id == -1 and last_sim_delta_accum >= GameSettings.sim_rate_target:
+		# ... launch task ...
+		sim_ticks_this_second += 1   # ← count this as a scheduled tick
+
+	# If using blocking version (fallback):
+	# world.update(...)  → put sim_ticks_this_second += 1 right after the call
+
+	# Finally, update the label text
+	if debug_label:
+		debug_label.text = "FPS: %d | VisibleSim: %.1f Hz | Backlog: %.2fs" % [
+			int(displayed_fps),
+			displayed_sim_rate,
+			last_sim_delta_accum
+		]
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F3:
 		for r in chunks.values():
 			if r.debug_label:
 				r.debug_label.visible = !r.debug_label.visible
+		if debug_label:
+			debug_label.visible = !debug_label.visible

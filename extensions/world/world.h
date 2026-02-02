@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <memory>
 #include <cmath>
+#include <shared_mutex>
 #include <vector>
 #include "chunk.h"
 #include "entity.h"
@@ -67,6 +68,7 @@ class World : public  Node2D{
         std::unordered_map<int, ProxyEntity> proxy_entities; // entities outside visible range
         double world_time = 0.0;
         ProxyManager proxy_manager;
+        std::set<Vector2i> last_visible_chunks;
 
         // for testing
         bool track_entity_movement_per_second = false;
@@ -79,10 +81,9 @@ class World : public  Node2D{
 
 
     public:
-        std::vector<std::tuple<std::shared_ptr<Chunk>, std::shared_ptr<Entity>>> pendingEntityPlacements;
-        std::mutex chunks_mutex;  // Protects chunks map
+        std::vector<std::pair<Vector2i, std::shared_ptr<Entity>>> pendingEntityPlacements;
+        std::shared_mutex chunks_mutex;  // Protects chunks map
         std::mutex pending_mutex;
-        std::mutex availableJobs_mutex;
 
     protected:
         static void _bind_methods();
@@ -123,6 +124,8 @@ class World : public  Node2D{
         Vector2i get_entity_position(const Vector2i &chunk_coord, int entity_index) const;
         int get_chunk_entity_capacity() const;
         Dictionary get_entities_at_world_pos(const Vector2 coord);
+
+        void flush_pending_placements(); 
 
         
         

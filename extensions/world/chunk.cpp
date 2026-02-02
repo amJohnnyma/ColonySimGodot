@@ -355,39 +355,26 @@ void Chunk::simulate(float delta) {
     if (!to_transfer[3].empty()) transfer_entities(to_transfer[3], Vector2i(-1, 0));
 }
 
-
-void Chunk::transfer_entities(
-        std::vector<std::shared_ptr<Entity>>& entities_vec,
-        Vector2i direction)
-{
+void Chunk::transfer_entities(std::vector<std::shared_ptr<Entity>>& entities_vec, Vector2i direction) {
     if (entities_vec.empty() || !world) return;
 
-    Vector2i target_chunk = coord + direction;
-    std::shared_ptr<Chunk> target;
+    Vector2i target_coord = coord + direction;
 
-    {
-        std::lock_guard<std::mutex> lock(world->chunks_mutex);
-        target = world->get_chunk(target_chunk);
-        if (!target) {
-            world->request_chunk(target_chunk);
-            for(auto& e: entities_vec)
-            {
-                std::shared_ptr<Chunk> currChunk = world->get_chunk(coord);
-                world->pendingEntityPlacements.emplace_back(currChunk,e);
-            }
-            return;
-        }
-    }
+    // Request the target chunk (safe to call from thread)
+    world->request_chunk(target_coord);
 
+    // Queue the transfer — only one mutex (pending), no chunks_mutex
     {
         std::lock_guard<std::mutex> lock(world->pending_mutex);
         for (auto& e : entities_vec) {
-            world->pendingEntityPlacements.emplace_back(target, e);
+            world->pendingEntityPlacements.emplace_back(target_coord, e);
         }
     }
 
     entities_vec.clear();
 }
+
+
 int Chunk::get_tile(int local_x, int local_y) const {
     if (local_x < 0 || local_y < 0 || local_x >= width || local_y >= height) return 0;
     return tiles[local_y * width + local_x];

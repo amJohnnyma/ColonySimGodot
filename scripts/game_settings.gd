@@ -11,6 +11,8 @@ extends Node2D
 @export var TARGET_FPS : int = 60  # Tune this (30-60)
 @export var MIN_SLOWDOWN : float = 0.1  # Never slower than 10% speed
 @export var HISTORY_FRAMES : int = 30  # Average FPS over ~0.5s
+@export var sim_rate_target: float = 1.0 / 30.0   # aim for ~30 sim ticks/sec (adjustable)
+@export var max_sim_delta_per_tick: float = 0.1   # cap single sim step to avoid huge jumps
 
 
 	

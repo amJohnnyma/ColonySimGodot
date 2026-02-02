@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4x0pgtbs0r18"]
+[gd_scene load_steps=4 format=3 uid="uid://b4x0pgtbs0r18"]
 
 [ext_resource type="Theme" uid="uid://dagsu1nb4qbs4" path="res://themes/main_theme.tres" id="1_u001w"]
 [ext_resource type="Script" uid="uid://8ks538tawrff" path="res://scripts/master_ui.gd" id="1_yubou"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rns2u"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="GameUI" type="Control"]
 layout_mode = 3
@@ -187,5 +190,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "||"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DebugPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_rns2u")
+
+[node name="Label" type="Label" parent="DebugPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "FPS:--Sim:--"
 horizontal_alignment = 1
 vertical_alignment = 1
