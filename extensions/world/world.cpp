@@ -12,7 +12,6 @@
 #include "entityDataReader.h"
 #include "entityJob.h"
 #include "item.h"
-#include "terrainGenerator.h"
 
 using namespace godot;
 
@@ -57,6 +56,11 @@ void World::init(int world_width_tiles, int world_height_tiles, int chunk_size_t
 
     // No pre-generation: chunks load on-demand for massive worlds
     init_thread_pool(4);
+
+
+    int load_rad = 512 / chunk_size_tiles;
+    int unload_rad = 768 / chunk_size_tiles;
+    chunkManager.initialize("NewWorld", load_rad, unload_rad, chunk_size_tiles, chunk_size_tiles, this);
 
     //Load JSON files for entity data
     // Preload the things we are most likely to use

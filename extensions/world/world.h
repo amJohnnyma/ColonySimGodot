@@ -24,14 +24,11 @@
 #include "entityDataReader.h"
 #include "entityJob.h"
 #include "threadpool.h"
+#include "chunk_manager.h"
+#include "hash_utils.h"
 
 using namespace godot;
 
-struct Vector2iHash {
-    std::size_t operator()(const Vector2i &v) const {
-        return std::hash<int>()(v.x) ^ (std::hash<int>()(v.y) << 1);
-    }
-};
 
 class World : public Node2D {
     GDCLASS(World, Node2D)
@@ -73,6 +70,7 @@ private:
     int tiles_moved_total_proxy = 0;
     float avg_fullsim_tiles_moved_temp = 0.0f;
     int tiles_moved_total_fullsim = 0;
+    ChunkManager chunkManager;
 
     void init_thread_pool(size_t thread_count = 0);
 

@@ -177,6 +177,30 @@ chunk.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk.cpp.s
 .PHONY : chunk.cpp.s
 
+chunk_manager.o: chunk_manager.cpp.o
+.PHONY : chunk_manager.o
+
+# target to build an object file
+chunk_manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk_manager.cpp.o
+.PHONY : chunk_manager.cpp.o
+
+chunk_manager.i: chunk_manager.cpp.i
+.PHONY : chunk_manager.i
+
+# target to preprocess a source file
+chunk_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk_manager.cpp.i
+.PHONY : chunk_manager.cpp.i
+
+chunk_manager.s: chunk_manager.cpp.s
+.PHONY : chunk_manager.s
+
+# target to generate assembly for a file
+chunk_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk_manager.cpp.s
+.PHONY : chunk_manager.cpp.s
+
 colonist.o: colonist.cpp.o
 .PHONY : colonist.o
 
@@ -384,6 +408,9 @@ help:
 	@echo "... chunk.o"
 	@echo "... chunk.i"
 	@echo "... chunk.s"
+	@echo "... chunk_manager.o"
+	@echo "... chunk_manager.i"
+	@echo "... chunk_manager.s"
 	@echo "... colonist.o"
 	@echo "... colonist.i"
 	@echo "... colonist.s"

@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/johnny/Godot/colony-sim-2/extensions/world/building.cpp" "CMakeFiles/world.dir/building.cpp.o" "gcc" "CMakeFiles/world.dir/building.cpp.o.d"
   "/home/johnny/Godot/colony-sim-2/extensions/world/chunk.cpp" "CMakeFiles/world.dir/chunk.cpp.o" "gcc" "CMakeFiles/world.dir/chunk.cpp.o.d"
+  "/home/johnny/Godot/colony-sim-2/extensions/world/chunk_manager.cpp" "CMakeFiles/world.dir/chunk_manager.cpp.o" "gcc" "CMakeFiles/world.dir/chunk_manager.cpp.o.d"
   "/home/johnny/Godot/colony-sim-2/extensions/world/colonist.cpp" "CMakeFiles/world.dir/colonist.cpp.o" "gcc" "CMakeFiles/world.dir/colonist.cpp.o.d"
   "/home/johnny/Godot/colony-sim-2/extensions/world/entity.cpp" "CMakeFiles/world.dir/entity.cpp.o" "gcc" "CMakeFiles/world.dir/entity.cpp.o.d"
   "/home/johnny/Godot/colony-sim-2/extensions/world/entityDataReader.cpp" "CMakeFiles/world.dir/entityDataReader.cpp.o" "gcc" "CMakeFiles/world.dir/entityDataReader.cpp.o.d"

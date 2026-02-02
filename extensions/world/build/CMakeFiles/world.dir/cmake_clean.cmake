@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/world.dir/building.cpp.o.d"
   "CMakeFiles/world.dir/chunk.cpp.o"
   "CMakeFiles/world.dir/chunk.cpp.o.d"
+  "CMakeFiles/world.dir/chunk_manager.cpp.o"
+  "CMakeFiles/world.dir/chunk_manager.cpp.o.d"
   "CMakeFiles/world.dir/colonist.cpp.o"
   "CMakeFiles/world.dir/colonist.cpp.o.d"
   "CMakeFiles/world.dir/entity.cpp.o"

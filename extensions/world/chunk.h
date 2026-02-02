@@ -19,6 +19,8 @@ public:
     int width = 0;
     int height = 0;
 
+    bool is_dirty = false; // for the save/load (dont write unless dirty)
+
     std::vector<int> tiles;
     std::vector<Color> tileColors;
     std::vector<std::shared_ptr<Entity>> entities;
