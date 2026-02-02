@@ -8,6 +8,9 @@ extends Node2D
 @export var render_buffer_chunks: int = max_render_distance_chunks + 2
 @export var simulation_distance: int = 20
 @export var paused : bool = true
+@export var TARGET_FPS : int = 60  # Tune this (30-60)
+@export var MIN_SLOWDOWN : float = 0.1  # Never slower than 10% speed
+@export var HISTORY_FRAMES : int = 30  # Average FPS over ~0.5s
 
 
 	

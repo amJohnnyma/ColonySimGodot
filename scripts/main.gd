@@ -164,7 +164,7 @@ func _ready() -> void:
 			jobTypeCount += 1
 
 	print("Colonists placed: ", colonist_count, " (", NUM_COLONISTS, " per corner)")
-	'''
+
 	# === Place colonists in all corner cells ===
 	var colonist_count := 0
 	var jobTypeCount := 0
@@ -187,7 +187,7 @@ func _ready() -> void:
 				var pos : Vector2i = corner + Vector2i(x, y)
 
 				var sprite_idx := colonist_count % NUM_COLONISTS
-				$World.create_entity("colonist", pos, 1, sprite_idx)
+				$World.create_entity("building", pos, 2, 8)
 
 				# Spread targets slightly
 				var colonist_target := target + Vector2i(
@@ -200,6 +200,86 @@ func _ready() -> void:
 
 				colonist_count += 1
 				jobTypeCount += 1
+'''
+	# ────────────────────────────────────────────────
+	# Assuming these exist / are defined earlier:
+	# var world_width  : int
+	# var world_height : int
+	# var half_width   := world_width  / 2
+	# var half_height  := world_height / 2
+	# const GameSettings.chunk_size : int = 16 (example)
+	# const NUM_COLONISTS : int = ... (number of colonist sprites)
+	# ────────────────────────────────────────────────
+
+	var max_chunk_x :int= (world_width  / GameSettings.chunk_size) - 1
+	var max_chunk_y :int= (world_height / GameSettings.chunk_size) - 1
+
+	# We now pick only **four corner chunks** (one per corner)
+	var corner_chunks := [
+		Vector2i(0, 0),                    # top-left
+		Vector2i(max_chunk_x, 0),          # top-right
+		Vector2i(0, max_chunk_y),          # bottom-left
+		Vector2i(max_chunk_x, max_chunk_y) # bottom-right
+	]
+
+	const BUILDING_IDS := [24,26,28,32,33,34,35,36,37,40,41,42,43,44]
+
+	var colonist_count := 0
+	var jobTypeCount   := 0
+
+	# Optional: different random seed per corner so they look different
+	var rng = RandomNumberGenerator.new()
+
+	for corner_idx in range(corner_chunks.size()):
+		rng.seed = corner_idx + 1000  # simple way to get different feel per corner
+
+		var chunk :Vector2i= corner_chunks[corner_idx]
+
+		# Clamp just to be 100% safe
+		chunk.x = clamp(chunk.x, 0, max_chunk_x)
+		chunk.y = clamp(chunk.y, 0, max_chunk_y)
+
+		var origin := chunk * GameSettings.chunk_size
+
+		for y in range(GameSettings.chunk_size):
+			for x in range(GameSettings.chunk_size):
+				var pos := origin + Vector2i(x, y)
+
+				# Skip if somehow outside world (edge case protection)
+				if pos.x >= world_width or pos.y >= world_height:
+					continue
+
+				# Decide randomly whether to place colonist or building
+				# Adjust 0.15 to control colonist density (15% colonists here)
+				if rng.randf() < 2:
+					# ─── Colonist ───────────────────────────────────────
+					var sprite_idx := colonist_count % NUM_COLONISTS
+
+					$World.create_entity("colonist", pos, 1, sprite_idx)
+
+					# Spread target around center
+					var offset_x := (sprite_idx % 13) - 6
+					var offset_y := ((sprite_idx / 13) % 9) - 4
+					var target_pos := Vector2i(
+					half_width  + offset_x,
+					half_height + offset_y
+					)
+					target_pos.x = clamp(target_pos.x, 0, world_width - 1)
+					target_pos.y = clamp(target_pos.y, 0, world_height - 1)
+
+					var job_type := 1 if jobTypeCount % 2 == 0 else 2
+
+					$World.create_temp_job(target_pos, pos, colonist_count, job_type)
+
+					colonist_count += 1
+					jobTypeCount   += 1
+
+				else:
+				# ─── Building ───────────────────────────────────────
+					var building_id = BUILDING_IDS[rng.randi() % BUILDING_IDS.size()]
+					$World.create_entity("building", pos, 2, building_id)
+
+
 
 	# ===================================================================
 	# END OF TEMPORARY GENERATION

@@ -802,7 +802,7 @@ void World::update_proxies(double current_time)
 
 }
 
-void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_type, const int &entity_sprite)
+void World::create_entity(const String &type, const Vector2i &tile_coord, const int &entity_sheet, const int &entity_sprite)
 {
     Vector2i chunk_coord = world_tile_to_chunk(tile_coord.x, tile_coord.y);
     // UtilityFunctions::print("-> Chunk: ", chunk_coord);
@@ -816,7 +816,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         return;
     }
 
-    EntityData data = entityDataReader.get_entity_data(entity_type, entity_sprite);
+    EntityData data = entityDataReader.get_entity_data(entity_sheet, entity_sprite);
     if(data.def) return;
 
     Vector2i size = Vector2i(data.size_x, data.size_y);
@@ -832,7 +832,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     else if(type == "building")
     {
         // temporarily make a building this size
-        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, size, entity_type);
+        auto e = std::make_shared<Building>(tile_coord, get_next_entity_id(), entity_sprite, size);
         e->set_base_move_speed(data.base_move_speed);
         e->set_must_simulate(data.must_simulate);
         pendingEntityPlacements.push_back({chunk,e});
