@@ -1,6 +1,10 @@
 #include "chunk_manager.h"
 #include "chunk.h"
 #include "entity.h"
+#include "godot_cpp/variant/packed_byte_array.hpp"
+#include "godot_cpp/variant/packed_float32_array.hpp"
+#include "godot_cpp/variant/packed_int32_array.hpp"
+#include "godot_cpp/variant/packed_string_array.hpp"
 #include "world.h"
 
 #include <cmath>
@@ -65,6 +69,16 @@ void ChunkManager::initialize(const String& world_name, int load_rad, int unload
     chunk_width = chunk_w;
     chunk_height = chunk_h;
     world = world_ptr;
+
+    // Get world dimensions from World class
+    int world_width_tiles = world_ptr->get_world_width_tiles();    
+    int world_height_tiles = world_ptr->get_world_width_tiles();
+    
+    // Calculate max chunk coordinates (0-indexed)
+    max_chunk_x = (world_width_tiles / chunk_width) - 1;   // 512/64 - 1 = 7
+    max_chunk_y = (world_height_tiles / chunk_height) - 1; // 512/64 - 1 = 7
+    
+    UtilityFunctions::print(vformat("World bounds: chunks (0,0) to (%d,%d)", max_chunk_x, max_chunk_y));
 
     String fixed_world_name = "NewWorld";
     world_save_path = "user://worlds/" + fixed_world_name + "/chunks/";
@@ -145,7 +159,7 @@ PackedByteArray ChunkManager::_serialize_chunk(const Chunk* chunk) const {
         data.append_array(tile_data.to_byte_array());
     }
     
-    // Tile colors
+    // Tile colors // might be unnecessary
     for (const Color& color : chunk->tileColors) {
         PackedFloat32Array color_data;
         color_data.push_back(color.r);
@@ -165,40 +179,41 @@ PackedByteArray ChunkManager::_serialize_chunk(const Chunk* chunk) const {
     for (const auto& e : chunk->entities) {
         if (!e) continue;
         
-        // Entity type ID (4 bytes)
+        // Entity type ID 4 bytes
         PackedInt32Array type_data;
-        type_data.push_back(e->get_type_id());
+        int entity_type_id = e->get_type_id();
+        type_data.push_back(entity_type_id);
         data.append_array(type_data.to_byte_array());
         
-        // Entity ID (8 bytes)
+        // Entity ID 8 bytes
         PackedInt64Array id_data;
         id_data.push_back(e->get_entity_id());
         data.append_array(id_data.to_byte_array());
         
-        // Position (8 bytes)
+        // Position 8 bytes
         PackedInt32Array pos_data;
         pos_data.push_back(e->get_position().x);
         pos_data.push_back(e->get_position().y);
         data.append_array(pos_data.to_byte_array());
         
-        // Size (8 bytes)
+        // Size 8 bytes
         PackedInt32Array size_data;
         size_data.push_back(e->get_entity_size().x);
         size_data.push_back(e->get_entity_size().y);
         data.append_array(size_data.to_byte_array());
         
-        // Sprite (4 bytes)
+        // Sprite 4 bytes
         PackedInt32Array sprite_data;
         sprite_data.push_back(e->get_entity_sprite());
         data.append_array(sprite_data.to_byte_array());
         
-        // Movement data (8 bytes)
+        // Movement data 8 bytes
         PackedFloat32Array movement_data;
         movement_data.push_back(e->get_move_speed());
         movement_data.push_back(e->get_base_move_speed());
         data.append_array(movement_data.to_byte_array());
         
-        // Flags (8 bytes)
+        // Flags 8 bytes
         PackedInt32Array flags_data;
         flags_data.push_back(e->is_active() ? 1 : 0);
         flags_data.push_back(e->is_must_simulate() ? 1 : 0);
@@ -214,8 +229,64 @@ PackedByteArray ChunkManager::_serialize_chunk(const Chunk* chunk) const {
         job_index_data.push_back(e->get_current_job_index());
         data.append_array(job_index_data.to_byte_array());
         
-        // TODO: Serialize individual EntityJob objects if needed
-        // For now, we're not saving job details - entities will regenerate jobs on load
+        // Serialize individual EntityJob objects if needed
+        for (auto & j : jobs)
+        {
+
+            PackedInt32Array job_flags_data; // 8 bytes
+            job_flags_data.push_back(j.isValid ? 1 : 0);
+            job_flags_data.push_back(j.complete ? 1 : 0);
+            data.append_array(job_flags_data.to_byte_array());
+
+            PackedInt32Array job_target_coord; // 8 bytes
+            job_target_coord.push_back(j.target_coord.x);
+            job_target_coord.push_back(j.target_coord.y);
+            data.append_array(job_target_coord.to_byte_array());
+
+            // move_algo
+            const std::string& algo = j.move_algo;
+            PackedByteArray algo_bytes;
+            algo_bytes.resize(static_cast<int32_t>(algo.size()));
+            uint8_t* ptr = algo_bytes.ptrw();  // writable pointer
+            std::memcpy(ptr, algo.data(), algo.size());
+            data.append_array(algo_bytes);
+
+
+            //priority // 4 bytes
+            PackedInt32Array prio_data;
+            prio_data.push_back(j.priority);
+            data.append_array(prio_data.to_byte_array());
+
+            // move speed multiplier // 4 bytes
+            PackedFloat32Array moveSpeedMultiplier_data;
+            moveSpeedMultiplier_data.push_back(j.moveSpeedMultiplier);
+            data.append_array(moveSpeedMultiplier_data.to_byte_array());
+
+
+        }
+
+
+        // Now check what type it is and add that. Polymorphism
+        switch(entity_type_id)
+        {
+            case 1:
+                if(auto colonist = std::dynamic_pointer_cast<Colonist>(e))
+                {
+                    PackedInt32Array homeCoord; // 8 bytes
+                    homeCoord.push_back(colonist->get_home_coord().x);
+                    homeCoord.push_back(colonist->get_home_coord().y);
+                    data.append_array(homeCoord.to_byte_array());
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+
+        }
+
     }
     
     return data;
@@ -338,26 +409,27 @@ void ChunkManager::_io_worker() {
 
         switch (task.type) {
             case IO_Task::SAVE: {
-                PackedByteArray data = _serialize_chunk(task.chunk);
+                // Just write the pre-serialized data
                 Ref<FileAccess> f = FileAccess::open(task.file_path, FileAccess::WRITE);
                 if (f.is_valid()) {
-                    f->store_buffer(data);
+                    f->store_buffer(task.raw_data);
                 }
                 break;
             }
             case IO_Task::LOAD: {
+                // Just read raw bytes
+                PackedByteArray raw;
                 Ref<FileAccess> f = FileAccess::open(task.file_path, FileAccess::READ);
-                Chunk* chunk = nullptr;
                 if (f.is_valid() && f->get_length() > 0) {
-                    PackedByteArray raw = f->get_buffer(f->get_length());
-                    chunk = _deserialize_chunk(raw);
+                    raw = f->get_buffer(f->get_length());
                 }
                 
-                // Must call callback on main thread via Godot's deferred system
-                // Since we can't directly call Godot functions from worker thread
+                // Callback will handle deserialization on main thread
                 if (task.load_callback) {
-                    // We'll handle this in the callback itself by checking if chunk is null
-                    task.load_callback(chunk);
+                    // Need to invoke this on main thread!
+                    // Store for processing in update()
+                    std::lock_guard<std::mutex> lock(completed_loads_mutex);
+                    completed_loads.push_back({task.load_callback, raw});
                 }
                 break;
             }
@@ -369,32 +441,63 @@ void ChunkManager::_io_worker() {
     }
 }
 
+void ChunkManager::_queue_save(Chunk* chunk) {
+    if (!chunk) return;
+
+    // Don't save negative chunks
+    if (!_is_valid_chunk_coord(chunk->coord)) {
+        chunk->is_dirty = false;  // Mark as clean so we don't try again
+        return;
+    }
+    
+    // SERIALIZE ON MAIN THREAD
+    PackedByteArray data = _serialize_chunk(chunk);
+    
+    IO_Task task;
+    task.type = IO_Task::SAVE;
+    task.coord = chunk->coord;
+    task.raw_data = data;  // Pass serialized data
+    task.file_path = _get_chunk_path(chunk->coord);
+    
+    chunk->is_dirty = false;
+    
+    std::lock_guard<std::mutex> lock(io_mutex);
+    io_queue.push(task);
+}
+
+// Modified _queue_load
 void ChunkManager::_queue_load(const Vector2i& coord, std::function<void(Chunk*)> callback) {
     IO_Task task;
     task.type = IO_Task::LOAD;
     task.coord = coord;
     task.file_path = _get_chunk_path(coord);
-    task.load_callback = callback;
+    
+    // Load callback now receives raw data
+    task.load_callback = [this, coord, callback](PackedByteArray raw_data) {
+        // DESERIALIZE ON MAIN THREAD
+        Chunk* chunk = nullptr;
+        if (!raw_data.is_empty()) {
+            chunk = _deserialize_chunk(raw_data);
+        }
+        
+        {
+            std::lock_guard<std::mutex> lock(loading_mutex);
+            chunks_being_loaded.erase(coord);
+        }
+        
+        if (chunk) {
+            std::lock_guard<std::mutex> lock(chunks_mutex);
+            loaded_chunks[coord] = chunk;
+        }
+        
+        if (callback) {
+            callback(chunk);
+        }
+    };
     
     std::lock_guard<std::mutex> lock(io_mutex);
     io_queue.push(task);
 }
-
-void ChunkManager::_queue_save(Chunk* chunk) {
-    if (!chunk) return;
-    
-    IO_Task task;
-    task.type = IO_Task::SAVE;
-    task.coord = chunk->coord;
-    task.chunk = chunk;
-    task.file_path = _get_chunk_path(chunk->coord);
-    
-    chunk->is_dirty = false;  // Mark as saved
-    
-    std::lock_guard<std::mutex> lock(io_mutex);
-    io_queue.push(task);
-}
-
 void ChunkManager::_handle_load_complete(Vector2i coord, Chunk* chunk, std::function<void(Chunk*)> callback) {
     if (chunk) {
         std::lock_guard<std::mutex> lock(chunks_mutex);
@@ -408,6 +511,9 @@ void ChunkManager::_handle_load_complete(Vector2i coord, Chunk* chunk, std::func
 // PUBLIC API
 
 Chunk* ChunkManager::get_chunk(const Vector2i& coord, bool allow_generate_if_missing) {
+    if (!_is_valid_chunk_coord(coord)) {
+        return nullptr;
+    }
     {
         std::lock_guard<std::mutex> lock(chunks_mutex);
         auto it = loaded_chunks.find(coord);
@@ -518,6 +624,9 @@ void ChunkManager::update(const Vector2& player_world_pos) {
     for (int dy = -load_radius; dy <= load_radius; ++dy) {
         for (int dx = -load_radius; dx <= load_radius; ++dx) {
             Vector2i c = { player_chunk.x + dx, player_chunk.y + dy };
+            if (!_is_valid_chunk_coord(c)) {
+                continue; // Skip invalid chunks
+            }
             float dist = std::sqrt(dx*dx + dy*dy);
             if (dist <= load_radius) {
                 get_chunk(c, true); // Async load/generate
@@ -540,5 +649,17 @@ void ChunkManager::update(const Vector2& player_world_pos) {
     
     for (const Vector2i& c : to_unload) {
         unload_chunk(c);
+    }
+}
+void ChunkManager::process_completed_loads() {
+    std::vector<std::pair<std::function<void(PackedByteArray)>, PackedByteArray>> to_process;
+    
+    {
+        std::lock_guard<std::mutex> lock(completed_loads_mutex);
+        to_process.swap(completed_loads);
+    }
+    
+    for (auto& pair : to_process) {
+        pair.first(pair.second);  // Execute callback on main thread
     }
 }

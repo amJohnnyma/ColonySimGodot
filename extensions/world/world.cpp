@@ -60,6 +60,7 @@ void World::init(int world_width_tiles, int world_height_tiles, int chunk_size_t
 
     int load_rad = 512 / chunk_size_tiles;
     int unload_rad = 768 / chunk_size_tiles;
+    UtilityFunctions::print(world_chunks_x, " ", world_chunks_y);
     chunkManager.initialize("NewWorld", load_rad, unload_rad, chunk_size_tiles, chunk_size_tiles, this);
 
     //Load JSON files for entity data
@@ -215,6 +216,7 @@ void World::set_tile(int world_x, int world_y, int value) {
     }
     Vector2i local = world_tile_to_local(world_x, world_y);
     it->second->set_tile(local.x, local.y, value);
+    chunkManager.mark_dirty(it->second.get());
 }
 
 Array World::get_chunk_colors(const Vector2i &coord) {
@@ -531,6 +533,9 @@ void World::update(const Vector2 &origin,
 
     if (!paused) world_time += delta;
 
+    chunkManager.update(origin);
+    chunkManager.process_completed_loads();
+
     // 1. Flush pending (always)
     flush_pending_placements();   // ← new helper (see below)
 
@@ -830,6 +835,8 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         e->set_base_move_speed(data.base_move_speed);
         e->set_must_simulate(data.must_simulate);
         pendingEntityPlacements.push_back({chunk->coord, e});
+
+        chunkManager.mark_dirty(chunk.get());
     }
     else if(type == "building")
     {
@@ -838,6 +845,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         e->set_base_move_speed(data.base_move_speed);
         e->set_must_simulate(data.must_simulate);
         pendingEntityPlacements.push_back({chunk->coord,e});
+        chunkManager.mark_dirty(chunk.get());
         // How will i fetch the data for the buildings?
         // Storage space, size, available jobs, etc. 
         // Maybe just a simple data structure that is populated from a JSON or something
@@ -849,6 +857,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         e->set_base_move_speed(data.base_move_speed);
         e->set_must_simulate(data.must_simulate);
         pendingEntityPlacements.push_back({chunk->coord,e});
+        chunkManager.mark_dirty(chunk.get());
     }
     else 
     {

@@ -23,6 +23,7 @@ func random_pos(rng) -> Vector2i:
 	return Vector2i(x, y)
 
 func _ready() -> void:
+	print(OS.get_user_data_dir())
 	scale = Vector2(world_scale, world_scale)
 	Engine.max_fps = 0
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)

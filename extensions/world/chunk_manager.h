@@ -44,14 +44,16 @@ public:
     // Called each frame to update loading/unloading
     void update(const Vector2& player_world_pos);
 
+    void process_completed_loads();
+
 private:
     struct IO_Task {
-        enum Type { LOAD, SAVE, DELETE };
+        enum Type { SAVE, LOAD, DELETE };
         Type type;
         Vector2i coord;
-        Chunk* chunk = nullptr;
         String file_path;
-        std::function<void(Chunk*)> load_callback;
+        PackedByteArray raw_data;  // For serialized data
+        std::function<void(PackedByteArray)> load_callback;  // Returns raw data
     };
 
     // Thread-safe IO queue
@@ -59,6 +61,8 @@ private:
     std::mutex io_mutex;
     std::thread io_thread;
     std::atomic<bool> io_thread_should_exit{false};
+    std::mutex completed_loads_mutex;
+    std::vector<std::pair<std::function<void(PackedByteArray)>, PackedByteArray>> completed_loads;
 
     // Loaded chunks
     Vector2iMap<Chunk*> loaded_chunks;
@@ -73,6 +77,8 @@ private:
     int unload_radius = 12;
     int chunk_width = 16;
     int chunk_height = 16;
+    int max_chunk_x = 0;
+    int max_chunk_y = 0;
     World* world = nullptr;
     String world_save_path;
 
@@ -87,4 +93,7 @@ private:
     void _queue_load(const Vector2i& coord, std::function<void(Chunk*)> callback);
     void _queue_save(Chunk* chunk);
     void _handle_load_complete(Vector2i coord, Chunk* chunk, std::function<void(Chunk*)> callback);
+    bool _is_valid_chunk_coord(const Vector2i& coord) const {
+        return coord.x >= 0 && coord.y >= 0 && coord.x <= max_chunk_x && coord.y <=max_chunk_y;
+    }
 };
