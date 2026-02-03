@@ -1,5 +1,4 @@
 extends Camera2D
-
 @export var move_speed_base: float = 400.0    # Base speed at zoom=1.0
 @export var zoom_speed: float = 0.15          # Zoom multiplier per wheel tick
 @export var zoom_smoothness: float = 8.0      # How fast zoom interpolates (higher = snappier)
@@ -16,6 +15,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	handle_movement(delta)
 	handle_zoom(delta)
+	handle_corner_teleport()
 	
 	# Smooth interpolation
 	global_position = global_position.lerp(target_position, move_smoothness * delta)
@@ -45,8 +45,6 @@ func handle_movement(delta: float) -> void:
 		target_position += input_dir * current_speed * delta
 
 func handle_zoom(delta: float) -> void:
-
-	
 	# KEYBOARD ZOOM (Q/E or +/-)
 	if Input.is_key_pressed(KEY_Q) or Input.is_key_pressed(KEY_MINUS):
 		target_zoom *= (1.0 + zoom_speed * delta * 10.0)  # Continuous zoom out
@@ -56,7 +54,33 @@ func handle_zoom(delta: float) -> void:
 	# CLAMP ZOOM LIMITS
 	target_zoom = clamp(target_zoom, min_zoom, max_zoom)
 
-# MOUSE WHEEL INPUT (add these to your Input Map)
-# Project Settings → Input Map → Add "zoom_in" and "zoom_out"
-# Mouse wheel up → zoom_in
-# Mouse wheel down → zoom_out
+func handle_corner_teleport() -> void:
+	var chunk_size = GameSettings.chunk_size
+	var max_tiles = GameSettings.max_world_tiles
+	var max_chunk_coord = (max_tiles / chunk_size) - 1  # e.g., 512/64 - 1 = 7
+	
+	var target_chunk: Vector2i
+	var should_teleport := false
+	
+	# Number keys to teleport to corners
+	if Input.is_key_pressed(KEY_1):
+		target_chunk = Vector2i(0, 0)  # Top-left
+		should_teleport = true
+	elif Input.is_key_pressed(KEY_2):
+		target_chunk = Vector2i(max_chunk_coord, 0)  # Top-right
+		should_teleport = true
+	elif Input.is_key_pressed(KEY_3):
+		target_chunk = Vector2i(0, max_chunk_coord)  # Bottom-left
+		should_teleport = true
+	elif Input.is_key_pressed(KEY_4):
+		target_chunk = Vector2i(max_chunk_coord, max_chunk_coord)  # Bottom-right
+		should_teleport = true
+	
+	if should_teleport:
+		# Calculate center of chunk in world coordinates
+		var world_pos = Vector2(
+			target_chunk.x * chunk_size + chunk_size / 2.0,
+			target_chunk.y * chunk_size + chunk_size / 2.0
+		)
+		target_position = world_pos
+		print("Teleported to chunk %s (world pos: %s)" % [target_chunk, world_pos])
