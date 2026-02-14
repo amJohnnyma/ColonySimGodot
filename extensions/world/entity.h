@@ -38,16 +38,19 @@ protected:
     bool must_simulate = true;
 
     Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size = Vector2i(1, 1));
+    Entity() {}; // plain entity // current use -> deserialization
 
 public:
     virtual ~Entity() = default;
     virtual bool simulate(EntitySimulationParam &params) = 0;
-    virtual int get_type_id() const = 0;
+    virtual int get_type_id() const {return entity_type;};
+    void set_type_id(int type) {entity_type = type;}
 
     void reset_timer(float a = 1);
     Vector2i get_position() { return position; }
     void set_position(Vector2i pos) { position = pos; }
     bool is_active() { return active; }
+    void set_entity_id(int id) {entity_id = id;}
     uint64_t get_entity_id() const { return entity_id; }
     int get_entity_sprite() const { return entity_sprite; }
     Vector2i get_entity_size() const { return size; }
@@ -61,6 +64,9 @@ public:
     bool has_active_job() const { return currentJobIndex != -1 && currentJobIndex < jobList.size(); }
     bool is_must_simulate() { return must_simulate; }
     void set_must_simulate(bool flag) { must_simulate = flag; }
+    void set_entity_sprite(int sprite) { entity_sprite = sprite; }
+    void set_entity_size(Vector2i entity_size) { size = entity_size; }
+    void set_active(bool is_active) { active = is_active; }
 
     void update_move_speed_from_job(const EntityJob &job);
     void add_job(EntityJob job);

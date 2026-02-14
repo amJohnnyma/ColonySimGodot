@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/johnny/Godot/colony-sim-2/extensions/world/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
@@ -129,12 +139,39 @@ world/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/build
 .PHONY : world/fast
 
+#=============================================================================
+# Target rules for targets named test_serialization
+
+# Build rule for target.
+test_serialization: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_serialization
+.PHONY : test_serialization
+
+# fast build rule for target.
+test_serialization/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/build
+.PHONY : test_serialization/fast
+
+#=============================================================================
+# Target rules for targets named run_tests
+
+# Build rule for target.
+run_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 run_tests
+.PHONY : run_tests
+
+# fast build rule for target.
+run_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
+.PHONY : run_tests/fast
+
 building.o: building.cpp.o
 .PHONY : building.o
 
 # target to build an object file
 building.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/building.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/building.cpp.o
 .PHONY : building.cpp.o
 
 building.i: building.cpp.i
@@ -143,6 +180,7 @@ building.i: building.cpp.i
 # target to preprocess a source file
 building.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/building.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/building.cpp.i
 .PHONY : building.cpp.i
 
 building.s: building.cpp.s
@@ -151,6 +189,7 @@ building.s: building.cpp.s
 # target to generate assembly for a file
 building.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/building.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/building.cpp.s
 .PHONY : building.cpp.s
 
 chunk.o: chunk.cpp.o
@@ -159,6 +198,7 @@ chunk.o: chunk.cpp.o
 # target to build an object file
 chunk.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/chunk.cpp.o
 .PHONY : chunk.cpp.o
 
 chunk.i: chunk.cpp.i
@@ -167,6 +207,7 @@ chunk.i: chunk.cpp.i
 # target to preprocess a source file
 chunk.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/chunk.cpp.i
 .PHONY : chunk.cpp.i
 
 chunk.s: chunk.cpp.s
@@ -175,6 +216,7 @@ chunk.s: chunk.cpp.s
 # target to generate assembly for a file
 chunk.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/chunk.cpp.s
 .PHONY : chunk.cpp.s
 
 chunk_manager.o: chunk_manager.cpp.o
@@ -183,6 +225,7 @@ chunk_manager.o: chunk_manager.cpp.o
 # target to build an object file
 chunk_manager.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk_manager.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/chunk_manager.cpp.o
 .PHONY : chunk_manager.cpp.o
 
 chunk_manager.i: chunk_manager.cpp.i
@@ -191,6 +234,7 @@ chunk_manager.i: chunk_manager.cpp.i
 # target to preprocess a source file
 chunk_manager.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk_manager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/chunk_manager.cpp.i
 .PHONY : chunk_manager.cpp.i
 
 chunk_manager.s: chunk_manager.cpp.s
@@ -199,6 +243,7 @@ chunk_manager.s: chunk_manager.cpp.s
 # target to generate assembly for a file
 chunk_manager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/chunk_manager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/chunk_manager.cpp.s
 .PHONY : chunk_manager.cpp.s
 
 colonist.o: colonist.cpp.o
@@ -207,6 +252,7 @@ colonist.o: colonist.cpp.o
 # target to build an object file
 colonist.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/colonist.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/colonist.cpp.o
 .PHONY : colonist.cpp.o
 
 colonist.i: colonist.cpp.i
@@ -215,6 +261,7 @@ colonist.i: colonist.cpp.i
 # target to preprocess a source file
 colonist.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/colonist.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/colonist.cpp.i
 .PHONY : colonist.cpp.i
 
 colonist.s: colonist.cpp.s
@@ -223,6 +270,7 @@ colonist.s: colonist.cpp.s
 # target to generate assembly for a file
 colonist.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/colonist.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/colonist.cpp.s
 .PHONY : colonist.cpp.s
 
 entity.o: entity.cpp.o
@@ -231,6 +279,7 @@ entity.o: entity.cpp.o
 # target to build an object file
 entity.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entity.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/entity.cpp.o
 .PHONY : entity.cpp.o
 
 entity.i: entity.cpp.i
@@ -239,6 +288,7 @@ entity.i: entity.cpp.i
 # target to preprocess a source file
 entity.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entity.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/entity.cpp.i
 .PHONY : entity.cpp.i
 
 entity.s: entity.cpp.s
@@ -247,6 +297,7 @@ entity.s: entity.cpp.s
 # target to generate assembly for a file
 entity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entity.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/entity.cpp.s
 .PHONY : entity.cpp.s
 
 entityDataReader.o: entityDataReader.cpp.o
@@ -255,6 +306,7 @@ entityDataReader.o: entityDataReader.cpp.o
 # target to build an object file
 entityDataReader.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entityDataReader.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/entityDataReader.cpp.o
 .PHONY : entityDataReader.cpp.o
 
 entityDataReader.i: entityDataReader.cpp.i
@@ -263,6 +315,7 @@ entityDataReader.i: entityDataReader.cpp.i
 # target to preprocess a source file
 entityDataReader.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entityDataReader.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/entityDataReader.cpp.i
 .PHONY : entityDataReader.cpp.i
 
 entityDataReader.s: entityDataReader.cpp.s
@@ -271,6 +324,7 @@ entityDataReader.s: entityDataReader.cpp.s
 # target to generate assembly for a file
 entityDataReader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/entityDataReader.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/entityDataReader.cpp.s
 .PHONY : entityDataReader.cpp.s
 
 item.o: item.cpp.o
@@ -279,6 +333,7 @@ item.o: item.cpp.o
 # target to build an object file
 item.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/item.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/item.cpp.o
 .PHONY : item.cpp.o
 
 item.i: item.cpp.i
@@ -287,6 +342,7 @@ item.i: item.cpp.i
 # target to preprocess a source file
 item.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/item.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/item.cpp.i
 .PHONY : item.cpp.i
 
 item.s: item.cpp.s
@@ -295,6 +351,7 @@ item.s: item.cpp.s
 # target to generate assembly for a file
 item.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/item.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/item.cpp.s
 .PHONY : item.cpp.s
 
 perlin_noise.o: perlin_noise.cpp.o
@@ -303,6 +360,7 @@ perlin_noise.o: perlin_noise.cpp.o
 # target to build an object file
 perlin_noise.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/perlin_noise.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/perlin_noise.cpp.o
 .PHONY : perlin_noise.cpp.o
 
 perlin_noise.i: perlin_noise.cpp.i
@@ -311,6 +369,7 @@ perlin_noise.i: perlin_noise.cpp.i
 # target to preprocess a source file
 perlin_noise.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/perlin_noise.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/perlin_noise.cpp.i
 .PHONY : perlin_noise.cpp.i
 
 perlin_noise.s: perlin_noise.cpp.s
@@ -319,6 +378,7 @@ perlin_noise.s: perlin_noise.cpp.s
 # target to generate assembly for a file
 perlin_noise.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/perlin_noise.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/perlin_noise.cpp.s
 .PHONY : perlin_noise.cpp.s
 
 register_types.o: register_types.cpp.o
@@ -351,6 +411,7 @@ terrainGenerator.o: terrainGenerator.cpp.o
 # target to build an object file
 terrainGenerator.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/terrainGenerator.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/terrainGenerator.cpp.o
 .PHONY : terrainGenerator.cpp.o
 
 terrainGenerator.i: terrainGenerator.cpp.i
@@ -359,6 +420,7 @@ terrainGenerator.i: terrainGenerator.cpp.i
 # target to preprocess a source file
 terrainGenerator.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/terrainGenerator.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/terrainGenerator.cpp.i
 .PHONY : terrainGenerator.cpp.i
 
 terrainGenerator.s: terrainGenerator.cpp.s
@@ -367,7 +429,32 @@ terrainGenerator.s: terrainGenerator.cpp.s
 # target to generate assembly for a file
 terrainGenerator.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/terrainGenerator.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/terrainGenerator.cpp.s
 .PHONY : terrainGenerator.cpp.s
+
+test_chunk_serialization.o: test_chunk_serialization.cpp.o
+.PHONY : test_chunk_serialization.o
+
+# target to build an object file
+test_chunk_serialization.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/test_chunk_serialization.cpp.o
+.PHONY : test_chunk_serialization.cpp.o
+
+test_chunk_serialization.i: test_chunk_serialization.cpp.i
+.PHONY : test_chunk_serialization.i
+
+# target to preprocess a source file
+test_chunk_serialization.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/test_chunk_serialization.cpp.i
+.PHONY : test_chunk_serialization.cpp.i
+
+test_chunk_serialization.s: test_chunk_serialization.cpp.s
+.PHONY : test_chunk_serialization.s
+
+# target to generate assembly for a file
+test_chunk_serialization.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/test_chunk_serialization.cpp.s
+.PHONY : test_chunk_serialization.cpp.s
 
 world.o: world.cpp.o
 .PHONY : world.o
@@ -375,6 +462,7 @@ world.o: world.cpp.o
 # target to build an object file
 world.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/world.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/world.cpp.o
 .PHONY : world.cpp.o
 
 world.i: world.cpp.i
@@ -383,6 +471,7 @@ world.i: world.cpp.i
 # target to preprocess a source file
 world.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/world.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/world.cpp.i
 .PHONY : world.cpp.i
 
 world.s: world.cpp.s
@@ -391,6 +480,7 @@ world.s: world.cpp.s
 # target to generate assembly for a file
 world.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/world.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/world.cpp.s
 .PHONY : world.cpp.s
 
 # Help Target
@@ -401,6 +491,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... test"
+	@echo "... run_tests"
+	@echo "... test_serialization"
 	@echo "... world"
 	@echo "... building.o"
 	@echo "... building.i"
@@ -432,6 +525,9 @@ help:
 	@echo "... terrainGenerator.o"
 	@echo "... terrainGenerator.i"
 	@echo "... terrainGenerator.s"
+	@echo "... test_chunk_serialization.o"
+	@echo "... test_chunk_serialization.i"
+	@echo "... test_chunk_serialization.s"
 	@echo "... world.o"
 	@echo "... world.i"
 	@echo "... world.s"

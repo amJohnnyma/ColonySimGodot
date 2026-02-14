@@ -16,6 +16,7 @@ Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size)
     homeCoord = pos;
 }
 
+
 bool Colonist::simulate(EntitySimulationParam &params) {
     if (!active) return false;
 

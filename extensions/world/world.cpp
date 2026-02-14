@@ -8,6 +8,7 @@
 
 #include "building.h"
 #include "chunk.h"
+#include "chunk_manager.h"
 #include "colonist.h"
 #include "entityDataReader.h"
 #include "entityJob.h"
@@ -41,6 +42,7 @@ void World::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_track_entity_movement_per_second","flag"),&World::set_track_entity_movement_per_second);
     ClassDB::bind_method(D_METHOD("toggle_track_entity_movement_per_second"),&World::toggle_track_entity_movement_per_second);
     ClassDB::bind_method(D_METHOD("is_tracking_entity_movement_per_second"),&World::is_tracking_entity_movement_per_second);
+    ClassDB::bind_method(D_METHOD("test_serialization"), &World::test_serialization);
 
 }
 
@@ -962,4 +964,7 @@ EntityJob World::create_job(const int& entityType, const int& jobType, const Vec
     job.target_coord = {jobPos.x,jobPos.y};
 
     return job;
+}
+bool World::test_serialization() {
+    return chunkManager.test_serialize_deserialize();
 }

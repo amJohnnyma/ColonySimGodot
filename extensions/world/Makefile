@@ -1,4 +1,4 @@
-# cd extensions/world/bin
+# cd extensions/world/build
 # rm -rf *
 # cmake .. -DCMAKE_BUILD_TYPE=editor
 # make -j8

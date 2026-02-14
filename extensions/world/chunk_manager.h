@@ -46,6 +46,11 @@ public:
 
     void process_completed_loads();
 
+    bool test_serialize_deserialize();
+
+    PackedByteArray _serialize_chunk(const Chunk* chunk) const;
+    Chunk* _deserialize_chunk(const PackedByteArray& raw) const;
+
 private:
     struct IO_Task {
         enum Type { SAVE, LOAD, DELETE };
@@ -86,8 +91,6 @@ private:
 
     // Helpers
     String _get_chunk_path(const Vector2i& coord) const;
-    PackedByteArray _serialize_chunk(const Chunk* chunk) const;
-    Chunk* _deserialize_chunk(const PackedByteArray& raw) const;
     
     void _io_worker();
     void _queue_load(const Vector2i& coord, std::function<void(Chunk*)> callback);

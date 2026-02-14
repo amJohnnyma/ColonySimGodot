@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//Build test executable for serialization
+BUILD_TESTS:BOOL=ON
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
