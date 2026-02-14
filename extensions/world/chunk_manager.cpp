@@ -1,6 +1,7 @@
 #include "chunk_manager.h"
 #include "chunk.h"
 #include "entity.h"
+#include "entityJob.h"
 #include "godot_cpp/variant/packed_byte_array.hpp"
 #include "godot_cpp/variant/packed_float32_array.hpp"
 #include "godot_cpp/variant/packed_int32_array.hpp"
@@ -8,6 +9,8 @@
 #include "world.h"
 
 #include <cmath>
+#include <cstdint>
+#include <cstring>
 
 ChunkManager::ChunkManager() {
     thread_pool = WorkerThreadPool::get_singleton();
@@ -174,10 +177,12 @@ PackedByteArray ChunkManager::_serialize_chunk(const Chunk* chunk) const {
     PackedInt32Array entity_header;
     entity_header.push_back(entity_count);
     data.append_array(entity_header.to_byte_array());
+
     
     // Entities - store basic serializable data
     for (const auto& e : chunk->entities) {
         if (!e) continue;
+
         
         // Entity type ID 4 bytes
         PackedInt32Array type_data;
@@ -219,12 +224,13 @@ PackedByteArray ChunkManager::_serialize_chunk(const Chunk* chunk) const {
         flags_data.push_back(e->is_must_simulate() ? 1 : 0);
         data.append_array(flags_data.to_byte_array());
         
-        // Job data
+        // Job data size
         auto jobs = e->get_job_list();
         PackedInt32Array job_count_data;
         job_count_data.push_back(jobs.size());
         data.append_array(job_count_data.to_byte_array());
         
+        //job current index
         PackedInt32Array job_index_data;
         job_index_data.push_back(e->get_current_job_index());
         data.append_array(job_index_data.to_byte_array());
@@ -243,8 +249,11 @@ PackedByteArray ChunkManager::_serialize_chunk(const Chunk* chunk) const {
             job_target_coord.push_back(j.target_coord.y);
             data.append_array(job_target_coord.to_byte_array());
 
-            // move_algo
+            // move_algo// 4 + lenstring
             const std::string& algo = j.move_algo;
+            PackedInt32Array len;
+            len.push_back(static_cast<int32_t>(algo.size()));
+            data.append_array(len.to_byte_array());
             PackedByteArray algo_bytes;
             algo_bytes.resize(static_cast<int32_t>(algo.size()));
             uint8_t* ptr = algo_bytes.ptrw();  // writable pointer
@@ -350,38 +359,102 @@ Chunk* ChunkManager::_deserialize_chunk(const PackedByteArray& raw) const {
     
     chunk->entities.clear();
     chunk->entities.reserve(entity_count);
-    
-    // NOTE: Entity deserialization is complex because entities are polymorphic
-    // Need a factory function that creates the correct entity subclass
-    // based on type_id. For now, we skip entity deserialization.
-    // 
-    // In practice, might want to:
-    // 1. Create an EntityFactory class
-    // 2. Register creation functions for each entity type
-    // 3. Call factory->create(type_id, position, ...) here
-    //
-    // Example:
-    // for (uint32_t i = 0; i < entity_count; ++i) {
-    //     int32_t type_id = raw.decode_s32(offset); offset += 4;
-    //     uint64_t entity_id = raw.decode_u64(offset); offset += 8;
-    //     ... read rest of data ...
-    //     auto entity = EntityFactory::create(type_id, position, entity_id, sprite, size);
-    //     chunk->entities.push_back(entity);
-    // }
-    
+
     // Skip entity data for now
     for (uint32_t i = 0; i < entity_count; ++i) {
+
+        int32_t type_id = raw.decode_u32(offset);
         offset += 4;  // type_id
+        int64_t entity_id = raw.decode_s64(offset);
         offset += 8;  // entity_id
-        offset += 8;  // position
-        offset += 8;  // size
+        int32_t pos_x = raw.decode_s32(offset);
+        offset += 4; // pos x
+        int32_t pos_y = raw.decode_s32(offset);
+        offset += 4; // pos y
+        int32_t size_x= raw.decode_s32(offset);
+        offset += 4; // size x
+        int32_t size_y = raw.decode_s32(offset);
+        offset += 4; // size y
+        int32_t sprite_idx = raw.decode_s32(offset);
         offset += 4;  // sprite
-        offset += 8;  // movement speeds
-        offset += 8;  // flags
-        uint32_t job_count = raw.decode_u32(offset); offset += 4;
+        float move_speed = raw.decode_float(offset);
+        offset += 4;
+        float base_move_speed = raw.decode_float(offset);
+        offset += 4;  // movement speeds
+        bool is_active = raw.decode_s32(offset);
+        offset += 4;
+        bool is_must_simulate = raw.decode_s32(offset);
+        offset += 4;  // flags
+        uint32_t job_count = raw.decode_u32(offset); 
+        offset += 4;
+        int32_t job_index = raw.decode_s32(offset);
         offset += 4;  // job_index
-        // Skip job data
+                      //
+        // for each job
+        for (uint32_t j = 0; j < job_count; ++j)
+        {
+
+            // job is valid // 4
+            bool is_valid = raw.decode_s32(offset);
+            offset += 4; 
+            // job is complete // 4
+            bool is_complete = raw.decode_s32(offset);
+            offset += 4;
+            // job target coord x // 4
+            int32_t target_coord_x = raw.decode_s32(offset);
+            offset += 4;
+            // job target coord y // 4
+            int32_t target_coord_y = raw.decode_s32(offset);
+            offset += 4;
+            // move algo // 4 + lenstring (First 4 are length)
+            int32_t len = raw.decode_s32(offset);
+            offset += 4;
+            std::string algo;
+            algo.resize(len);
+            std::memcpy(algo.data(), &raw[offset], len);
+            offset += len;
+            //priority // 4 bytes
+            uint32_t priority = raw.decode_s32(offset);
+            offset += 4;
+            // move speed multiplier // 4 bytes
+            float move_speed_multiplier = raw.decode_float(offset);
+            offset += 4;
+
+            EntityJob job;
+            job.isValid = is_valid;
+            job.complete = is_complete;
+            job.target_coord = Vector2(target_coord_x, target_coord_y);
+            job.move_algo = algo;
+            job.priority = priority;
+            job.moveSpeedMultiplier = move_speed_multiplier;
+        } 
+
+
+        // Now check what type it is and add that. Polymorphism
+        switch(type_id)
+        {
+            case 1:
+                {
+                    //colonist home coord x
+                    uint32_t home_x = raw.decode_s32(offset);
+                    offset += 4;
+                    //colonist home coord y
+                    uint32_t home_y = raw.decode_s32(offset);
+                    offset += 4;
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+
+        }
     }
+
+
+    
     
     chunk->is_dirty = false;
     return chunk;
