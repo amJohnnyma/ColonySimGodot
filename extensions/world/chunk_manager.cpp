@@ -190,6 +190,7 @@ PackedByteArray ChunkManager::_serialize_chunk(const Chunk* chunk) const {
     
     // Entities
     int entity_idx = 0;
+    
     for (const auto& e : chunk->entities) {
         if (!e) continue;
         

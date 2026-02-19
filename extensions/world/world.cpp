@@ -60,8 +60,11 @@ void World::init(int world_width_tiles, int world_height_tiles, int chunk_size_t
     init_thread_pool(4);
 
 
-    int load_rad = 512 / chunk_size_tiles;
-    int unload_rad = 768 / chunk_size_tiles;
+    // what the hell was my thought on this calculation??
+    //int load_rad = 512 / chunk_size_tiles;
+    //int unload_rad = 768 / chunk_size_tiles;
+    int load_rad = 4;
+    int unload_rad = 5;
     UtilityFunctions::print(world_chunks_x, " ", world_chunks_y);
     chunkManager.initialize("NewWorld", load_rad, unload_rad, chunk_size_tiles, chunk_size_tiles, this);
 
