@@ -211,7 +211,7 @@ func _ready() -> void:
 	# const GameSettings.chunk_size : int = 16 (example)
 	# const NUM_COLONISTS : int = ... (number of colonist sprites)
 	# ────────────────────────────────────────────────
-
+'''
 	var max_chunk_x :int= (world_width  / GameSettings.chunk_size) - 1
 	var max_chunk_y :int= (world_height / GameSettings.chunk_size) - 1
 
@@ -280,7 +280,7 @@ func _ready() -> void:
 					var building_id = BUILDING_IDS[rng.randi() % BUILDING_IDS.size()]
 					$World.create_entity("building", pos, 2, building_id)
 
-
+'''
 
 	# ===================================================================
 	# END OF TEMPORARY GENERATION

@@ -34,21 +34,6 @@ void Chunk::generate(int wx, int wy) {
             tiles[y * width + x] = (x + y + coord.x + coord.y) % 3;
             tileColors[y * width + x] = terrain.generate_tile_color(world_x, world_y);
 
-            // add entities 
-            // For now lets fill it with 0.1% trees
-            
-            /*
-            thread_local static std::mt19937 gen(std::random_device{}());
-            std::uniform_real_distribution<float> dist(0.0f, 1.0f);
-            float rng = dist(gen);
-
-            if (rng <= 0.001)
-            {
-                // place a trees
-                auto tree = std::make_shared<Building>(Vector2i(world_x, world_y),world->get_next_entity_id(), 8, Vector2i(2,8));
-                entities.push_back(tree);
-            }
-            */
         }
     }
     auto newentities = terrain.get_chunk_entities(width, coord);
@@ -58,9 +43,21 @@ void Chunk::generate(int wx, int wy) {
         Vector2i epos = std::get<1>(e);
         int ewidth = std::get<2>(e);
         int eheight = std::get<3>(e);
+        bool freeSpace = true;
+        for(const auto& en : entities)
+        {
+            if(en->get_position().x == epos.x && en->get_position().y == epos.y)
+            {
+                freeSpace = false;
+                break;
+            }
+        }
 
-        auto tree = std::make_shared<Building>(epos,world->get_next_entity_id(), 8, Vector2i(ewidth,eheight));
-        entities.push_back(tree);
+        if(freeSpace)
+        {
+            auto tree = std::make_shared<Building>(epos,world->get_next_entity_id(), 8, Vector2i(ewidth,eheight));
+            entities.push_back(tree);
+        }
 
     }
 }
