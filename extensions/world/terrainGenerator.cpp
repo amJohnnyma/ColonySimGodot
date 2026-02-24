@@ -165,28 +165,68 @@ std::vector<std::tuple<godot::String, Vector2i, int, int>> TerrainGenerator::get
     std::vector<std::tuple<godot::String, Vector2i, int, int>> chunk_entities;
     chunk_entities.reserve(chunk_size * chunk_size / 20);
 
+    // Keep track of already placed buildings in this chunk (for overlap checks)
+    std::vector<std::tuple<Vector2i, int, int>> placed;  // pos, width, height
+    placed.reserve(chunk_entities.capacity());
+
     uint32_t seed = 12345u ^ static_cast<uint32_t>(coord.x) * 0x9e3779b9u ^ static_cast<uint32_t>(coord.y) * 0x9e3779b9u * 2u;
     std::mt19937 gen(seed);
-
     std::uniform_real_distribution<float> dist(0.0f, 1.0f);
 
     for (int y = 0; y < chunk_size; ++y) {
         for (int x = 0; x < chunk_size; ++x) {
             int world_x = x + coord.x * chunk_size;
             int world_y = y + coord.y * chunk_size;
-
             BiomeType biome = get_biome_type(world_x, world_y);
             const BiomeData &bd = BIOME_TABLE[static_cast<int>(biome)];
 
             float val = dist(gen);
-
-            if (val <= bd.tree_density) {
-                chunk_entities.emplace_back(
-                    String("building"),
-                    Vector2i(world_x, world_y),
-                    2,
-                    8);
+            if (val > bd.tree_density) {
+                continue;
             }
+
+            Vector2i proposed_pos(world_x, world_y);
+            int w = 2;
+            int h = 4;
+
+            // Check if this position + size would overlap any already placed building
+            bool overlaps = false;
+            for (const auto& [p_pos, p_w, p_h] : placed) {
+                // Compute bounding boxes (inclusive)
+                int this_left   = proposed_pos.x;
+                int this_right  = proposed_pos.x + w - 1;
+                int this_bottom = proposed_pos.y - h + 1;
+                int this_top    = proposed_pos.y;
+
+                int other_left   = p_pos.x;
+                int other_right  = p_pos.x + p_w - 1;
+                int other_bottom = p_pos.y - p_h + 1;
+                int other_top    = p_pos.y;
+
+                // Axis-Aligned Bounding Box (AABB) overlap test
+                if (!(this_right  < other_left   ||   // completely left
+                      this_left   > other_right  ||   // completely right
+                      this_top    < other_bottom ||   // completely below
+                      this_bottom > other_top))       // completely above
+                {
+                    overlaps = true;
+                    break;
+                }
+            }
+
+            if (!overlaps) {
+                // Safe to place
+                chunk_entities.emplace_back(
+                    godot::String("building"),
+                    proposed_pos,
+                    w,
+                    h
+                );
+
+                // Remember it for future checks in this chunk
+                placed.emplace_back(proposed_pos, w, h);
+            }
+            // else: skip — would have overlapped
         }
     }
 

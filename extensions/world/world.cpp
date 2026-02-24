@@ -329,9 +329,14 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     int count = 0;
     for (const auto& entity_ptr : chunk->entities) {  // const ref for safety
         if (!entity_ptr) continue;
-        Vector2 entity_pos = entity_ptr->get_position();
-        // Exact match; for float tolerance: if (abs(entity_pos.x - entity_coord.x) < 0.01f && same for y)
-        if (Math::absf(entity_pos.x - entity_coord.x) < 0.01f && Math::absf(entity_pos.y - entity_coord.y) < 0.01f) {
+        Vector2i entity_pos = entity_ptr->get_position();
+        Vector2i entity_size = entity_ptr->get_entity_size();
+        const float eps = 0.01f;
+        if (entity_coord.x >= entity_pos.x - eps &&
+                entity_coord.x <= entity_pos.x + entity_size.x - 1.0f + eps &&
+                entity_coord.y >= entity_pos.y - entity_size.y + 1.0f - eps &&
+                entity_coord.y <= entity_pos.y + eps) {
+
             if (count >= max_entities) {
                 break;
             }

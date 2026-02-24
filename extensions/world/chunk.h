@@ -38,4 +38,6 @@ public:
 
     std::vector<int> getAvailableDirs(Vector2i current_world, Vector2i current_size,
                                       std::vector<std::tuple<Vector2i, int>> neighbourChunks);
+
+    bool isOverlappingEntity(Vector2i pos);
 };

@@ -43,23 +43,38 @@ void Chunk::generate(int wx, int wy) {
         Vector2i epos = std::get<1>(e);
         int ewidth = std::get<2>(e);
         int eheight = std::get<3>(e);
-        bool freeSpace = true;
-        for(const auto& en : entities)
-        {
-            if(en->get_position().x == epos.x && en->get_position().y == epos.y)
-            {
-                freeSpace = false;
-                break;
-            }
-        }
 
-        if(freeSpace)
+        if(!isOverlappingEntity(epos))
         {
             auto tree = std::make_shared<Building>(epos,world->get_next_entity_id(), 8, Vector2i(ewidth,eheight));
             entities.push_back(tree);
         }
 
     }
+}
+
+bool Chunk::isOverlappingEntity(Vector2i pos)
+{
+    for (const auto& e : entities)
+    {
+        Vector2i entity_pos  = e->get_position();   // bottom-left, integer
+        Vector2i entity_size = e->get_entity_size();
+
+        if (entity_size.x <= 0 || entity_size.y <= 0) continue;
+
+        Vector2i entity_min = entity_pos;                               // bottom-left
+        Vector2i entity_max = entity_pos + entity_size - Vector2i(1, 1); // inclusive top-right
+
+        // pos is overlapped if it's inside [min .. max] inclusive
+        if (pos.x >= entity_min.x &&
+            pos.x <= entity_max.x &&
+            pos.y >= entity_min.y - (entity_size.y - 1) &&  // = entity_pos.y - entity_size.y + 1
+            pos.y <= entity_max.y)                          // = entity_pos.y
+        {
+            return true;  // yes — this cell is occupied
+        }
+    }
+    return false;  // no overlap → free
 }
 
 Vector2i entityWorldToLocalCoord(Vector2i worldCoord, World *world) {
