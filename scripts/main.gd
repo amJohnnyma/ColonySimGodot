@@ -336,7 +336,7 @@ func _unhandled_input(event):
 			elif selectedSprite[0] == 3:
 				type = "item"
 			elif selectedSprite[0] == 4:
-				type = "building"
+				type = "harvestable"
 			$World.create_entity(type, new_tile, selectedSprite[0], selectedSprite[1])
 		else:
 			var camera := get_viewport().get_camera_2d()

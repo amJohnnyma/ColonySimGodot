@@ -21,6 +21,7 @@ set(SOURCES
     perlin_noise.cpp
     terrainGenerator.cpp
     chunk_manager.cpp
+    harvestable.cpp
 )
 
 # === Create the library target FIRST ===
@@ -117,6 +118,7 @@ if(BUILD_TESTS)
         world.cpp
         chunk.cpp
         chunk_manager.cpp
+        harvestable.cpp
         test_chunk_serialization.cpp  # The test file
     )
     

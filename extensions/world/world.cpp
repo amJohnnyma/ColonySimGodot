@@ -7,6 +7,7 @@
 #include <unordered_set>
 
 #include "building.h"
+#include "harvestable.h"
 #include "chunk.h"
 #include "chunk_manager.h"
 #include "colonist.h"
@@ -308,7 +309,7 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
         return result;
     }
 
-    int max_entities = chunk_size;  // Arbitrary cap; adjust as needed
+    int max_entities = 1;  // There should only be one entity in a spot
     PackedInt64Array entity_ids;
     PackedInt32Array types;
     PackedInt32Array entity_sprites;
@@ -869,6 +870,15 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
         e->set_must_simulate(data.must_simulate);
         pendingEntityPlacements.push_back({chunk->coord,e});
         chunkManager.mark_dirty(chunk.get());
+    }
+    else if (type == "harvestable")
+    {
+        auto e = std::make_shared<Harvestable>(tile_coord, get_next_entity_id(), entity_sprite, size);
+        e->set_base_move_speed(data.base_move_speed);
+        e->set_must_simulate(data.must_simulate);
+        pendingEntityPlacements.push_back({chunk->coord,e});
+        chunkManager.mark_dirty(chunk.get());
+
     }
     else 
     {

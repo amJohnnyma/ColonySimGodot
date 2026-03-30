@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/world.dir/entity.cpp.o.d"
   "CMakeFiles/world.dir/entityDataReader.cpp.o"
   "CMakeFiles/world.dir/entityDataReader.cpp.o.d"
+  "CMakeFiles/world.dir/harvestable.cpp.o"
+  "CMakeFiles/world.dir/harvestable.cpp.o.d"
   "CMakeFiles/world.dir/item.cpp.o"
   "CMakeFiles/world.dir/item.cpp.o.d"
   "CMakeFiles/world.dir/perlin_noise.cpp.o"

@@ -11,10 +11,13 @@
 
 using namespace godot;
 
+class World;
+
 struct EntitySimulationParam {
     float delta;
     Vector2i &out_new_pos;
     std::vector<int> availableDirs;
+    World* world = nullptr;
 };
 
 class Entity {

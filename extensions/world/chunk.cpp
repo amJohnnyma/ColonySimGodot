@@ -264,7 +264,10 @@ void Chunk::simulate(float delta) {
         EntitySimulationParam params = {
             delta,
             new_pos,
-            availableDirs};
+            availableDirs,
+            world
+
+        };
 
         bool moved = entity->simulate(params);
 
@@ -309,6 +312,7 @@ void Chunk::simulate(float delta) {
             }
         } else {
             staying_entities.push_back(entity);
+
         }
     }
 

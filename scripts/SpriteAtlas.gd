@@ -64,7 +64,7 @@ func load_json(path: String) -> Variant:
 	1: Vector2(0.015, 0.015),
 	2: Vector2(0.03, 0.03),
 	3: Vector2(0.06, 0.06),
-	4: Vector2(0.02, 0.02),
+	4: Vector2(0.015, 0.015),
 }
 
 @export var sheet_offsets: Dictionary = {

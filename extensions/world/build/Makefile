@@ -327,6 +327,33 @@ entityDataReader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/entityDataReader.cpp.s
 .PHONY : entityDataReader.cpp.s
 
+harvestable.o: harvestable.cpp.o
+.PHONY : harvestable.o
+
+# target to build an object file
+harvestable.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/harvestable.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/harvestable.cpp.o
+.PHONY : harvestable.cpp.o
+
+harvestable.i: harvestable.cpp.i
+.PHONY : harvestable.i
+
+# target to preprocess a source file
+harvestable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/harvestable.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/harvestable.cpp.i
+.PHONY : harvestable.cpp.i
+
+harvestable.s: harvestable.cpp.s
+.PHONY : harvestable.s
+
+# target to generate assembly for a file
+harvestable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/harvestable.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/harvestable.cpp.s
+.PHONY : harvestable.cpp.s
+
 item.o: item.cpp.o
 .PHONY : item.o
 
@@ -513,6 +540,9 @@ help:
 	@echo "... entityDataReader.o"
 	@echo "... entityDataReader.i"
 	@echo "... entityDataReader.s"
+	@echo "... harvestable.o"
+	@echo "... harvestable.i"
+	@echo "... harvestable.s"
 	@echo "... item.o"
 	@echo "... item.i"
 	@echo "... item.s"

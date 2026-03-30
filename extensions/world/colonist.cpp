@@ -10,6 +10,9 @@
 #include "entityJob.h"
 #include "godot_cpp/core/math.hpp"
 
+#include "godot_cpp/variant/array.hpp"
+#include "world.h"
+
 Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size)
     : Entity(pos, id, entity_sprite, size) {
     reset_timer();
@@ -98,6 +101,23 @@ bool Colonist::harvest_movement(EntitySimulationParam &params) {
     if (distance_between(target, current) < 2) {
         // get the entity at that pos and decrement it's inventory
         UtilityFunctions::print("Reached harvest spot");
+        auto harvestable = params.world->get_entities_at_world_pos(target);
+
+        Array types = harvestable["types"];
+        if(types.size() <= 0) {
+            UtilityFunctions::print("Empty spot");
+            currentJob.complete = true;
+            return false;
+        }
+
+        int e_type = static_cast<int>(types[0]);
+
+        if(e_type == 4)
+        {
+            UtilityFunctions::print("Found harvestable. Harvesting...");
+        }
+        
+        
         // get the entity
         // wait a second or two to harvest
         // harvest should have an infinite inventory

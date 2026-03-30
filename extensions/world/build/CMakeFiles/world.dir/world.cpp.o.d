@@ -383,4 +383,5 @@ CMakeFiles/world.dir/world.cpp.o: \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/dir_access.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/file_access.hpp \
  /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/worker_thread_pool.hpp \
- /home/johnny/Godot/colony-sim-2/extensions/world/hash_utils.h
+ /home/johnny/Godot/colony-sim-2/extensions/world/hash_utils.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/harvestable.h
