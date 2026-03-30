@@ -10,6 +10,7 @@ func _ready():
 	load_sheet(1, "res://EntityData/sprite_sheet_1.json")
 	load_sheet(2, "res://EntityData/sprite_sheet_2.json")
 	load_sheet(3, "res://EntityData/sprite_sheet_3.json")
+	load_sheet(4, "res://EntityData/sprite_sheet_4.json")
 
 
 func load_sheet(sheet_id: int, path: String):
@@ -53,7 +54,7 @@ func load_json(path: String) -> Variant:
 	preload("res://sprites/ninja-sheet.png"),      # 1 → Players
 	preload("res://sprites/Castle2.png"),    # 2 → Buildings
 	preload("res://sprites/items-sheet.png"),        # 3 → Items / Environment
-#	preload("res://sprites/creature-sheet.png"),    # 4 → Creatures, etc.
+	preload("res://sprites/building.jpg"),    # 4 → Buildings, etc.
 ]
 
 
@@ -63,14 +64,14 @@ func load_json(path: String) -> Variant:
 	1: Vector2(0.015, 0.015),
 	2: Vector2(0.03, 0.03),
 	3: Vector2(0.06, 0.06),
-	4: Vector2(0.04, 0.04),
+	4: Vector2(0.02, 0.02),
 }
 
 @export var sheet_offsets: Dictionary = {
 	1: Vector2(32, -32),
 	2: Vector2(16, -16),
 	3: Vector2(8, -8),
-	4: Vector2(0, 0),
+	4: Vector2(8, -8),
 }
 
 # Fallbacks

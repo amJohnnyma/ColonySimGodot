@@ -61,7 +61,7 @@ func handle_corner_teleport() -> void:
 	
 	var target_chunk: Vector2i
 	var should_teleport := false
-	
+'''
 	# Number keys to teleport to corners
 	if Input.is_key_pressed(KEY_1):
 		target_chunk = Vector2i(0, 0)  # Top-left
@@ -84,3 +84,4 @@ func handle_corner_teleport() -> void:
 		)
 		target_position = world_pos
 		print("Teleported to chunk %s (world pos: %s)" % [target_chunk, world_pos])
+'''

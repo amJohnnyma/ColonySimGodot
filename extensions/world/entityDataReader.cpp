@@ -63,10 +63,12 @@ EntityData EntityDataReader::get_entity_data(int sheet_id, int sprite_id) {
     }
 
     nlohmann::json sheet = load_sheet(sheet_id);
+    godot::UtilityFunctions::print("Loading sheet ", sheet_id);
 
     std::string sprite_key = std::to_string(sprite_id);
     if (!sheet.contains(sprite_key)) {
         std::cerr << "Warning: Sprite " << sprite_id << " not found in sheet " << sheet_id << std::endl;
+        godot::UtilityFunctions::print("Sprite not found, ", sprite_id);
         return EntityData();
     }
 
@@ -81,6 +83,9 @@ EntityData EntityDataReader::get_entity_data(int sheet_id, int sprite_id) {
     data.must_simulate = sprite.value("must_simulate", false);
 
     data.def = false;
+    
+    godot::UtilityFunctions::print(data.size_x," ",  data.size_y);
+
 
     evict_if_needed();
     cache[key] = data;

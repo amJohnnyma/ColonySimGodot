@@ -8,6 +8,7 @@
 
 #include "entity.h"
 #include "entityJob.h"
+#include "godot_cpp/core/math.hpp"
 
 Colonist::Colonist(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size)
     : Entity(pos, id, entity_sprite, size) {
@@ -61,7 +62,8 @@ bool Colonist::simulate(EntitySimulationParam &params) {
     update_move_speed_from_job(jobList[currentJobIndex]);
     if (current.move_algo == "default") {
         moved = default_movement(params);
-    } else if (current.move_algo == "aco") {
+    } else if (current.move_algo == "harvest") {
+        moved = harvest_movement(params);
     } else {
         moved = random_movement(params);
     }
@@ -73,6 +75,84 @@ bool Colonist::simulate(EntitySimulationParam &params) {
     return moved;
 }
 
+float distance_between(const Vector2i& target, const Vector2i& pos)
+{
+    float distance = 0.f;
+    float tsqr = std::pow((pos.x - target.x),2);
+    float psqr = std::pow((pos.y - target.y),2);
+    float d = tsqr + psqr;
+    distance = Math::sqrt(d);
+
+    return distance;
+}
+
+bool Colonist::harvest_movement(EntitySimulationParam &params) {
+    if (currentJobIndex < 0 || currentJobIndex >= jobList.size()) {
+        return false;
+    }
+    EntityJob &currentJob = jobList[currentJobIndex];
+    Vector2i target = currentJob.target_coord;
+    Vector2i current = position;
+
+    // check if we are close to the position and then try harvest
+    if (distance_between(target, current) < 2) {
+        // get the entity at that pos and decrement it's inventory
+        UtilityFunctions::print("Reached harvest spot");
+        // get the entity
+        // wait a second or two to harvest
+        // harvest should have an infinite inventory
+        // increment player inventory
+        currentJob.complete = true;
+        return false;
+    }
+
+    Vector2i delta = target - current;
+    int dx = delta.x;
+    int dy = delta.y;
+
+    Vector2i move(0, 0);
+
+    if (std::abs(dx) > std::abs(dy)) {
+        move.x = (dx > 0) ? 1 : -1;
+    } else if (std::abs(dy) > 0) {
+        move.y = (dy > 0) ? 1 : -1;
+    } else {
+        move.x = (dx > 0) ? 1 : -1;
+    }
+
+    Vector2i desired_pos = position + move;
+    if (is_position_available(desired_pos, params)) {
+        params.out_new_pos = desired_pos;
+        reset_timer();
+        return true;
+    }
+
+    const Vector2i dirs[4] = {
+        Vector2i(0, -1), Vector2i(1, 0),
+        Vector2i(0, 1), Vector2i(-1, 0)};
+
+    std::vector<std::pair<int, Vector2i>> scored_dirs;
+    for (const auto &dir : dirs) {
+        Vector2i test_pos = position + dir;
+        int score = -(std::abs(target.x - test_pos.x) + std::abs(target.y - test_pos.y));
+        scored_dirs.push_back({score, dir});
+    }
+
+    std::sort(scored_dirs.begin(), scored_dirs.end(),
+              [](const auto &a, const auto &b) { return a.first > b.first; });
+
+    for (const auto &[score, dir] : scored_dirs) {
+        Vector2i test_pos = position + dir;
+        if (is_position_available(test_pos, params)) {
+            params.out_new_pos = test_pos;
+            reset_timer();
+            return true;
+        }
+    }
+
+    reset_timer(1.f);
+    return false;
+}
 bool Colonist::default_movement(EntitySimulationParam &params) {
     if (currentJobIndex < 0 || currentJobIndex >= jobList.size()) {
         return false;
@@ -130,7 +210,7 @@ bool Colonist::default_movement(EntitySimulationParam &params) {
         }
     }
 
-    reset_timer(2.f);
+    reset_timer(1.f);
     return false;
 }
 
@@ -149,7 +229,7 @@ bool Colonist::random_movement(EntitySimulationParam &params) {
         Vector2i test_pos = position + dirs[idx];
         if (is_position_available(test_pos, params)) {
             params.out_new_pos = test_pos;
-            reset_timer();
+            reset_timer(1.f);
             return true;
         }
     }

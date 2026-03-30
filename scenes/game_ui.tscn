@@ -111,8 +111,7 @@ icon_alignment = 1
 [node name="Cat4Button" type="Button" parent="BuildExpandedPanel/BuildCategories"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Cat4
-"
+text = "Building2"
 alignment = 0
 icon_alignment = 1
 

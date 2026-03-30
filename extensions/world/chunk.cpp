@@ -46,8 +46,8 @@ void Chunk::generate(int wx, int wy) {
 
         if(!isOverlappingEntity(epos))
         {
-            auto tree = std::make_shared<Building>(epos,world->get_next_entity_id(), 8, Vector2i(ewidth,eheight));
-            entities.push_back(tree);
+          //  auto tree = std::make_shared<Building>(epos,world->get_next_entity_id(), 8, Vector2i(ewidth,eheight));
+          //  entities.push_back(tree);
         }
 
     }

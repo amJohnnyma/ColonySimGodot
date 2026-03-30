@@ -49,8 +49,8 @@ func entities_selected(ids : Array, types : Array, sprites : Array, epos : Array
 	var menu = $MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/MenuButton.get_popup()
 	menu.clear()
 	if type == 1:
-		menu.add_item("Sprint to pos", 1)
-		menu.add_item("Slow to pos", 2)
+		menu.add_item("MoveToPos", 1)
+		menu.add_item("Harvest", 2)
 	elif type == 2:
 		menu.add_item("Option C", 1)
 		menu.add_item("Option D", 2)

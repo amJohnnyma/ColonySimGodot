@@ -834,6 +834,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     }
 
     EntityData data = entityDataReader.get_entity_data(entity_sheet, entity_sprite);
+    UtilityFunctions::print("Sheet and sprite", entity_sheet, " ", entity_sprite);
     if(data.def) return;
 
     Vector2i size = Vector2i(data.size_x, data.size_y);
@@ -953,12 +954,12 @@ EntityJob getEntityJobConfig(const int& entityType, const int& jobType)
 {   
     EntityJob config;
 
-    if (entityType == 1 && jobType == 1) { // colonist speedy move to point
+    if (entityType == 1 && jobType == 1) { // move to pos
         config.move_algo = "default";
         config.moveSpeedMultiplier = 5.0f;
         config.priority = 100;
-    } else if (entityType == 1 && jobType == 2) { //colonist slow move to point
-        config.move_algo = "default";
+    } else if (entityType == 1 && jobType == 2) { // harvest
+        config.move_algo = "harvest";
         config.moveSpeedMultiplier = 1.0f;
         config.priority = 100;
     }

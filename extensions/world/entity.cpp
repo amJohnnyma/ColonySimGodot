@@ -21,13 +21,13 @@ void Entity::reset_timer(float a) {
 void Entity::add_job(EntityJob job) {
     job.isValid = true;
     job.complete = false;
-    job.move_algo = "default";
+    //job.move_algo = "default";
 
     jobList.push_back(job);
 }
 
 void Entity::update_move_speed_from_job(const EntityJob &job) {
-    move_speed = base_move_speed * job.moveSpeedMultiplier;
+    move_speed = base_move_speed / job.moveSpeedMultiplier;
 }
 
 bool Entity::is_position_available(Vector2i pos, EntitySimulationParam &params) {
