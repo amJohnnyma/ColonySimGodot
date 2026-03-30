@@ -104,6 +104,7 @@ bool Colonist::harvest_movement(EntitySimulationParam &params) {
         auto harvestable = params.world->get_entities_at_world_pos(target);
 
         Array types = harvestable["types"];
+        Array ids = harvestable["entity_ids"];
         if(types.size() <= 0) {
             UtilityFunctions::print("Empty spot");
             currentJob.complete = true;
@@ -115,6 +116,9 @@ bool Colonist::harvest_movement(EntitySimulationParam &params) {
         if(e_type == 4)
         {
             UtilityFunctions::print("Found harvestable. Harvesting...");
+            add_to_inventory(e_type, static_cast<int>(ids[0]), 10);
+
+            UtilityFunctions::print("Inventory: ", inventory.get_count(e_type, static_cast<int>(ids[0])));
         }
         
         

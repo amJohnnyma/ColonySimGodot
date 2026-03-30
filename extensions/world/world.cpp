@@ -7,6 +7,7 @@
 #include <unordered_set>
 
 #include "building.h"
+#include "godot_cpp/variant/packed_int32_array.hpp"
 #include "harvestable.h"
 #include "chunk.h"
 #include "chunk_manager.h"
@@ -317,6 +318,9 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     PackedInt32Array entity_heights;
     PackedInt32Array x_pos; 
     PackedInt32Array y_pos;
+    PackedInt32Array inventory_types;
+    PackedInt32Array inventory_ids;
+    PackedInt32Array inventory_counts;
 
     // Pre-allocate for performance
     entity_ids.resize(max_entities);
@@ -326,8 +330,12 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     entity_heights.resize(max_entities);
     x_pos.resize(max_entities);
     y_pos.resize(max_entities);
+    inventory_types.resize(max_entities * 8); // an entity can have multiple types of items
+    inventory_ids.resize(max_entities * 8);
+    inventory_counts.resize(max_entities * 8);
 
     int count = 0;
+    int invIndex = 0;
     for (const auto& entity_ptr : chunk->entities) {  // const ref for safety
         if (!entity_ptr) continue;
         Vector2i entity_pos = entity_ptr->get_position();
@@ -348,6 +356,20 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
             entity_heights[count] = entity_ptr->get_entity_height();
             x_pos[count] = entity_ptr->get_position().x;
             y_pos[count] = entity_ptr->get_position().y;
+
+            const Inventory& inv = entity_ptr->get_inventory();
+            for(const auto& [key, ic] : inv.get_all_items())
+            {
+                if (invIndex >= inventory_types.size())
+                {
+                    // finished 
+                    break;
+                }
+                inventory_types[invIndex] = key.first;
+                inventory_ids[invIndex] = key.second;
+                inventory_counts[invIndex] = ic;
+                invIndex ++;
+            }
             count++;
         }
     }
@@ -373,6 +395,20 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
                 entity_heights[count] = entity_ptr->get_entity_height();
                 x_pos[count] = entity_ptr->get_position().x;
                 y_pos[count] = entity_ptr->get_position().y;
+
+                const Inventory& inv = entity_ptr->get_inventory();
+                for(const auto& [key, ic] : inv.get_all_items())
+                {
+                    if (invIndex >= inventory_types.size())
+                    {
+                        // finished 
+                        break;
+                    }
+                    inventory_types[invIndex] = key.first;
+                    inventory_ids[invIndex] = key.second;
+                    inventory_counts[invIndex] = ic;
+                    invIndex ++;
+                }
                 count++;
             }
         }
@@ -386,6 +422,10 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     x_pos.resize(count);
     y_pos.resize(count);
 
+    inventory_types.resize(invIndex); // an entity can have multiple types of items
+    inventory_ids.resize(invIndex);
+    inventory_counts.resize(invIndex);
+
     result["entity_ids"] = entity_ids;
     result["types"] = types;
     result["entity_sprites"] = entity_sprites;
@@ -393,6 +433,9 @@ Dictionary World::get_entities_at_world_pos(const Vector2 coord) {
     result["entity_height"] = entity_heights;
     result["x_pos"] = x_pos;
     result["y_pos"] = y_pos;
+    result["inv_types"] = inventory_types;
+    result["inv_ids"] = inventory_ids;
+    result["inv_counts"] = inventory_counts;
     result["count"] = count;
     return result;
 }

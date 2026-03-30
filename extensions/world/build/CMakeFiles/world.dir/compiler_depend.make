@@ -64,6 +64,7 @@ CMakeFiles/world.dir/building.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector3i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -82,17 +83,22 @@ CMakeFiles/world.dir/building.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/
   /usr/include/c++/13/bits/concept_check.h \
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
+  /usr/include/c++/13/bits/enable_special_members.h \
+  /usr/include/c++/13/bits/erase_if.h \
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/functexcept.h \
   /usr/include/c++/13/bits/functional_hash.h \
   /usr/include/c++/13/bits/hash_bytes.h \
+  /usr/include/c++/13/bits/hashtable.h \
+  /usr/include/c++/13/bits/hashtable_policy.h \
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/localefwd.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
   /usr/include/c++/13/bits/new_allocator.h \
+  /usr/include/c++/13/bits/node_handle.h \
   /usr/include/c++/13/bits/ostream_insert.h \
   /usr/include/c++/13/bits/postypes.h \
   /usr/include/c++/13/bits/predefined_ops.h \
@@ -119,6 +125,7 @@ CMakeFiles/world.dir/building.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/
   /usr/include/c++/13/bits/string_view.tcc \
   /usr/include/c++/13/bits/stringfwd.h \
   /usr/include/c++/13/bits/uniform_int_dist.h \
+  /usr/include/c++/13/bits/unordered_map.h \
   /usr/include/c++/13/bits/uses_allocator.h \
   /usr/include/c++/13/bits/uses_allocator_args.h \
   /usr/include/c++/13/bits/utility.h \
@@ -137,6 +144,7 @@ CMakeFiles/world.dir/building.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/debug/assertions.h \
   /usr/include/c++/13/debug/debug.h \
+  /usr/include/c++/13/ext/aligned_buffer.h \
   /usr/include/c++/13/ext/alloc_traits.h \
   /usr/include/c++/13/ext/numeric_traits.h \
   /usr/include/c++/13/ext/string_conversions.h \
@@ -166,6 +174,7 @@ CMakeFiles/world.dir/building.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/
   /usr/include/c++/13/tr1/special_function_util.h \
   /usr/include/c++/13/tuple \
   /usr/include/c++/13/type_traits \
+  /usr/include/c++/13/unordered_map \
   /usr/include/c++/13/utility \
   /usr/include/c++/13/vector \
   /usr/include/ctype.h \
@@ -381,6 +390,7 @@ CMakeFiles/world.dir/chunk.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/hash_utils.h \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/json.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/perlinNoise.h \
@@ -846,6 +856,7 @@ CMakeFiles/world.dir/chunk_manager.cpp.o: /home/johnny/Godot/colony-sim-2/extens
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/hash_utils.h \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/json.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/threadpool.h \
@@ -1308,6 +1319,7 @@ CMakeFiles/world.dir/colonist.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/hash_utils.h \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/json.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/threadpool.h \
@@ -1730,6 +1742,7 @@ CMakeFiles/world.dir/entity.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wo
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector3i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -1750,17 +1763,22 @@ CMakeFiles/world.dir/entity.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wo
   /usr/include/c++/13/bits/concept_check.h \
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
+  /usr/include/c++/13/bits/enable_special_members.h \
+  /usr/include/c++/13/bits/erase_if.h \
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/functexcept.h \
   /usr/include/c++/13/bits/functional_hash.h \
   /usr/include/c++/13/bits/hash_bytes.h \
+  /usr/include/c++/13/bits/hashtable.h \
+  /usr/include/c++/13/bits/hashtable_policy.h \
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/localefwd.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
   /usr/include/c++/13/bits/new_allocator.h \
+  /usr/include/c++/13/bits/node_handle.h \
   /usr/include/c++/13/bits/ostream_insert.h \
   /usr/include/c++/13/bits/postypes.h \
   /usr/include/c++/13/bits/predefined_ops.h \
@@ -1790,6 +1808,7 @@ CMakeFiles/world.dir/entity.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wo
   /usr/include/c++/13/bits/string_view.tcc \
   /usr/include/c++/13/bits/stringfwd.h \
   /usr/include/c++/13/bits/uniform_int_dist.h \
+  /usr/include/c++/13/bits/unordered_map.h \
   /usr/include/c++/13/bits/uses_allocator.h \
   /usr/include/c++/13/bits/uses_allocator_args.h \
   /usr/include/c++/13/bits/utility.h \
@@ -1808,6 +1827,7 @@ CMakeFiles/world.dir/entity.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wo
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/debug/assertions.h \
   /usr/include/c++/13/debug/debug.h \
+  /usr/include/c++/13/ext/aligned_buffer.h \
   /usr/include/c++/13/ext/alloc_traits.h \
   /usr/include/c++/13/ext/numeric_traits.h \
   /usr/include/c++/13/ext/string_conversions.h \
@@ -1838,6 +1858,7 @@ CMakeFiles/world.dir/entity.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wo
   /usr/include/c++/13/tr1/special_function_util.h \
   /usr/include/c++/13/tuple \
   /usr/include/c++/13/type_traits \
+  /usr/include/c++/13/unordered_map \
   /usr/include/c++/13/utility \
   /usr/include/c++/13/vector \
   /usr/include/ctype.h \
@@ -2443,6 +2464,7 @@ CMakeFiles/world.dir/harvestable.cpp.o: /home/johnny/Godot/colony-sim-2/extensio
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/harvestable.h \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -2461,17 +2483,22 @@ CMakeFiles/world.dir/harvestable.cpp.o: /home/johnny/Godot/colony-sim-2/extensio
   /usr/include/c++/13/bits/concept_check.h \
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
+  /usr/include/c++/13/bits/enable_special_members.h \
+  /usr/include/c++/13/bits/erase_if.h \
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/functexcept.h \
   /usr/include/c++/13/bits/functional_hash.h \
   /usr/include/c++/13/bits/hash_bytes.h \
+  /usr/include/c++/13/bits/hashtable.h \
+  /usr/include/c++/13/bits/hashtable_policy.h \
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/localefwd.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
   /usr/include/c++/13/bits/new_allocator.h \
+  /usr/include/c++/13/bits/node_handle.h \
   /usr/include/c++/13/bits/ostream_insert.h \
   /usr/include/c++/13/bits/postypes.h \
   /usr/include/c++/13/bits/predefined_ops.h \
@@ -2498,6 +2525,7 @@ CMakeFiles/world.dir/harvestable.cpp.o: /home/johnny/Godot/colony-sim-2/extensio
   /usr/include/c++/13/bits/string_view.tcc \
   /usr/include/c++/13/bits/stringfwd.h \
   /usr/include/c++/13/bits/uniform_int_dist.h \
+  /usr/include/c++/13/bits/unordered_map.h \
   /usr/include/c++/13/bits/uses_allocator.h \
   /usr/include/c++/13/bits/uses_allocator_args.h \
   /usr/include/c++/13/bits/utility.h \
@@ -2516,6 +2544,7 @@ CMakeFiles/world.dir/harvestable.cpp.o: /home/johnny/Godot/colony-sim-2/extensio
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/debug/assertions.h \
   /usr/include/c++/13/debug/debug.h \
+  /usr/include/c++/13/ext/aligned_buffer.h \
   /usr/include/c++/13/ext/alloc_traits.h \
   /usr/include/c++/13/ext/numeric_traits.h \
   /usr/include/c++/13/ext/string_conversions.h \
@@ -2545,6 +2574,7 @@ CMakeFiles/world.dir/harvestable.cpp.o: /home/johnny/Godot/colony-sim-2/extensio
   /usr/include/c++/13/tr1/special_function_util.h \
   /usr/include/c++/13/tuple \
   /usr/include/c++/13/type_traits \
+  /usr/include/c++/13/unordered_map \
   /usr/include/c++/13/utility \
   /usr/include/c++/13/vector \
   /usr/include/ctype.h \
@@ -2658,6 +2688,124 @@ CMakeFiles/world.dir/harvestable.cpp.o: /home/johnny/Godot/colony-sim-2/extensio
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
 
+CMakeFiles/world.dir/inventory.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/inventory.cpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
+  /usr/include/alloca.h \
+  /usr/include/c++/13/algorithm \
+  /usr/include/c++/13/backward/binders.h \
+  /usr/include/c++/13/bit \
+  /usr/include/c++/13/bits/algorithmfwd.h \
+  /usr/include/c++/13/bits/alloc_traits.h \
+  /usr/include/c++/13/bits/allocator.h \
+  /usr/include/c++/13/bits/concept_check.h \
+  /usr/include/c++/13/bits/cpp_type_traits.h \
+  /usr/include/c++/13/bits/enable_special_members.h \
+  /usr/include/c++/13/bits/erase_if.h \
+  /usr/include/c++/13/bits/exception.h \
+  /usr/include/c++/13/bits/exception_defines.h \
+  /usr/include/c++/13/bits/functexcept.h \
+  /usr/include/c++/13/bits/functional_hash.h \
+  /usr/include/c++/13/bits/hash_bytes.h \
+  /usr/include/c++/13/bits/hashtable.h \
+  /usr/include/c++/13/bits/hashtable_policy.h \
+  /usr/include/c++/13/bits/invoke.h \
+  /usr/include/c++/13/bits/memory_resource.h \
+  /usr/include/c++/13/bits/memoryfwd.h \
+  /usr/include/c++/13/bits/move.h \
+  /usr/include/c++/13/bits/new_allocator.h \
+  /usr/include/c++/13/bits/node_handle.h \
+  /usr/include/c++/13/bits/predefined_ops.h \
+  /usr/include/c++/13/bits/ptr_traits.h \
+  /usr/include/c++/13/bits/range_access.h \
+  /usr/include/c++/13/bits/requires_hosted.h \
+  /usr/include/c++/13/bits/std_abs.h \
+  /usr/include/c++/13/bits/stl_algo.h \
+  /usr/include/c++/13/bits/stl_algobase.h \
+  /usr/include/c++/13/bits/stl_construct.h \
+  /usr/include/c++/13/bits/stl_function.h \
+  /usr/include/c++/13/bits/stl_heap.h \
+  /usr/include/c++/13/bits/stl_iterator.h \
+  /usr/include/c++/13/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/13/bits/stl_iterator_base_types.h \
+  /usr/include/c++/13/bits/stl_pair.h \
+  /usr/include/c++/13/bits/stl_relops.h \
+  /usr/include/c++/13/bits/stl_tempbuf.h \
+  /usr/include/c++/13/bits/uniform_int_dist.h \
+  /usr/include/c++/13/bits/unordered_map.h \
+  /usr/include/c++/13/bits/uses_allocator.h \
+  /usr/include/c++/13/bits/uses_allocator_args.h \
+  /usr/include/c++/13/bits/utility.h \
+  /usr/include/c++/13/cstddef \
+  /usr/include/c++/13/cstdlib \
+  /usr/include/c++/13/debug/assertions.h \
+  /usr/include/c++/13/debug/debug.h \
+  /usr/include/c++/13/ext/aligned_buffer.h \
+  /usr/include/c++/13/ext/alloc_traits.h \
+  /usr/include/c++/13/ext/numeric_traits.h \
+  /usr/include/c++/13/ext/type_traits.h \
+  /usr/include/c++/13/initializer_list \
+  /usr/include/c++/13/new \
+  /usr/include/c++/13/pstl/execution_defs.h \
+  /usr/include/c++/13/pstl/glue_algorithm_defs.h \
+  /usr/include/c++/13/pstl/pstl_config.h \
+  /usr/include/c++/13/tuple \
+  /usr/include/c++/13/type_traits \
+  /usr/include/c++/13/unordered_map \
+  /usr/include/c++/13/utility \
+  /usr/include/endian.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdlib.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/select2.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
+
 CMakeFiles/world.dir/item.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/world/item.cpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/entity.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/entityJob.h \
@@ -2720,6 +2868,7 @@ CMakeFiles/world.dir/item.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/worl
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector3i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
@@ -2739,17 +2888,22 @@ CMakeFiles/world.dir/item.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/worl
   /usr/include/c++/13/bits/concept_check.h \
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
+  /usr/include/c++/13/bits/enable_special_members.h \
+  /usr/include/c++/13/bits/erase_if.h \
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/functexcept.h \
   /usr/include/c++/13/bits/functional_hash.h \
   /usr/include/c++/13/bits/hash_bytes.h \
+  /usr/include/c++/13/bits/hashtable.h \
+  /usr/include/c++/13/bits/hashtable_policy.h \
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/localefwd.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
   /usr/include/c++/13/bits/new_allocator.h \
+  /usr/include/c++/13/bits/node_handle.h \
   /usr/include/c++/13/bits/ostream_insert.h \
   /usr/include/c++/13/bits/postypes.h \
   /usr/include/c++/13/bits/predefined_ops.h \
@@ -2776,6 +2930,7 @@ CMakeFiles/world.dir/item.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/worl
   /usr/include/c++/13/bits/string_view.tcc \
   /usr/include/c++/13/bits/stringfwd.h \
   /usr/include/c++/13/bits/uniform_int_dist.h \
+  /usr/include/c++/13/bits/unordered_map.h \
   /usr/include/c++/13/bits/uses_allocator.h \
   /usr/include/c++/13/bits/uses_allocator_args.h \
   /usr/include/c++/13/bits/utility.h \
@@ -2794,6 +2949,7 @@ CMakeFiles/world.dir/item.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/worl
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/debug/assertions.h \
   /usr/include/c++/13/debug/debug.h \
+  /usr/include/c++/13/ext/aligned_buffer.h \
   /usr/include/c++/13/ext/alloc_traits.h \
   /usr/include/c++/13/ext/numeric_traits.h \
   /usr/include/c++/13/ext/string_conversions.h \
@@ -2823,6 +2979,7 @@ CMakeFiles/world.dir/item.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/worl
   /usr/include/c++/13/tr1/special_function_util.h \
   /usr/include/c++/13/tuple \
   /usr/include/c++/13/type_traits \
+  /usr/include/c++/13/unordered_map \
   /usr/include/c++/13/utility \
   /usr/include/c++/13/vector \
   /usr/include/ctype.h \
@@ -3285,6 +3442,7 @@ CMakeFiles/world.dir/register_types.cpp.o: /home/johnny/Godot/colony-sim-2/exten
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/hash_utils.h \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/json.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/threadpool.h \
@@ -4023,6 +4181,7 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
   /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector4i.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/harvestable.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/hash_utils.h \
+  /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
   /home/johnny/Godot/colony-sim-2/extensions/world/json.hpp \
   /home/johnny/Godot/colony-sim-2/extensions/world/threadpool.h \
@@ -4462,8 +4621,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/c++/13/ext/atomicity.h:
 
-/usr/include/c++/13/ext/aligned_buffer.h:
-
 /home/johnny/Godot/colony-sim-2/extensions/world/perlin_noise.cpp:
 
 /usr/include/c++/13/deque:
@@ -4480,8 +4637,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/c++/13/bits/unordered_set.h:
 
-/usr/include/c++/13/bits/unordered_map.h:
-
 /usr/include/c++/13/bits/unique_lock.h:
 
 /usr/include/c++/13/bits/this_thread_sleep.h:
@@ -4491,6 +4646,8 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /usr/include/c++/13/bits/stl_raw_storage_iter.h:
 
 /usr/include/c++/13/bits/stl_queue.h:
+
+/home/johnny/Godot/colony-sim-2/extensions/world/inventory.cpp:
 
 /usr/include/c++/13/bits/stl_map.h:
 
@@ -4598,10 +4755,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/texture2d.hpp:
 
-/usr/include/c++/13/bits/hashtable_policy.h:
-
-/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/texture.hpp:
-
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/text_server.hpp:
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/resource.hpp:
@@ -4634,10 +4787,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
-/usr/include/c++/13/bits/node_handle.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
 /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
 
 /usr/include/c++/13/ostream:
@@ -4662,27 +4811,23 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
-/usr/include/c++/13/bits/stl_list.h:
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
 
-/usr/include/c++/13/bits/erase_if.h:
+/usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
-/usr/include/x86_64-linux-gnu/bits/wchar2-decl.h:
+/usr/include/c++/13/bits/stream_iterator.h:
 
-/usr/include/c++/13/clocale:
+/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
 
-/usr/include/c++/13/climits:
+/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
-/usr/include/c++/13/optional:
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
-/usr/include/c++/13/bits/vector.tcc:
+/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
 
-/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/a_hash_map.hpp:
+/home/johnny/Godot/colony-sim-2/extensions/world/terrainGenerator.cpp:
 
-/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/node2d.hpp:
-
-/usr/include/c++/13/bits/stl_function.h:
-
-/usr/include/c++/13/tr1/beta_function.tcc:
+/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
 /usr/include/c++/13/bits/locale_classes.tcc:
 
@@ -4693,10 +4838,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /home/johnny/Godot/colony-sim-2/extensions/world/world.h:
 
 /usr/include/c++/13/bits/stl_numeric.h:
-
-/home/johnny/Godot/colony-sim-2/extensions/world/terrainGenerator.cpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
 /usr/include/c++/13/bits/stl_construct.h:
 
@@ -4722,6 +4863,14 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
+/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/a_hash_map.hpp:
+
+/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/node2d.hpp:
+
+/usr/include/c++/13/bits/stl_function.h:
+
+/usr/include/c++/13/tr1/beta_function.tcc:
+
 /usr/include/c++/13/bits/move.h:
 
 /usr/include/c++/13/bits/memoryfwd.h:
@@ -4740,13 +4889,35 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/c++/13/bits/exception_defines.h:
+
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/variant.hpp:
 
 /usr/include/c++/13/cstdio:
 
+/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/texture.hpp:
+
+/usr/include/c++/13/bits/hashtable_policy.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
+
+/usr/include/c++/13/bits/std_function.h:
+
+/usr/include/c++/13/bits/char_traits.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
+
 /usr/include/c++/13/bits/exception.h:
 
-/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+/usr/include/c++/13/bits/stl_list.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar2-decl.h:
+
+/usr/include/c++/13/bits/erase_if.h:
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
 
@@ -4755,10 +4926,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /usr/include/c++/13/bits/concept_check.h:
 
 /usr/include/c++/13/bits/alloc_traits.h:
-
-/usr/include/c++/13/unordered_map:
-
-/usr/include/c++/13/bits/allocator.h:
 
 /usr/include/c++/13/bits/stl_bvector.h:
 
@@ -4790,6 +4957,8 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/asm-generic/errno-base.h:
 
+/home/johnny/Godot/colony-sim-2/extensions/world/inventory.h:
+
 /usr/include/c++/13/bits/basic_string.tcc:
 
 /usr/include/c++/13/bits/allocated_ptr.h:
@@ -4820,6 +4989,8 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/vector3.hpp:
 
+/usr/include/c++/13/bits/unordered_map.h:
+
 /usr/include/c++/13/bits/new_allocator.h:
 
 /usr/include/c++/13/bits/stl_uninitialized.h:
@@ -4833,12 +5004,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /usr/include/math.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/c++/13/cctype:
-
-/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/class_db_singleton.hpp:
-
-/usr/include/c++/13/tr1/gamma.tcc:
 
 /usr/include/wctype.h:
 
@@ -4878,16 +5043,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
-
-/usr/include/c++/13/bits/std_function.h:
-
-/usr/include/c++/13/bits/char_traits.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
-
 /usr/include/c++/13/ext/concurrence.h:
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_float32_array.hpp:
@@ -4908,6 +5063,10 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_int32_array.hpp:
 
+/usr/include/c++/13/bits/allocator.h:
+
+/usr/include/c++/13/unordered_map:
+
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/packed_vector4_array.hpp:
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/callable.hpp:
@@ -4917,6 +5076,10 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /usr/include/c++/13/exception:
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/builtin_vararg_methods.hpp:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/c++/13/bits/node_handle.h:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
@@ -4946,8 +5109,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/math.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/waitflags.h:
-
 /usr/include/c++/13/bits/stl_algobase.h:
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/vector.hpp:
@@ -4976,18 +5137,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/templates/safe_refcount.hpp:
 
-/usr/include/c++/13/cerrno:
-
-/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/math.compat.inc:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
-
-/usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
-
-/usr/include/c++/13/bits/unique_ptr.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
-
 /home/johnny/Godot/colony-sim-2/extensions/world/building.cpp:
 
 /home/johnny/Godot/colony-sim-2/extensions/world/building.h:
@@ -5013,6 +5162,18 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /usr/include/c++/13/bits/stl_pair.h:
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/core/math.compat.inc:
+
+/usr/include/c++/13/cerrno:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
+
+/usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
+
+/usr/include/c++/13/bits/unique_ptr.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/c++/13/bits/postypes.h:
 
@@ -5058,10 +5219,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include/godot_cpp/variant/color.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
-
-/usr/include/c++/13/pstl/glue_numeric_defs.h:
-
 /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/variant/builtin_types.hpp:
 
 /usr/include/c++/13/bits/random.tcc:
@@ -5090,6 +5247,24 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/c++/13/tr1/riemann_zeta.tcc:
 
+/usr/include/c++/13/optional:
+
+/usr/include/c++/13/bits/vector.tcc:
+
+/usr/include/c++/13/cctype:
+
+/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include/godot_cpp/classes/class_db_singleton.hpp:
+
+/usr/include/c++/13/tr1/gamma.tcc:
+
+/usr/include/c++/13/pstl/glue_numeric_defs.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
+
+/usr/include/c++/13/climits:
+
+/usr/include/c++/13/clocale:
+
 /home/johnny/Godot/colony-sim-2/extensions/world/json.hpp:
 
 /usr/include/c++/13/cstddef:
@@ -5110,9 +5285,21 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/x86_64-linux-gnu/bits/select-decl.h:
 
+/usr/include/c++/13/ext/aligned_buffer.h:
+
+/usr/include/locale.h:
+
+/usr/include/c++/13/bits/utility.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+
 /usr/include/c++/13/ext/string_conversions.h:
 
 /usr/include/c++/13/ext/type_traits.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
+
+/usr/include/c++/13/limits:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
@@ -5153,10 +5340,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
 
 /usr/include/c++/13/tr1/modified_bessel_func.tcc:
-
-/usr/include/c++/13/bits/exception_defines.h:
-
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
 /usr/include/c++/13/tr1/poly_hermite.tcc:
 
@@ -5206,12 +5389,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
 
-/usr/include/locale.h:
-
-/usr/include/c++/13/bits/utility.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
-
 /usr/include/c++/13/bits/stl_iterator_base_types.h:
 
 /usr/include/stdio.h:
@@ -5240,10 +5417,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
-/usr/include/c++/13/limits:
-
-/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
-
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar2.h:
@@ -5265,8 +5438,6 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /usr/include/c++/13/sstream:
 
 /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
@@ -5335,11 +5506,3 @@ CMakeFiles/world.dir/world.cpp.o: /home/johnny/Godot/colony-sim-2/extensions/wor
 /usr/include/c++/13/bits/charconv.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/typesizes.h:
-
-/usr/include/c++/13/bits/stream_iterator.h:
-
-/usr/include/x86_64-linux-gnu/bits/uio_lim.h:

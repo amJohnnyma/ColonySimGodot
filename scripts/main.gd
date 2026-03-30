@@ -355,25 +355,13 @@ func _unhandled_input(event):
 				return
 			
 			print("Found %d entit(y/ies) at %s:" % [count, world_click_pos])
-			var ids = result["entity_ids"]
-			var types = result["types"]
-			var sprites = result["entity_sprites"]
-			var pos_x = result["x_pos"]
-			var pos_y = result["y_pos"]
-			
-			var pos : Array[Vector2i] 
-			
-			for i in count:
-				print(" - ID: ", ids[i],
-					  " | Type: ", types[i],
-					  " | Sprite: ", sprites[i])
-				pos.push_back(Vector2i(pos_x[i], pos_y[i]))
+
 					
 			# Show hide correct UI
 			$UI/MasterControl/GameUI.visible=false
 			$UI/MasterControl/EntityClickPopup.visible=true
 			
-			selectedEntity.entities_selected(ids, types, sprites, pos)
+			selectedEntity.entities_selected(result)
 
 
 func create_entity_job(pos : Vector2i, entityPos : Vector2i, id : int, jobType : int):

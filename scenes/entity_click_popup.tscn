@@ -27,54 +27,21 @@ theme_override_constants/margin_bottom = 50
 [node name="Panel" type="Panel" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="TabBar" type="TabBar" parent="MarginContainer/Panel"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/Panel"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 212.0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
 current_tab = 0
-tab_count = 3
-tab_0/title = "Job"
-tab_1/title = "Inventory"
-tab_2/title = "Other"
+tabs_position = 1
 
-[node name="EntityJobPanel" type="Panel" parent="MarginContainer/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -47.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="IconMargin" type="MarginContainer" parent="MarginContainer/Panel/EntityJobPanel"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 100.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="Icon" type="Panel" parent="MarginContainer/Panel/EntityJobPanel/IconMargin"]
+[node name="EntityJobPanel" type="Panel" parent="MarginContainer/Panel/TabContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_rakx5")
+metadata/_tab_index = 0
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/EntityJobPanel/IconMargin/Icon"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_uxrx7")
-expand_mode = 5
-
-[node name="JoblistButtonMargin" type="MarginContainer" parent="MarginContainer/Panel/EntityJobPanel"]
+[node name="JoblistButtonMargin" type="MarginContainer" parent="MarginContainer/Panel/TabContainer/EntityJobPanel"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
 offset_top = 400.0
@@ -85,11 +52,11 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Button" type="Button" parent="MarginContainer/Panel/EntityJobPanel/JoblistButtonMargin"]
+[node name="Button" type="Button" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JoblistButtonMargin"]
 layout_mode = 2
 text = "CreateJob"
 
-[node name="JoblistMargin" type="MarginContainer" parent="MarginContainer/Panel/EntityJobPanel"]
+[node name="JoblistMargin" type="MarginContainer" parent="MarginContainer/Panel/TabContainer/EntityJobPanel"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
 offset_top = 100.0
@@ -100,17 +67,17 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Joblist" type="Panel" parent="MarginContainer/Panel/EntityJobPanel/JoblistMargin"]
+[node name="Joblist" type="Panel" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JoblistMargin"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rakx5")
 
-[node name="Label" type="Label" parent="MarginContainer/Panel/EntityJobPanel/JoblistMargin/Joblist"]
+[node name="Label" type="Label" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JoblistMargin/Joblist"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 autowrap_mode = 2
 
-[node name="JobCreatePanel" type="Panel" parent="MarginContainer/Panel/EntityJobPanel"]
+[node name="JobCreatePanel" type="Panel" parent="MarginContainer/Panel/TabContainer/EntityJobPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,7 +89,7 @@ offset_bottom = -117.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -131,37 +98,81 @@ offset_bottom = -46.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuButton" type="MenuButton" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+[node name="MenuButton" type="MenuButton" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 text = "JobType"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+[node name="SelectedJobLabel" type="Label" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Pos_x"
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer"]
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Pos_y"
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer2"]
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/Panel/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+[node name="Button" type="Button" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "CreateJob"
+
+[node name="InventoryPanel" type="Panel" parent="MarginContainer/Panel/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Inventory" type="Panel" parent="MarginContainer/Panel/TabContainer/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 264.0
+offset_top = 124.0
+offset_right = -34.0
+offset_bottom = -117.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IconMargin" type="MarginContainer" parent="MarginContainer/Panel"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Icon" type="Panel" parent="MarginContainer/Panel/IconMargin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rakx5")
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/IconMargin/Icon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_uxrx7")
+expand_mode = 5
 
 [node name="CloseButton" type="Button" parent="."]
 layout_mode = 0

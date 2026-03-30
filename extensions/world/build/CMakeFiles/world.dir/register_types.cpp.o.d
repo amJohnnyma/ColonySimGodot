@@ -325,6 +325,7 @@ CMakeFiles/world.dir/register_types.cpp.o: \
  /home/johnny/Godot/colony-sim-2/extensions/world/building.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/entity.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/entityJob.h \
+ /home/johnny/Godot/colony-sim-2/extensions/world/inventory.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/colonist.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/item.h \
  /home/johnny/Godot/colony-sim-2/extensions/world/chunk.h \

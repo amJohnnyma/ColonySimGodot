@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "entityJob.h"
+#include "inventory.h"
 
 using namespace godot;
 
@@ -39,9 +40,10 @@ protected:
     float last_avg_update_time = 0.0f;
     Vector2i start_pos_test = Vector2i(-1, -1);
     bool must_simulate = true;
+    Inventory inventory;
 
     Entity(Vector2i pos, uint64_t id, int entity_sprite, Vector2i size = Vector2i(1, 1));
-    Entity() {}; // plain entity // current use -> deserialization
+    Entity() : inventory() {}; // plain entity // current use -> deserialization
 
 public:
     virtual ~Entity() = default;
@@ -93,4 +95,9 @@ public:
     void set_last_avg_update_time(float value) { last_avg_update_time = value; }
     Vector2i get_start_pos_test() const { return start_pos_test; }
     void set_start_pos_test(const Vector2i &value) { start_pos_test = value; }
+
+    void add_to_inventory(int type, int id, int count) {inventory.add(type, id, count);}
+    void remove_from_inventory(int type, int id, int count) {inventory.remove(type, id, count);}
+    const Inventory& get_inventory() const {return inventory;}
+    Inventory& get_inventory() {return inventory;}
 };

@@ -22,6 +22,7 @@ set(SOURCES
     terrainGenerator.cpp
     chunk_manager.cpp
     harvestable.cpp
+    inventory.cpp
 )
 
 # === Create the library target FIRST ===
@@ -119,6 +120,7 @@ if(BUILD_TESTS)
         chunk.cpp
         chunk_manager.cpp
         harvestable.cpp
+        inventory.cpp
         test_chunk_serialization.cpp  # The test file
     )
     

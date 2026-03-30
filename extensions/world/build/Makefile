@@ -354,6 +354,33 @@ harvestable.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/harvestable.cpp.s
 .PHONY : harvestable.cpp.s
 
+inventory.o: inventory.cpp.o
+.PHONY : inventory.o
+
+# target to build an object file
+inventory.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/inventory.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/inventory.cpp.o
+.PHONY : inventory.cpp.o
+
+inventory.i: inventory.cpp.i
+.PHONY : inventory.i
+
+# target to preprocess a source file
+inventory.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/inventory.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/inventory.cpp.i
+.PHONY : inventory.cpp.i
+
+inventory.s: inventory.cpp.s
+.PHONY : inventory.s
+
+# target to generate assembly for a file
+inventory.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/world.dir/build.make CMakeFiles/world.dir/inventory.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_serialization.dir/build.make CMakeFiles/test_serialization.dir/inventory.cpp.s
+.PHONY : inventory.cpp.s
+
 item.o: item.cpp.o
 .PHONY : item.o
 
@@ -543,6 +570,9 @@ help:
 	@echo "... harvestable.o"
 	@echo "... harvestable.i"
 	@echo "... harvestable.s"
+	@echo "... inventory.o"
+	@echo "... inventory.i"
+	@echo "... inventory.s"
 	@echo "... item.o"
 	@echo "... item.i"
 	@echo "... item.s"
