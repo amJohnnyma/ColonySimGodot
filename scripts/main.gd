@@ -292,12 +292,12 @@ func _on_building_selected(sheet_id: int, variant_id: int) -> void:
 		selectedSprite[0] = 0
 		selectedSprite[1] = 0
 		selectedSprite[2] = 0
-		print("Main received deselection → sheet: %d  variant: %d" % [sheet_id, variant_id])
+		#print("Main received deselection → sheet: %d  variant: %d" % [sheet_id, variant_id])
 	else:
 		selectedSprite[0] = sheet_id
 		selectedSprite[1] = variant_id
 		selectedSprite[2] = 1
-		print("Main received selection → sheet: %d  variant: %d" % [sheet_id, variant_id])
+		#print("Main received selection → sheet: %d  variant: %d" % [sheet_id, variant_id])
 
 func _update_place_ghost(sprite : AtlasTexture, c_scale : Vector2, offset : Vector2) -> void:
 	if selectedSprite[0] == 0:
@@ -317,7 +317,7 @@ func _unhandled_input(event):
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if selectedSprite[2]:
-			print("Placing sprite")
+			#print("Placing sprite")
 			var camera := get_viewport().get_camera_2d()
 			if camera == null:
 				print("No Camera2D found!")
@@ -351,10 +351,10 @@ func _unhandled_input(event):
 			
 			
 			if count == 0:
-				print("No entities found at ", world_click_pos)
+				#print("No entities found at ", world_click_pos)
 				return
 			
-			print("Found %d entit(y/ies) at %s:" % [count, world_click_pos])
+			#print("Found %d entit(y/ies) at %s:" % [count, world_click_pos])
 
 					
 			# Show hide correct UI

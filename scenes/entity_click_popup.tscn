@@ -34,10 +34,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 tabs_position = 1
 
 [node name="EntityJobPanel" type="Panel" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -134,21 +135,19 @@ layout_mode = 2
 text = "CreateJob"
 
 [node name="InventoryPanel" type="Panel" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Inventory" type="Panel" parent="MarginContainer/Panel/TabContainer/InventoryPanel"]
+[node name="Inventory" type="GridContainer" parent="MarginContainer/Panel/TabContainer/InventoryPanel"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 264.0
-offset_top = 124.0
-offset_right = -34.0
-offset_bottom = -117.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+columns = 5
 
 [node name="IconMargin" type="MarginContainer" parent="MarginContainer/Panel"]
 custom_minimum_size = Vector2(100, 100)

@@ -878,7 +878,7 @@ void World::create_entity(const String &type, const Vector2i &tile_coord, const 
     }
 
     EntityData data = entityDataReader.get_entity_data(entity_sheet, entity_sprite);
-    UtilityFunctions::print("Sheet and sprite", entity_sheet, " ", entity_sprite);
+   // UtilityFunctions::print("Sheet and sprite", entity_sheet, " ", entity_sprite);
     if(data.def) return;
 
     Vector2i size = Vector2i(data.size_x, data.size_y);

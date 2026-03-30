@@ -63,7 +63,7 @@ EntityData EntityDataReader::get_entity_data(int sheet_id, int sprite_id) {
     }
 
     nlohmann::json sheet = load_sheet(sheet_id);
-    godot::UtilityFunctions::print("Loading sheet ", sheet_id);
+    //godot::UtilityFunctions::print("Loading sheet ", sheet_id);
 
     std::string sprite_key = std::to_string(sprite_id);
     if (!sheet.contains(sprite_key)) {
@@ -84,7 +84,7 @@ EntityData EntityDataReader::get_entity_data(int sheet_id, int sprite_id) {
 
     data.def = false;
     
-    godot::UtilityFunctions::print(data.size_x," ",  data.size_y);
+    //godot::UtilityFunctions::print(data.size_x," ",  data.size_y);
 
 
     evict_if_needed();

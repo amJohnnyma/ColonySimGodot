@@ -223,7 +223,7 @@ func fill_grid_with_sprites(grid: GridContainer, button_id: int = -1) -> void:
 
 func _on_sprite_gui_input(event: InputEvent, index: int, sheet_id: int, variant_id : int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		print("Clicked sprite %d → sheet %d variant %d" % [index, sheet_id, variant_id])
+		#print("Clicked sprite %d → sheet %d variant %d" % [index, sheet_id, variant_id])
 		building_selected.emit(sheet_id, variant_id)
 		var full_tex = SpriteAtlas.get_texture(sheet_id)
 		var region  = SpriteAtlas.get_region(sheet_id, variant_id)
