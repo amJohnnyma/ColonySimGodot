@@ -316,6 +316,8 @@ func _unhandled_input(event):
 		$World.toggle_track_entity_movement_per_second()
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if $UI/MasterControl/SelectionOverlay.is_active:
+			return
 		if selectedSprite[2]:
 			#print("Placing sprite")
 			var camera := get_viewport().get_camera_2d()

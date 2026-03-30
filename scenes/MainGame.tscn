@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b4buet0jfu1wt"]
+[gd_scene load_steps=15 format=3 uid="uid://b4buet0jfu1wt"]
 
 [ext_resource type="Script" uid="uid://c24qbluo3e5pl" path="res://scripts/WorldRenderer.gd" id="1_elqb8"]
 [ext_resource type="Script" uid="uid://cjt5nf5s7y8ul" path="res://scripts/main.gd" id="1_rvslj"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://8ks538tawrff" path="res://scripts/master_ui.gd" id="9_vs82q"]
 [ext_resource type="PackedScene" uid="uid://c7gru2s185m08" path="res://scenes/entity_click_popup.tscn" id="10_rtryj"]
 [ext_resource type="Script" uid="uid://b548ejt61cf1d" path="res://scripts/EntitySelected.gd" id="11_qsiih"]
+[ext_resource type="Script" uid="uid://cvwh32gd4w1oi" path="res://scripts/selection_overlay.gd" id="13_7d840"]
+[ext_resource type="Script" uid="uid://bf3yi6ql1psi0" path="res://scripts/selection_hud.gd" id="14_utvnp"]
 
 [node name="Main_Game" type="Node2D"]
 script = ExtResource("1_rvslj")
@@ -62,13 +64,50 @@ grow_vertical = 2
 script = ExtResource("9_vs82q")
 main = NodePath("../..")
 
-[node name="EntityClickPopup" parent="UI/MasterControl" node_paths=PackedStringArray("main") instance=ExtResource("10_rtryj")]
+[node name="EntityClickPopup" parent="UI/MasterControl" node_paths=PackedStringArray("main", "selection_overlay", "selection_hud") instance=ExtResource("10_rtryj")]
 visible = false
 layout_mode = 1
 script = ExtResource("11_qsiih")
 main = NodePath("../../..")
+selection_overlay = NodePath("../SelectionOverlay")
+selection_hud = NodePath("../SelectionHUD")
 
 [node name="GameUI" parent="UI/MasterControl" instance=ExtResource("8_q8u5g")]
 top_level = true
 layout_mode = 1
 script = null
+
+[node name="SelectionOverlay" type="Control" parent="UI/MasterControl" node_paths=PackedStringArray("camera")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_7d840")
+camera = NodePath("../../../Camera2D")
+
+[node name="SelectionHUD" type="CanvasLayer" parent="UI/MasterControl"]
+visible = false
+script = ExtResource("14_utvnp")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MasterControl/SelectionHUD"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -10.0
+offset_right = 10.0
+offset_bottom = 8.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 2
+
+[node name="Confirm" type="Button" parent="UI/MasterControl/SelectionHUD/HBoxContainer"]
+layout_mode = 2
+text = "Confirm"
+
+[node name="Cancel" type="Button" parent="UI/MasterControl/SelectionHUD/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"

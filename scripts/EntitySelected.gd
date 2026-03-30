@@ -32,16 +32,48 @@ var _inv_counts: PackedInt32Array
 @onready var menu_popup: PopupMenu = job_create_panel.get_node("VBoxContainer/MenuButton").get_popup()
 @onready var selected_job_label: Label = job_create_panel.get_node("VBoxContainer/SelectedJobLabel")
 
+@export var selection_overlay: Control 
+@export var selection_hud: CanvasLayer
 func _ready() -> void:
-	print_tree_pretty()
+	
 	# Connect button signals
 	joblist_button.pressed.connect(_create_job_panel)
 	job_create_panel.get_node("VBoxContainer/Button").pressed.connect(_create_job)
 	
+	job_create_panel.get_node("VBoxContainer/SelectAreaButton").pressed.connect(_activate_area_selection)
+
+	selection_overlay.area_confirmed.connect(_on_area_confirmed)
+	selection_overlay.area_cancelled.connect(_on_area_cancelled)
+	selection_hud.confirmed.connect(selection_overlay.confirm)
+	selection_hud.cancelled.connect(selection_overlay.cancel)
+	
 	# Set default tab
 	tab_container.current_tab = 0
 
+func _activate_area_selection() -> void:
+	pass
+	#visible = false
+	#selection_overlay.visible = true
+	#selection_hud.visible = true
+	#selection_overlay.activate()
+	#selection_hud.activate()
 
+func _on_area_confirmed(rects: Array) -> void:
+	selection_hud.deactivate()
+	selection_hud.visible = false
+	# Each rect is independent — one job per tile per rect
+	for rect in rects:
+		for x in rect.size.x:
+			for y in rect.size.y:
+				var tile_pos : Vector2i
+				tile_pos = rect.position + Vector2i(x, y)
+				main.create_entity_job(tile_pos, selected_entity_pos, selected_entity_id, selected_job_type)
+	create_job.emit()
+
+func _on_area_cancelled() -> void:
+	selection_hud.deactivate()
+	visible = true  # reopen the popup
+	
 func entities_selected(result: Dictionary) -> void:
 	if result.get("count", 0) == 0:
 		push_warning("entities_selected called with no entity data")

@@ -34,11 +34,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 tabs_position = 1
 
 [node name="EntityJobPanel" type="Panel" parent="MarginContainer/Panel/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -102,10 +101,15 @@ grow_vertical = 2
 [node name="MenuButton" type="MenuButton" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-text = "JobType"
+text = "Select JobType"
 
 [node name="SelectedJobLabel" type="Label" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
 layout_mode = 2
+text = "Selected: None"
+
+[node name="SelectAreaButton" type="Button" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
+layout_mode = 2
+text = "Select Area"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/TabContainer/EntityJobPanel/JobCreatePanel/VBoxContainer"]
 layout_mode = 2
@@ -135,6 +139,7 @@ layout_mode = 2
 text = "CreateJob"
 
 [node name="InventoryPanel" type="Panel" parent="MarginContainer/Panel/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
