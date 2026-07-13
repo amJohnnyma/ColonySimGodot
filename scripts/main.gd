@@ -46,7 +46,7 @@ func _ready() -> void:
 	# ===================================================================
 	# Comment out or delete this entire block when no longer needed.
 	const NUM_COLONISTS : int = 15
-	'''
+	
 	const NUM_SPRITES_COLONIST : int = 15
 	const NUM_SPRITES_BUILDING : int = 135
 	const NUM_SPRITES_ITEMS : int = 27 * 26
@@ -167,12 +167,12 @@ func _ready() -> void:
 	print("Colonists placed: ", colonist_count, " (", NUM_COLONISTS, " per corner)")
 
 	# === Place colonists in all corner cells ===
-	var colonist_count := 0
-	var jobTypeCount := 0
+	colonist_count = 0
+	jobTypeCount = 0
 	const CORNER_SIZE := 15
 
 	# Corners (top-left, top-right, bottom-left, bottom-right)
-	var corners = [
+	corners = [
 		Vector2i(0, 0),
 		Vector2i(world_width - CORNER_SIZE, 0),
 		Vector2i(0, world_height - CORNER_SIZE),
@@ -180,7 +180,7 @@ func _ready() -> void:
 	]
 
 	# Center target
-	var target := Vector2i(half_width, half_height)
+	target = Vector2i(half_width, half_height)
 
 	for corner in corners:
 		for y in range(CORNER_SIZE):
@@ -191,7 +191,7 @@ func _ready() -> void:
 				$World.create_entity("building", pos, 2, 8)
 
 				# Spread targets slightly
-				var colonist_target := target + Vector2i(
+				var colonist_target = target + Vector2i(
 					sprite_idx % 10,
 					(sprite_idx / 10) % 10
 				)
@@ -201,7 +201,7 @@ func _ready() -> void:
 
 				colonist_count += 1
 				jobTypeCount += 1
-'''
+
 	# ────────────────────────────────────────────────
 	# Assuming these exist / are defined earlier:
 	# var world_width  : int
@@ -211,7 +211,7 @@ func _ready() -> void:
 	# const GameSettings.chunk_size : int = 16 (example)
 	# const NUM_COLONISTS : int = ... (number of colonist sprites)
 	# ────────────────────────────────────────────────
-'''
+
 	var max_chunk_x :int= (world_width  / GameSettings.chunk_size) - 1
 	var max_chunk_y :int= (world_height / GameSettings.chunk_size) - 1
 
@@ -225,11 +225,11 @@ func _ready() -> void:
 
 	const BUILDING_IDS := [24,26,28,32,33,34,35,36,37,40,41,42,43,44]
 
-	var colonist_count := 0
-	var jobTypeCount   := 0
+	colonist_count = 0
+	jobTypeCount   = 0
 
 	# Optional: different random seed per corner so they look different
-	var rng = RandomNumberGenerator.new()
+	rng = RandomNumberGenerator.new()
 
 	for corner_idx in range(corner_chunks.size()):
 		rng.seed = corner_idx + 1000  # simple way to get different feel per corner
@@ -280,7 +280,7 @@ func _ready() -> void:
 					var building_id = BUILDING_IDS[rng.randi() % BUILDING_IDS.size()]
 					$World.create_entity("building", pos, 2, building_id)
 
-'''
+
 
 	# ===================================================================
 	# END OF TEMPORARY GENERATION
