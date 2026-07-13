@@ -4,6 +4,7 @@
 ![Game View 1](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/1.png)
 ![Game View 2](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/2.png)
 ![Game View 3](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/3.png)
+![Game View 3](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/4.png)
 
 This project was created to explore the Godot engine after spending significant time tinkering with with C++ and SFML. Rather than aiming to become a finished game, the project serves as a sandbox for experimenting with engine architecture, gameplay systems, and workflows that differ from lower-level game development.
 
