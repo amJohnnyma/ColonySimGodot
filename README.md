@@ -4,29 +4,20 @@
 ![Game View](https://github.com/amJohnnyma/ColonySimGodot)
 
 
-## Installation - Linux only 
-**SFML**
-```
-sudo apt update
-```
-```
-sudo apt install libsfml-dev
-```
+## Installation
 
-**Install**
-```
-git clone https://github.com/amJohnnyma/ColonySim.git
-```
-**Build**
-```
-make clean
-```
-```
-make
-```
-```
-make run
-```
+### Option 1: Play the Pre-Compiled Build (Recommended)
+No installation or compilation is required. 
+
+**[Play ColonySim Live in Browser](https://amJohnnyma.github.io/ColonySim/)**
+
+### Option 2: Run From Source (For Developers)
+If you want to view or modify the project structure inside the Godot Engine:
+
+1. Download and install **Godot Engine 4.x** (Standard Version) from the [official website](https://godotengine.org/).
+2. Clone this repository:
+   ```bash
+   git clone [https://github.com/amJohnnyma/ColonySim.git](https://github.com/amJohnnyma/ColonySim.git)
 
 ## Controls
 * E: Zoom out
