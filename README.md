@@ -1,10 +1,10 @@
 # ColonySim
-
+**Tech:** C++17, GDExtension, Godot 4.5, CMake, OpenMP, multithreading
 
 ![Game View 1](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/1.png)
 ![Game View 2](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/2.png)
 ![Game View 3](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/3.png)
-![Game View 3](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/4.png)
+![Game View 4](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/4.png)
 
 This project was created to explore the Godot engine after spending significant time tinkering with with C++ and SFML. Rather than aiming to become a finished game, the project serves as a sandbox for experimenting with engine architecture, gameplay systems, and workflows that differ from lower-level game development.
 
@@ -19,7 +19,16 @@ If you want to view or modify the project structure inside the Godot Engine:
 1. Download and install **Godot Engine 4.x** (Standard Version) from the [official website](https://godotengine.org/).
 2. Clone this repository:
    ```bash
-   git clone [https://github.com/amJohnnyma/ColonySim.git](https://github.com/amJohnnyma/ColonySim.git)
+   git clone https://github.com/amJohnnyma/ColonySim.git
+   
+   cd ColonySim/extensions/world   
+   
+   git submodule update --init --recursive   # if godot-cpp is a submodule   
+   
+   cd godot-cpp && scons platform=linux target=editor   
+   
+   cd ../build && cmake .. && cmake --build .
+
 
 ## Controls
 * E: Zoom out
@@ -29,6 +38,10 @@ If you want to view or modify the project structure inside the Godot Engine:
 * S: Move down
 * D: Move right
 * P: Pause/Unpause
+
+### Notes
+- Perlin noise can be enabled for terrain generation
+- Infinite world is disabled due to instability -> Uses a proxy system for entities but off-screen interactions are not consistent enough.
 
 
 
