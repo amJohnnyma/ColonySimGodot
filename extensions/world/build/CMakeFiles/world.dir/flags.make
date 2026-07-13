@@ -6,5 +6,5 @@ CXX_DEFINES = -Dworld_EXPORTS
 
 CXX_INCLUDES = -I/home/johnny/Godot/colony-sim-2/extensions/world -I/home/johnny/Godot/colony-sim-2/extensions/world/SYSTEM -I/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/include -I/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gen/include -I/home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/gdextension
 
-CXX_FLAGS = -std=gnu++17 -fPIC -fopenmp -O3 -fopenmp
+CXX_FLAGS = -g -std=gnu++17 -fPIC -fopenmp -fopenmp
 

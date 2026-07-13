@@ -42,7 +42,9 @@ target_include_directories(world
 )
 
 # Pick the correct godot-cpp static library based on build type / variant
-if (CMAKE_BUILD_TYPE STREQUAL "editor" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(GODOT_CPP_LIB "${GODOT_CPP_DIR}/bin/libgodot-cpp.linux.template_debug.x86_64.a")
+elseif (CMAKE_BUILD_TYPE STREQUAL "editor")
     set(GODOT_CPP_LIB "${GODOT_CPP_DIR}/bin/libgodot-cpp.linux.editor.x86_64.a")
 else()
     set(GODOT_CPP_LIB "${GODOT_CPP_DIR}/bin/libgodot-cpp.linux.template_release.x86_64.a")

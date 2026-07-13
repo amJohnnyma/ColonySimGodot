@@ -284,7 +284,7 @@ world_EXTERNAL_OBJECTS =
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/harvestable.cpp.o
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/inventory.cpp.o
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/build.make
-/home/johnny/Godot/colony-sim-2/bin/libworld.so: /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/bin/libgodot-cpp.linux.editor.x86_64.a
+/home/johnny/Godot/colony-sim-2/bin/libworld.so: /home/johnny/Godot/colony-sim-2/extensions/world/godot-cpp/bin/libgodot-cpp.linux.template_debug.x86_64.a
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: /usr/lib/x86_64-linux-gnu/libpthread.a
 /home/johnny/Godot/colony-sim-2/bin/libworld.so: CMakeFiles/world.dir/link.txt

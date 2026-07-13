@@ -101,6 +101,10 @@ bool Colonist::harvest_movement(EntitySimulationParam &params) {
     if (distance_between(target, current) < 2) {
         // get the entity at that pos and decrement it's inventory
         UtilityFunctions::print("Reached harvest spot");
+
+        add_to_inventory(4, 0, 10);
+        add_to_inventory(4, 1, 20);
+        add_to_inventory(4, 2, 30);
         auto harvestable = params.world->get_entities_at_world_pos(target);
 
         Array types = harvestable["types"];
