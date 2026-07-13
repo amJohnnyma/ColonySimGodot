@@ -5,12 +5,31 @@
 ![Game View 2](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/2.png)
 ![Game View 3](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/3.png)
 ![Game View 4](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/4.png)
+![Game View 5](https://github.com/amJohnnyma/ColonySimGodot/blob/master/docs/5.png)
 
 This project was created to explore the Godot engine after spending significant time tinkering with with C++ and SFML. Rather than aiming to become a finished game, the project serves as a sandbox for experimenting with engine architecture, gameplay systems, and workflows that differ from lower-level game development.
 
 As an architectural challenge, the core simulation mechanics including chunk generation, AI state machines, and inventory systems—were implemented entirely in C++ via GDExtension rather than GDScript. This choice enforced a strict data-driven approach, decoupling the core simulation logic from the engine and leveraging Godot primarily as a rendering and user interface pipeline.
 
 The repository is maintained as a showcase and learning record rather than a complete game. It shows my exploration of Godot and the transition from lower-level programming with C++ and SFML to engine-based development.
+
+## Features
+- Perlin noise for terrain generation
+- Infinite world is possible
+- Save system serializes all data and saves to a file
+- Proxy system continues to simulate off-screen entities
+- Simulation speed is separate from game FPS, like Dwarf Fortress
+- Job system for entities (MoveTo, Harvest)
+- Inventory system
+
+## Controls
+* E: Zoom out
+* Q: Zoom in
+* W: Move up
+* A: Move left
+* S: Move down
+* D: Move right
+* P: Pause/Unpause
 
 ## Installation
 ### Run From Source 
@@ -30,18 +49,9 @@ If you want to view or modify the project structure inside the Godot Engine:
    cd ../build && cmake .. && cmake --build .
 
 
-## Controls
-* E: Zoom out
-* Q: Zoom in
-* W: Move up
-* A: Move left
-* S: Move down
-* D: Move right
-* P: Pause/Unpause
 
-### Notes
-- Perlin noise can be enabled for terrain generation
-- Infinite world is disabled due to instability -> Uses a proxy system for entities but off-screen interactions are not consistent enough.
+
+
 
 
 
